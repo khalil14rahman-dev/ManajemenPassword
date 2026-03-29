@@ -28,13 +28,60 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.txtMasterPassword = new System.Windows.Forms.TextBox();
+            this.btnAction = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.AutoSize = true;
+            this.lblStatus.Location = new System.Drawing.Point(306, 87);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(141, 20);
+            this.lblStatus.TabIndex = 0;
+            this.lblStatus.Text = "\"Selamat Datang!\"";
+            // 
+            // txtMasterPassword
+            // 
+            this.txtMasterPassword.Location = new System.Drawing.Point(248, 142);
+            this.txtMasterPassword.Multiline = true;
+            this.txtMasterPassword.Name = "txtMasterPassword";
+            this.txtMasterPassword.Size = new System.Drawing.Size(253, 49);
+            this.txtMasterPassword.TabIndex = 1;
+            this.txtMasterPassword.UseSystemPasswordChar = true;
+            // 
+            // btnAction
+            // 
+            this.btnAction.Location = new System.Drawing.Point(248, 231);
+            this.btnAction.Name = "btnAction";
+            this.btnAction.Size = new System.Drawing.Size(253, 39);
+            this.btnAction.TabIndex = 2;
+            this.btnAction.Text = "Masuk";
+            this.btnAction.UseVisualStyleBackColor = true;
+            this.btnAction.Click += new System.EventHandler(this.btnAction_Click);
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnAction);
+            this.Controls.Add(this.txtMasterPassword);
+            this.Controls.Add(this.lblStatus);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Label lblStatus;
+        private System.Windows.Forms.TextBox txtMasterPassword;
+        private System.Windows.Forms.Button btnAction;
     }
 }
 
