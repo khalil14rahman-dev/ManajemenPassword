@@ -4,7 +4,7 @@ using System.IO; // Penting untuk urusan simpan file
 public class AuthManager
 {
     // Nama file rahasia kita
-    private string path = "master_key.txt";
+    private string path = "master_key2.txt";
 
     // Cek: Ini pertama kali pakai atau sudah ada password?
     public bool IsFirstTime()
