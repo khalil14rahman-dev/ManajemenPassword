@@ -1,31 +1,44 @@
 ﻿using System;
-using System.IO; // Penting untuk urusan simpan file
+using System.IO;
+
+// Definisi State untuk Automata
+public enum AppState { SETUP, LOGIN, DASHBOARD }
 
 public class AuthManager
 {
-    // Nama file rahasia kita
-    private string path = "master_key2.txt";
+    //master 5 ; aku
+    private string path = "master_key6.txt";
+    public AppState CurrentState { get; private set; }
 
-    // Cek: Ini pertama kali pakai atau sudah ada password?
-    public bool IsFirstTime()
+    public AuthManager()
     {
-        return !File.Exists(path);
+        // State awal ditentukan dari keberadaan file (Inisialisasi State)
+        CurrentState = File.Exists(path) ? AppState.LOGIN : AppState.SETUP;
     }
 
-    // Fungsi simpan password baru
-    public void SimpanPasswordBaru(string password)
+    // Fungsi utama transisi state (Logika Automata)
+    public bool UpdateState(string input)
     {
-        File.WriteAllText(path, password);
-    }
+        // Defensive Programming: Validasi tingkat Logic
+        if (string.IsNullOrWhiteSpace(input)) return false;
 
-    // Fungsi cek password saat login
-    public bool CekPassword(string input)
-    {
-        if (File.Exists(path))
+        switch (CurrentState)
         {
-            string passAsli = File.ReadAllText(path);
-            return input == passAsli;
+            case AppState.SETUP:
+                File.WriteAllText(path, input);
+                CurrentState = AppState.LOGIN; // Transisi ke LOGIN
+                return true;
+
+            case AppState.LOGIN:
+                if (File.Exists(path) && input == File.ReadAllText(path))
+                {
+                    CurrentState = AppState.DASHBOARD; // Transisi ke DASHBOARD
+                    return true;
+                }
+                return false; // Password salah
+
+            default:
+                return false;
         }
-        return false;
     }
 }

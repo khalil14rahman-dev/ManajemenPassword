@@ -1,64 +1,74 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Project_KPL_ManajemenPassword
 {
     public partial class Form1 : Form
     {
+        // Instansiasi AuthManager sebagai pusat logika
+        AuthManager auth = new AuthManager();
+
         public Form1()
         {
             InitializeComponent();
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            RefreshUI();
+        }
+
         private void btnAction_Click(object sender, EventArgs e)
         {
-            AuthManager auth = new AuthManager();
-            string inputUser = txtMasterPassword.Text;
+            string input = txtMasterPassword.Text;
 
-            if (string.IsNullOrWhiteSpace(inputUser))
+            // --- STRATEGI DEFENSIVE PROGRAMMING ---
+            if (string.IsNullOrWhiteSpace(input))
             {
-                MessageBox.Show("Password tidak boleh kosong!");
+                MessageBox.Show("Password tidak boleh kosong!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (auth.IsFirstTime())
+            // Simpan state saat ini sebelum update untuk pengecekan notifikasi
+            AppState stateSebelumnya = auth.CurrentState;
+
+            // Eksekusi transisi di Automata
+            bool isSuccess = auth.UpdateState(input);
+
+            // --- LOGIKA RESPON BERDASARKAN HASIL TRANSISI ---
+            if (isSuccess)
             {
-                // Kondisi: Daftar Baru
-                auth.SimpanPasswordBaru(inputUser);
-                MessageBox.Show("Master Password Berhasil Dibuat! Silakan login ulang.");
-                Application.Restart(); // Kita restart biar state-nya berubah jadi Login
+                if (stateSebelumnya == AppState.SETUP)
+                {
+                    MessageBox.Show("Master Password Berhasil Dibuat! Silakan login ulang.", "Sukses");
+                    txtMasterPassword.Clear();
+                    RefreshUI(); // Update tampilan ke mode Login
+                }
+                else if (auth.CurrentState == AppState.DASHBOARD)
+                {
+                    MessageBox.Show("Login Berhasil! Selamat Datang.", "Informasi");
+                    // Code untuk buka Dashboard sesungguhnya di sini
+                }
             }
             else
             {
-                // Kondisi: Login Biasa
-                if (auth.CekPassword(inputUser))
+                // Jika isSuccess false pada state LOGIN, berarti password salah
+                if (auth.CurrentState == AppState.LOGIN)
                 {
-                    MessageBox.Show("Login Berhasil! Selamat Datang.");
-                    // Nanti di sini kita buka Dashboard
-                }
-                else
-                {
-                    MessageBox.Show("Password Salah!");
+                    MessageBox.Show("Password Salah!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        // --- STRATEGI STATE-BASED UI ---
+        private void RefreshUI()
         {
-            AuthManager auth = new AuthManager();
-            if (auth.IsFirstTime())
+            if (auth.CurrentState == AppState.SETUP)
             {
                 lblStatus.Text = "Halo! Silakan buat Master Password pertamamu.";
                 btnAction.Text = "Buat Password";
             }
-            else
+            else if (auth.CurrentState == AppState.LOGIN)
             {
                 lblStatus.Text = "Masukkan Master Password Anda:";
                 btnAction.Text = "Masuk";
