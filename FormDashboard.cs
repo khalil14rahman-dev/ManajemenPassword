@@ -16,10 +16,8 @@ namespace Project_KPL_ManajemenPassword
 
         public void LoadDataToGrid()
         {
-            // Ambil data dari file
             List<PasswordModel> listData = repo.LoadData();
 
-            // Masukkan ke DataGridView
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = listData;
 
@@ -38,10 +36,8 @@ namespace Project_KPL_ManajemenPassword
 
         private void btnTambah_Click(object sender, EventArgs e)
         {
-            // Membuat objek form input
             FormInputData formInput = new FormInputData();
 
-            // Menampilkan form sebagai Dialog (pop-up yang harus diselesaikan dulu)
             formInput.ShowDialog();
             LoadDataToGrid();
         }
@@ -64,17 +60,13 @@ namespace Project_KPL_ManajemenPassword
                 var confirm = MessageBox.Show("Apakah yakin ingin menghapus akun ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (confirm == DialogResult.Yes)
                 {
-                    // 1. Ambil data
                     List<PasswordModel> listData = repo.LoadData();
 
-                    // 2. Ambil index baris yang dipilih
                     int index = dataGridView1.CurrentRow.Index;
 
-                    // 3. Hapus dan Simpan
                     listData.RemoveAt(index);
                     repo.SaveData(listData);
 
-                    // 4. Update tampilan
                     LoadDataToGrid();
                     MessageBox.Show("Data berhasil dihapus!");
                 }
@@ -85,15 +77,12 @@ namespace Project_KPL_ManajemenPassword
         {
             if (dataGridView1.CurrentRow != null)
             {
-                // Ambil data yang diklik
                 PasswordModel dataTerpilih = (PasswordModel)dataGridView1.CurrentRow.DataBoundItem;
                 int index = dataGridView1.CurrentRow.Index;
 
-                // Buka form input dengan membawa data tersebut
                 FormInputData formEdit = new FormInputData(dataTerpilih, index);
                 formEdit.ShowDialog();
 
-                // Refresh tabel setelah ditutup
                 LoadDataToGrid();
             }
         }

@@ -12,7 +12,6 @@ namespace Project_KPL_ManajemenPassword
         public string Username { get; set; }
         public string Password { get; set; }
 
-        // Constructor kosong (Penting untuk JSON)
         public PasswordModel() { }
 
         public PasswordModel(string aplikasi, string user, string pass)

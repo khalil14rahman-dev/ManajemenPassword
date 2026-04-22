@@ -15,7 +15,6 @@ namespace Project_KPL_ManajemenPassword
         DataRepository<PasswordModel> repo = new DataRepository<PasswordModel>("data_password.json");
         private int indexEdit = -1; // -1 artinya mode TAMBAH, kalau >= 0 artinya mode EDIT
 
-        // Constructor asli (jangan dihapus)
         public FormInputData()
         {
             InitializeComponent();
@@ -80,13 +79,13 @@ namespace Project_KPL_ManajemenPassword
 
             try
             {
-                // 1. Ambil data lama dulu dari JSON
+                // Ambil data lama  dari JSON
                 List<PasswordModel> listData = repo.LoadData();
 
-                // 2. Buat objek data dari inputan TextBox
+                // Buat objek data dari inputan TextBox
                 PasswordModel dataInput = new PasswordModel(txtAplikasi.Text, txtUsername.Text, textPassword.Text);
 
-                // 3. LOGIKA UPDATE (EDIT) ATAU TAMBAH (ADD)
+                // LOGIKA UPDATE (EDIT) ATAU TAMBAH (ADD)
                 // Jika indexEdit adalah -1 berarti data baru, jika >= 0 berarti sedang mengedit
                 if (indexEdit == -1)
                 {
@@ -101,7 +100,7 @@ namespace Project_KPL_ManajemenPassword
                     }
                 }
 
-                // 4. Simpan kembali List terbaru ke file JSON
+                // Simpan List terbaru ke file JSON
                 repo.SaveData(listData);
 
                 MessageBox.Show("Data berhasil diproses!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -109,7 +108,7 @@ namespace Project_KPL_ManajemenPassword
             }
             catch (Exception ex)
             {
-                // --- EXCEPTION HANDLING ---
+                // EXCEPTION HANDLING
                 MessageBox.Show("Gagal memproses data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

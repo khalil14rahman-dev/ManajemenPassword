@@ -29,32 +29,25 @@ namespace Project_KPL_ManajemenPassword
             string passBaru = txtPassBaru.Text;
             string konfirmasi = txtKonfirmasi.Text;
 
-            // 1. Validasi: Jangan ada yang kosong
             if (string.IsNullOrEmpty(passLama) || string.IsNullOrEmpty(passBaru))
             {
                 MessageBox.Show("Semua kolom harus diisi!");
                 return;
             }
 
-            // 2. Cek Konfirmasi: Password baru harus sama dengan konfirmasi
             if (passBaru != konfirmasi)
             {
                 MessageBox.Show("Konfirmasi password baru tidak cocok!");
                 return;
             }
 
-            // 3. Eksekusi Ganti Password (Materi State Transition)
-            // Kita asumsikan di AuthManager ada fungsi untuk ganti password
-            bool sukses = auth.UpdateState(passLama); // Cek dulu password lamanya bener gak
+            bool sukses = auth.UpdateState(passLama);
 
             if (sukses)
             {
                 auth.ChangePassword(passBaru);
-                // Di sini kamu perlu koordinasi dengan temanmu 
-                // untuk fungsi menyimpan password baru ke file auth
                 MessageBox.Show("Master Password berhasil diperbarui! Silakan Login ulang.");
 
-                // Logout otomatis agar user tes password barunya
                 Application.Restart();
             }
             else

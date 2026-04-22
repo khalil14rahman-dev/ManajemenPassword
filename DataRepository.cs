@@ -11,7 +11,7 @@ namespace Project_KPL_ManajemenPassword
 
         public DataRepository(string fileName)
         {
-            // Lokasi file akan ada di folder bin/Debug aplikasi
+            // Lokasi file ada di folder bin/Debug aplikasi
             filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
         }
 
