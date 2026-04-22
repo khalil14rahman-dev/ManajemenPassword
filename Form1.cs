@@ -47,7 +47,12 @@ namespace Project_KPL_ManajemenPassword
                 else if (auth.CurrentState == AppState.DASHBOARD)
                 {
                     MessageBox.Show("Login Berhasil! Selamat Datang.", "Informasi");
-                    // Code untuk buka Dashboard sesungguhnya di sini
+
+                    // --- KODE PENGHUBUNG KE DASHBOARD KAMU ---
+                    FormDashboard dashboard = new FormDashboard(); // Memanggil Form yang kamu buat
+                    dashboard.Show(); // Menampilkan Dashboard
+
+                    this.Hide(); // Menyembunyikan Form Login (Form1)
                 }
             }
             else

@@ -41,4 +41,9 @@ public class AuthManager
                 return false;
         }
     }
+
+    public void ChangePassword(string newPassword)
+    {
+        File.WriteAllText(path, newPassword);
+    }
 }
