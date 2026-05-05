@@ -7,7 +7,7 @@ public enum AppState { SETUP, LOGIN, DASHBOARD }
 public class AuthManager
 {
     //master 5 ; aku
-    private string path = "master_key6.txt";
+    private string path = "master_key8.txt";
     public AppState CurrentState { get; private set; }
 
     public AuthManager()
