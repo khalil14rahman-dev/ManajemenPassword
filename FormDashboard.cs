@@ -95,5 +95,34 @@ namespace Project_KPL_ManajemenPassword
             // Menampilkan sebagai Pop-up (Modal)
             logWindow.ShowDialog();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (int.TryParse(txtJumlahLog.Text, out int jumlah))
+            {
+                PerformanceChecker checker = new PerformanceChecker();
+
+                // Ambil jumlah dari TextBox
+                long timeTaken = checker.MeasureSaveLogSpeed(jumlah);
+
+                MessageBox.Show($"Hasil Uji Performa:\n" +
+                                $"Input: {jumlah} data log\n" +
+                                $"Waktu: {timeTaken} ms", "Performance Report");
+            }
+            else
+            {
+                MessageBox.Show("Dra, masukin angka yang bener dong! hwhwhw", "Input Error");
+            }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtJumlahLog_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

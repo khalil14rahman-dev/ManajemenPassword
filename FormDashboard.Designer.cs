@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
             this.btnSetting = new System.Windows.Forms.Button();
             this.btnTambah = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -37,7 +38,9 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hapusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtJumlahLog = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -45,7 +48,10 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.Controls.Add(this.txtJumlahLog);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.btnSetting);
             this.panel1.Controls.Add(this.btnTambah);
@@ -55,6 +61,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(210, 450);
             this.panel1.TabIndex = 0;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(41, 235);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(135, 40);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Logs";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // btnSetting
             // 
@@ -87,6 +103,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.ContextMenuStrip = this.contextMenuStrip1;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -120,15 +137,36 @@
             this.hapusToolStripMenuItem.Text = "Hapus";
             this.hapusToolStripMenuItem.Click += new System.EventHandler(this.hapusToolStripMenuItem_Click);
             // 
-            // button2
+            // button3
             // 
-            this.button2.Location = new System.Drawing.Point(41, 235);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(135, 40);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Logs";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button3.Location = new System.Drawing.Point(41, 325);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(135, 52);
+            this.button3.TabIndex = 5;
+            this.button3.Text = "Run Performance Test";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(38, 385);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(107, 16);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Jumlah Data Uji :";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // txtJumlahLog
+            // 
+            this.txtJumlahLog.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.txtJumlahLog.Location = new System.Drawing.Point(151, 383);
+            this.txtJumlahLog.Name = "txtJumlahLog";
+            this.txtJumlahLog.Size = new System.Drawing.Size(25, 22);
+            this.txtJumlahLog.TabIndex = 2;
+            this.txtJumlahLog.Text = "10";
+            this.txtJumlahLog.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtJumlahLog.TextChanged += new System.EventHandler(this.txtJumlahLog_TextChanged);
             // 
             // FormDashboard
             // 
@@ -140,6 +178,7 @@
             this.Name = "FormDashboard";
             this.Text = "FormDashboard";
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -157,5 +196,8 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hapusToolStripMenuItem;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtJumlahLog;
     }
 }
