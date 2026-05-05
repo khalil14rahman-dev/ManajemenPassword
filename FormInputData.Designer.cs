@@ -94,6 +94,7 @@
             this.textPassword.Name = "textPassword";
             this.textPassword.Size = new System.Drawing.Size(132, 20);
             this.textPassword.TabIndex = 5;
+            this.textPassword.TextChanged += new System.EventHandler(this.textPassword_TextChanged_1);
             // 
             // btnAuto
             // 
