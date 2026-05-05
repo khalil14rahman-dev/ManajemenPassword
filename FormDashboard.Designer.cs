@@ -30,13 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btnTambah = new System.Windows.Forms.Button();
             this.btnSetting = new System.Windows.Forms.Button();
+            this.btnTambah = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hapusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button2 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -45,6 +46,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.btnSetting);
             this.panel1.Controls.Add(this.btnTambah);
             this.panel1.Controls.Add(this.button1);
@@ -53,6 +55,35 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(210, 450);
             this.panel1.TabIndex = 0;
+            // 
+            // btnSetting
+            // 
+            this.btnSetting.Location = new System.Drawing.Point(41, 189);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(135, 40);
+            this.btnSetting.TabIndex = 3;
+            this.btnSetting.Text = "Pengaturan";
+            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
+            // 
+            // btnTambah
+            // 
+            this.btnTambah.Location = new System.Drawing.Point(41, 143);
+            this.btnTambah.Name = "btnTambah";
+            this.btnTambah.Size = new System.Drawing.Size(135, 40);
+            this.btnTambah.TabIndex = 1;
+            this.btnTambah.Text = "Tambah Data (+)";
+            this.btnTambah.UseVisualStyleBackColor = true;
+            this.btnTambah.Click += new System.EventHandler(this.btnTambah_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(41, 97);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(135, 40);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Semua Akun";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 
@@ -66,35 +97,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(590, 450);
             this.dataGridView1.TabIndex = 1;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(41, 80);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(135, 40);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Semua Akun";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // btnTambah
-            // 
-            this.btnTambah.Location = new System.Drawing.Point(41, 143);
-            this.btnTambah.Name = "btnTambah";
-            this.btnTambah.Size = new System.Drawing.Size(135, 40);
-            this.btnTambah.TabIndex = 1;
-            this.btnTambah.Text = "Tambah Data (+)";
-            this.btnTambah.UseVisualStyleBackColor = true;
-            this.btnTambah.Click += new System.EventHandler(this.btnTambah_Click);
-            // 
-            // btnSetting
-            // 
-            this.btnSetting.Location = new System.Drawing.Point(41, 212);
-            this.btnSetting.Name = "btnSetting";
-            this.btnSetting.Size = new System.Drawing.Size(135, 40);
-            this.btnSetting.TabIndex = 3;
-            this.btnSetting.Text = "Pengaturan";
-            this.btnSetting.UseVisualStyleBackColor = true;
-            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -102,21 +104,31 @@
             this.editToolStripMenuItem,
             this.hapusToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(264, 100);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(121, 52);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(120, 24);
             this.editToolStripMenuItem.Text = "Edit";
             this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // hapusToolStripMenuItem
             // 
             this.hapusToolStripMenuItem.Name = "hapusToolStripMenuItem";
-            this.hapusToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.hapusToolStripMenuItem.Size = new System.Drawing.Size(120, 24);
             this.hapusToolStripMenuItem.Text = "Hapus";
             this.hapusToolStripMenuItem.Click += new System.EventHandler(this.hapusToolStripMenuItem_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(41, 235);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(135, 40);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "Logs";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // FormDashboard
             // 
@@ -144,5 +156,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hapusToolStripMenuItem;
+        private System.Windows.Forms.Button button2;
     }
 }

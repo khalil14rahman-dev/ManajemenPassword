@@ -107,6 +107,9 @@ namespace Project_KPL_ManajemenPassword
             {
                 MessageBox.Show("Gagal memproses data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            AuthManager auth = new AuthManager();
+            auth.SaveLog("Tambah Data Password", "Success");
         }
 
         private void textPassword_TextChanged(object sender, EventArgs e)

@@ -86,5 +86,14 @@ namespace Project_KPL_ManajemenPassword
                 LoadDataToGrid();
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            // Membuat instance form log baru
+            FormLog logWindow = new FormLog();
+
+            // Menampilkan sebagai Pop-up (Modal)
+            logWindow.ShowDialog();
+        }
     }
 }

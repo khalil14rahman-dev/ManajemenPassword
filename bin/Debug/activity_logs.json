@@ -1,0 +1,42 @@
+[
+  {
+    "Timestamp": "2026-05-05T16:38:50.3673547+07:00",
+    "Activity": "Login Attempt",
+    "Status": "Failed"
+  },
+  {
+    "Timestamp": "2026-05-05T16:38:57.466307+07:00",
+    "Activity": "User Login",
+    "Status": "Success"
+  },
+  {
+    "Timestamp": "2026-05-05T16:56:23.3535752+07:00",
+    "Activity": "User Login",
+    "Status": "Success"
+  },
+  {
+    "Timestamp": "2026-05-05T17:27:11.0898214+07:00",
+    "Activity": "User Login",
+    "Status": "Success"
+  },
+  {
+    "Timestamp": "2026-05-05T17:30:15.5600617+07:00",
+    "Activity": "User Login",
+    "Status": "Success"
+  },
+  {
+    "Timestamp": "2026-05-05T17:30:35.4996903+07:00",
+    "Activity": "Tambah Data Password",
+    "Status": "Success"
+  },
+  {
+    "Timestamp": "2026-05-05T17:31:13.1801053+07:00",
+    "Activity": "Tambah Data Password",
+    "Status": "Success"
+  },
+  {
+    "Timestamp": "2026-05-05T21:34:55.0480779+07:00",
+    "Activity": "User Login",
+    "Status": "Success"
+  }
+]
