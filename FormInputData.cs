@@ -12,6 +12,7 @@ namespace Project_KPL_ManajemenPassword
 {
     public partial class FormInputData : Form
     {
+        //generic
         DataRepository<PasswordModel> repo = new DataRepository<PasswordModel>("data_password.json");
         private int indexEdit = -1;
 

@@ -12,10 +12,12 @@ namespace Project_KPL_ManajemenPassword
 {
     public partial class FormDashboard : Form
     {
+        //generic
         DataRepository<PasswordModel> repo = new DataRepository<PasswordModel>("data_password.json");
 
         public void LoadDataToGrid()
         {
+            //generic
             List<PasswordModel> listData = repo.LoadData();
 
             dataGridView1.DataSource = null;
