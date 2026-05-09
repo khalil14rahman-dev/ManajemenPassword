@@ -41,15 +41,16 @@
             this.lblStatus.Size = new System.Drawing.Size(141, 20);
             this.lblStatus.TabIndex = 0;
             this.lblStatus.Text = "\"Selamat Datang!\"";
+            this.lblStatus.Click += new System.EventHandler(this.lblStatus_Click);
             // 
             // txtMasterPassword
             // 
             this.txtMasterPassword.Location = new System.Drawing.Point(248, 142);
-            this.txtMasterPassword.Multiline = true;
             this.txtMasterPassword.Name = "txtMasterPassword";
-            this.txtMasterPassword.Size = new System.Drawing.Size(253, 49);
+            this.txtMasterPassword.Size = new System.Drawing.Size(253, 26);
             this.txtMasterPassword.TabIndex = 1;
             this.txtMasterPassword.UseSystemPasswordChar = true;
+            this.txtMasterPassword.TextChanged += new System.EventHandler(this.txtMasterPassword_TextChanged);
             // 
             // btnAction
             // 

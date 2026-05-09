@@ -20,13 +20,30 @@ namespace Project_KPL_ManajemenPassword
             //generic
             List<PasswordModel> listData = repo.LoadData();
 
+            // 1. TAMBAHKAN INI: Agar kolom manual kamu tidak tertumpuk kolom otomatis
+            dataGridView1.AutoGenerateColumns = false;
+
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = listData;
 
-            
-            dataGridView1.Columns["NamaAplikasi"].HeaderText = "Aplikasi";
-            dataGridView1.Columns["Username"].HeaderText = "User / Email";
-            dataGridView1.Columns["Password"].HeaderText = "Password";
+            // 2. HUBUNGKAN KOLOM: Pastikan nama di dalam kurung [ ] sesuai dengan properti di PasswordModel
+            // colAplikasi adalah Name yang kamu buat di "Edit Columns" tadi
+            if (dataGridView1.Columns.Contains("colAplikasi"))
+            {
+                dataGridView1.Columns["colAplikasi"].DataPropertyName = "NamaAplikasi";
+            }
+
+            // Username dan Password tetap kita hubungkan ke kolom yang Visible = False 
+            // agar datanya "terbawa" tapi tidak terlihat di layar
+            if (dataGridView1.Columns.Contains("colUsername"))
+            {
+                dataGridView1.Columns["colUsername"].DataPropertyName = "Username";
+            }
+
+            if (dataGridView1.Columns.Contains("colPassword"))
+            {
+                dataGridView1.Columns["colPassword"].DataPropertyName = "Password";
+            }
         }
         public FormDashboard()
         {
@@ -91,13 +108,11 @@ namespace Project_KPL_ManajemenPassword
 
         private void button2_Click(object sender, EventArgs e)
         {
-            // Membuat instance form log baru
             FormLog logWindow = new FormLog();
-
-            // Menampilkan sebagai Pop-up (Modal)
             logWindow.ShowDialog();
         }
 
+<<<<<<< HEAD
         private void button3_Click(object sender, EventArgs e)
         {
             if (int.TryParse(txtJumlahLog.Text, out int jumlah))
@@ -123,6 +138,23 @@ namespace Project_KPL_ManajemenPassword
         }
 
         private void txtJumlahLog_TextChanged(object sender, EventArgs e)
+=======
+        // TAMBAHKAN KODE INI DI SINI:
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                // Mengambil data utuh dari baris yang diklik
+                var data = (PasswordModel)dataGridView1.Rows[e.RowIndex].DataBoundItem;
+
+                // Membuka form detail dan mengirim data (Aplikasi, User, Password Enkripsi)
+                FormDetailPassword formDetail = new FormDetailPassword(data.NamaAplikasi, data.Username, data.Password);
+                formDetail.ShowDialog();
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+>>>>>>> origin/khalil
         {
 
         }
