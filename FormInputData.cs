@@ -160,5 +160,38 @@ namespace Project_KPL_ManajemenPassword
                 lblstrength.ForeColor = Color.Green;
             }
         }
+
+        private void textPassword_TextChanged_1(object sender, EventArgs e)
+        {
+            // Mengambil teks langsung saat user mengetik
+            string pass = textPassword.Text;
+            int len = pass.Length;
+
+            // --- TABLE DRIVEN CONSTRUCTION ---
+            var strengthTable = new Dictionary<int, (string Status, Color Warna)>
+    {
+        { 0, ("Kekuatan: -", Color.Gray) },
+        { 1, ("Kekuatan: Lemah", Color.Red) },
+        { 8, ("Kekuatan: Sedang", Color.Orange) },
+        { 12, ("Kekuatan: Sangat Kuat", Color.Green) }
+    };
+
+            string statusBaru = "Kekuatan: -";
+            Color warnaBaru = Color.Gray;
+
+            // Otomatis mencari aturan yang sesuai dengan panjang teks saat ini
+            foreach (var rule in strengthTable)
+            {
+                if (len >= rule.Key)
+                {
+                    statusBaru = rule.Value.Status;
+                    warnaBaru = rule.Value.Warna;
+                }
+            }
+
+            // Langsung update Label secara Real-Time
+            lblstrength.Text = statusBaru;
+            lblstrength.ForeColor = warnaBaru;
+        }
     }
 }
