@@ -55,5 +55,10 @@ namespace Project_KPL_ManajemenPassword
                 MessageBox.Show("Password lama salah!");
             }
         }
+
+        private void txtPassLama_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -5,12 +5,14 @@ namespace Project_KPL_ManajemenPassword
 {
     public partial class Form1 : Form
     {
-        // Instansiasi AuthManager sebagai pusat logika
+        // Instansiasi AuthManager 
         AuthManager auth = new AuthManager();
 
         public Form1()
         {
-            InitializeComponent();
+            {
+                InitializeComponent(); 
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -22,7 +24,7 @@ namespace Project_KPL_ManajemenPassword
         {
             string input = txtMasterPassword.Text;
 
-            // --- STRATEGI DEFENSIVE PROGRAMMING ---
+            // STRATEGI DEFENSIVE PROGRAMMING 
             if (string.IsNullOrWhiteSpace(input))
             {
                 MessageBox.Show("Password tidak boleh kosong!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -35,7 +37,7 @@ namespace Project_KPL_ManajemenPassword
             // Eksekusi transisi di Automata
             bool isSuccess = auth.UpdateState(input);
 
-            // --- LOGIKA RESPON BERDASARKAN HASIL TRANSISI ---
+            // LOGIKA RESPON BERDASARKAN HASIL TRANSISI 
             if (isSuccess)
             {
                 if (stateSebelumnya == AppState.SETUP)
@@ -48,8 +50,8 @@ namespace Project_KPL_ManajemenPassword
                 {
                     MessageBox.Show("Login Berhasil! Selamat Datang.", "Informasi");
 
-                    // --- KODE PENGHUBUNG KE DASHBOARD KAMU ---
-                    FormDashboard dashboard = new FormDashboard(); // Memanggil Form yang kamu buat
+                    //  KODE PENGHUBUNG KE DASHBOARD 
+                    FormDashboard dashboard = new FormDashboard(); // Memanggil Form
                     dashboard.Show(); // Menampilkan Dashboard
 
                     this.Hide(); // Menyembunyikan Form Login (Form1)
@@ -65,7 +67,7 @@ namespace Project_KPL_ManajemenPassword
             }
         }
 
-        // --- STRATEGI STATE-BASED UI ---
+        // STRATEGI STATE-BASED UI
         private void RefreshUI()
         {
             if (auth.CurrentState == AppState.SETUP)
@@ -78,6 +80,16 @@ namespace Project_KPL_ManajemenPassword
                 lblStatus.Text = "Masukkan Master Password Anda:";
                 btnAction.Text = "Masuk";
             }
+        }
+
+        private void lblStatus_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtMasterPassword_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
