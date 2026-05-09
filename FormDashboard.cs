@@ -112,7 +112,7 @@ namespace Project_KPL_ManajemenPassword
             logWindow.ShowDialog();
         }
 
-<<<<<<< HEAD
+
         private void button3_Click(object sender, EventArgs e)
         {
             if (int.TryParse(txtJumlahLog.Text, out int jumlah))
@@ -138,7 +138,10 @@ namespace Project_KPL_ManajemenPassword
         }
 
         private void txtJumlahLog_TextChanged(object sender, EventArgs e)
-=======
+        {
+
+        }
+
         // TAMBAHKAN KODE INI DI SINI:
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -154,7 +157,7 @@ namespace Project_KPL_ManajemenPassword
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
->>>>>>> origin/khalil
+
         {
 
         }

@@ -3,7 +3,71 @@
   "WorkspaceRootPath": "C:\\Projects\\C#\\ManajemenPassword\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\formdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:formdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\formdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:formdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|c:\\projects\\c#\\manajemenpassword\\formdashboard.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:formdashboard.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F82444D4-58D3-400C-E54F-72DA8225281F}|..\\ManajemenPassword.Test\\ManajemenPassword.Test.csproj|c:\\projects\\c#\\manajemenpassword.test\\test1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\authmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:authmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\datarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:datarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|c:\\projects\\c#\\manajemenpassword\\securityservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:securityservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\passwordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:passwordmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\performancechecker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:performancechecker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\formsetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:formsetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\formlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:formlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\formlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:formlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\forminputdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:forminputdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\logactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:logactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\forminputdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:forminputdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F82444D4-58D3-400C-E54F-72DA8225281F}|..\\ManajemenPassword.Test\\ManajemenPassword.Test.csproj|c:\\projects\\c#\\manajemenpassword.test\\mstestsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -17,6 +81,22 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Projects\\C#\\ManajemenPassword\\bin\\Debug\\activity_logs.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:bin\\Debug\\activity_logs.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\formsetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:formsetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\forminputdata.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:forminputdata.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|C:\\Projects\\C#\\ManajemenPassword\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +106,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,55 +114,97 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
+              "Title": "SecurityService.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\SecurityService.cs",
+              "RelativeDocumentMoniker": "SecurityService.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\SecurityService.cs",
+              "RelativeToolTip": "SecurityService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.054Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FormDashboard.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\FormDashboard.cs",
+              "RelativeDocumentMoniker": "FormDashboard.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\FormDashboard.cs",
+              "RelativeToolTip": "FormDashboard.cs",
+              "ViewState": "AgIAAJEAAAAAAAAAAIAwwKEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.067Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DataRepository.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\DataRepository.cs",
+              "RelativeDocumentMoniker": "DataRepository.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\DataRepository.cs",
+              "RelativeToolTip": "DataRepository.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAAB4AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.066Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AuthManager.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\AuthManager.cs",
+              "RelativeDocumentMoniker": "AuthManager.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\AuthManager.cs",
+              "RelativeToolTip": "AuthManager.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAAAC8AAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.071Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "Test1.cs",
               "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword.Test\\Test1.cs",
               "RelativeDocumentMoniker": "..\\ManajemenPassword.Test\\Test1.cs",
               "ToolTip": "C:\\Projects\\C#\\ManajemenPassword.Test\\Test1.cs",
               "RelativeToolTip": "..\\ManajemenPassword.Test\\Test1.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAxwBsAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T15:58:47.654Z"
+              "WhenOpened": "2026-05-09T11:03:55.082Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MSTestSettings.cs",
-              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword.Test\\MSTestSettings.cs",
-              "RelativeDocumentMoniker": "..\\ManajemenPassword.Test\\MSTestSettings.cs",
-              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword.Test\\MSTestSettings.cs",
-              "RelativeToolTip": "..\\ManajemenPassword.Test\\MSTestSettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "FormDashboard.cs [Design]",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\FormDashboard.cs",
+              "RelativeDocumentMoniker": "FormDashboard.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\FormDashboard.cs [Design]",
+              "RelativeToolTip": "FormDashboard.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T15:58:40.167Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ManajemenPassword.Test.csproj",
-              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword.Test\\ManajemenPassword.Test.csproj",
-              "RelativeDocumentMoniker": "..\\ManajemenPassword.Test\\ManajemenPassword.Test.csproj",
-              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword.Test\\ManajemenPassword.Test.csproj",
-              "RelativeToolTip": "..\\ManajemenPassword.Test\\ManajemenPassword.Test.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-05-05T16:02:20.984Z"
+              "WhenOpened": "2026-05-09T11:03:55.261Z",
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "App.config",
-              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword.Test\\App.config",
-              "RelativeDocumentMoniker": "..\\ManajemenPassword.Test\\App.config",
-              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword.Test\\App.config",
-              "RelativeToolTip": "..\\ManajemenPassword.Test\\App.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2026-05-05T16:22:44.432Z"
+              "Title": "FormDashboard.Designer.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\FormDashboard.Designer.cs",
+              "RelativeDocumentMoniker": "FormDashboard.Designer.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\FormDashboard.Designer.cs",
+              "RelativeToolTip": "FormDashboard.Designer.cs",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAowI8AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:07:04.936Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 20,
               "Title": "activity_logs.json",
               "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\bin\\Debug\\activity_logs.json",
               "RelativeDocumentMoniker": "bin\\Debug\\activity_logs.json",
@@ -90,8 +212,211 @@
               "RelativeToolTip": "bin\\Debug\\activity_logs.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-05-05T09:57:06.566Z",
+              "WhenOpened": "2026-05-09T11:03:55.267Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "App.config",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword.Test\\App.config",
+              "RelativeDocumentMoniker": "..\\ManajemenPassword.Test\\App.config",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword.Test\\App.config",
+              "RelativeToolTip": "..\\ManajemenPassword.Test\\App.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2026-05-09T11:03:55.257Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ManajemenPassword.Test.csproj",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword.Test\\ManajemenPassword.Test.csproj",
+              "RelativeDocumentMoniker": "..\\ManajemenPassword.Test\\ManajemenPassword.Test.csproj",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword.Test\\ManajemenPassword.Test.csproj",
+              "RelativeToolTip": "..\\ManajemenPassword.Test\\ManajemenPassword.Test.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-05-09T11:03:55.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "MSTestSettings.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword.Test\\MSTestSettings.cs",
+              "RelativeDocumentMoniker": "..\\ManajemenPassword.Test\\MSTestSettings.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword.Test\\MSTestSettings.cs",
+              "RelativeToolTip": "..\\ManajemenPassword.Test\\MSTestSettings.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.1Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "FormSetting.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\FormSetting.cs",
+              "RelativeDocumentMoniker": "FormSetting.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\FormSetting.cs",
+              "RelativeToolTip": "FormSetting.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAqwDsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.044Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AgIAADUAAAAAAAAAAAAmwFIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.067Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "FormLog.cs [Design]",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\FormLog.cs",
+              "RelativeDocumentMoniker": "FormLog.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\FormLog.cs [Design]",
+              "RelativeToolTip": "FormLog.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.068Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FormLog.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\FormLog.cs",
+              "RelativeDocumentMoniker": "FormLog.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\FormLog.cs",
+              "RelativeToolTip": "FormLog.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAiwDIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.069Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PerformanceChecker.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\PerformanceChecker.cs",
+              "RelativeDocumentMoniker": "PerformanceChecker.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\PerformanceChecker.cs",
+              "RelativeToolTip": "PerformanceChecker.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAcwCIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.07Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PasswordModel.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\PasswordModel.cs",
+              "RelativeDocumentMoniker": "PasswordModel.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\PasswordModel.cs",
+              "RelativeToolTip": "PasswordModel.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABIAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.071Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "FormInputData.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\FormInputData.cs",
+              "RelativeDocumentMoniker": "FormInputData.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\FormInputData.cs",
+              "RelativeToolTip": "FormInputData.cs",
+              "ViewState": "AgIAAIgAAAAAAAAAAAAiwKQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.072Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LogActivity.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\LogActivity.cs",
+              "RelativeDocumentMoniker": "LogActivity.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\LogActivity.cs",
+              "RelativeToolTip": "LogActivity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.073Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "FormInputData.cs [Design]",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\FormInputData.cs",
+              "RelativeDocumentMoniker": "FormInputData.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\FormInputData.cs [Design]",
+              "RelativeToolTip": "FormInputData.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.073Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.074Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "FormSetting.cs [Design]",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\FormSetting.cs",
+              "RelativeDocumentMoniker": "FormSetting.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\FormSetting.cs [Design]",
+              "RelativeToolTip": "FormSetting.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.27Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "FormInputData.Designer.cs",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\FormInputData.Designer.cs",
+              "RelativeDocumentMoniker": "FormInputData.Designer.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\FormInputData.Designer.cs",
+              "RelativeToolTip": "FormInputData.Designer.cs",
+              "ViewState": "AgIAAHMAAAAAAAAAAAAuwIkAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.271Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\Form1.cs [Design]",
+              "RelativeToolTip": "Form1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-09T11:03:55.271Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "packages.config",
+              "DocumentMoniker": "C:\\Projects\\C#\\ManajemenPassword\\packages.config",
+              "RelativeDocumentMoniker": "packages.config",
+              "ToolTip": "C:\\Projects\\C#\\ManajemenPassword\\packages.config",
+              "RelativeToolTip": "packages.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2026-05-09T11:03:55.272Z"
             }
           ]
         }
