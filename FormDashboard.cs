@@ -113,25 +113,6 @@ namespace Project_KPL_ManajemenPassword
         }
 
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if (int.TryParse(txtJumlahLog.Text, out int jumlah))
-            {
-                PerformanceChecker checker = new PerformanceChecker();
-
-                // Ambil jumlah dari TextBox
-                long timeTaken = checker.MeasureSaveLogSpeed(jumlah);
-
-                MessageBox.Show($"Hasil Uji Performa:\n" +
-                                $"Input: {jumlah} data log\n" +
-                                $"Waktu: {timeTaken} ms", "Performance Report");
-            }
-            else
-            {
-                MessageBox.Show("Dra, masukin angka yang bener dong! hwhwhw", "Input Error");
-            }
-        }
-
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -142,7 +123,6 @@ namespace Project_KPL_ManajemenPassword
 
         }
 
-        // TAMBAHKAN KODE INI DI SINI:
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)

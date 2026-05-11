@@ -5,30 +5,38 @@ using System.Text.Json;
 
 namespace Project_KPL_ManajemenPassword
 {
-    public class DataRepository<T>
+    public class DataRepository<T> where T : class
     {
         private string filePath;
 
         public DataRepository(string fileName)
-        {
-            // Lokasi file ada di folder bin/Debug aplikasi
+        { 
             filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
         }
 
-        // Fungsi Simpan (Generic)
+        // Simpan (Generic)
         public void SaveData(List<T> dataList)
         {
             string jsonString = JsonSerializer.Serialize(dataList);
             File.WriteAllText(filePath, jsonString);
         }
 
-        // Fungsi Ambil Data (Generic)
-        public List<T> LoadData()
+        // Ambil Data (Generic)
+       public List<T> LoadData()
         {
             if (!File.Exists(filePath)) return new List<T>();
 
-            string jsonString = File.ReadAllText(filePath);
-            return JsonSerializer.Deserialize<List<T>>(jsonString);
+            try 
+            {
+                string jsonString = File.ReadAllText(filePath);
+                var result = JsonSerializer.Deserialize<List<T>>(jsonString);
+
+                return result ?? new List<T>();
+            }
+            catch 
+            {
+                return new List<T>();
+            }
         }
     }
 }

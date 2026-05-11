@@ -10,8 +10,9 @@ public enum AppState { SETUP, LOGIN, DASHBOARD }
 
 public class AuthManager
 {
-    private string path = "master_key9.txt"; //bbb
+    private string path = "master_key9.txt"; 
     private const string logFilePath = "activity_logs.json";
+    private DataRepository<LogActivity> logRepo = new DataRepository<LogActivity>("activity_logs.json");
     public AppState CurrentState { get; private set; }
 
     public AuthManager()
@@ -19,44 +20,29 @@ public class AuthManager
         CurrentState = File.Exists(path) ? AppState.LOGIN : AppState.SETUP;
     }
 
-    // FUNGSI PENCATAT LOG (JSON)
+    // LOG (JSON)
     public void SaveLog(string activity, string status)
     {
-        List<LogActivity> logs = new List<LogActivity>();
+        // 1. Ambil data 
+        List<LogActivity> logs = logRepo.LoadData();
 
-        if (File.Exists(logFilePath))
-        {
-            try
-            {
-                string existingJson = File.ReadAllText(logFilePath);
-                logs = JsonSerializer.Deserialize<List<LogActivity>>(existingJson) ?? new List<LogActivity>();
-            }
-            catch { logs = new List<LogActivity>(); }
-        }
-
+        // 2. Tambah data baru
         logs.Add(new LogActivity(activity, status));
-        string updatedJson = JsonSerializer.Serialize(logs, new JsonSerializerOptions { WriteIndented = true });
-        File.WriteAllText(logFilePath, updatedJson);
+
+        logRepo.SaveData(logs);
     }
 
     public List<LogActivity> GetLogs()
     {
-        if (!File.Exists(logFilePath)) return new List<LogActivity>();
-        try
-        {
-            string json = File.ReadAllText(logFilePath);
-            return JsonSerializer.Deserialize<List<LogActivity>>(json) ?? new List<LogActivity>();
-        }
-        catch { return new List<LogActivity>(); }
+        return logRepo.LoadData();
     }
 
-    // SATU FUNGSI UpdateState (Sudah Gabungan Hashing + Log + Automata)
+    // UpdateState 
     public bool UpdateState(string input)
     {
         // Defensive Programming
         if (string.IsNullOrWhiteSpace(input)) return false;
 
-        // Hash input panggil dari kelas security helper
         string hashedInput = SecurityHelper.HashPassword(input);
 
         switch (CurrentState)

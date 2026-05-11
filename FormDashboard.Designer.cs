@@ -30,9 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txtJumlahLog = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.btnSetting = new System.Windows.Forms.Button();
             this.btnTambah = new System.Windows.Forms.Button();
@@ -52,9 +49,6 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panel1.Controls.Add(this.txtJumlahLog);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.btnSetting);
             this.panel1.Controls.Add(this.btnTambah);
@@ -65,42 +59,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(211, 566);
             this.panel1.TabIndex = 0;
-            // 
-            // txtJumlahLog
-            // 
-            this.txtJumlahLog.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtJumlahLog.Location = new System.Drawing.Point(138, 392);
-            this.txtJumlahLog.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.txtJumlahLog.Name = "txtJumlahLog";
-            this.txtJumlahLog.Size = new System.Drawing.Size(32, 22);
-            this.txtJumlahLog.TabIndex = 2;
-            this.txtJumlahLog.Text = "10";
-            this.txtJumlahLog.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtJumlahLog.TextChanged += new System.EventHandler(this.txtJumlahLog_TextChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 392);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(107, 16);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Jumlah Data Uji :";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.button3.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.button3.Location = new System.Drawing.Point(26, 331);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(161, 40);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "Run Performance Test";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -221,7 +179,6 @@
             this.Name = "FormDashboard";
             this.Text = "FormDashboard";
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -239,10 +196,6 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hapusToolStripMenuItem;
         private System.Windows.Forms.Button button2;
-
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtJumlahLog;
 
         private System.Windows.Forms.DataGridViewTextBoxColumn colAplikasi;
         private System.Windows.Forms.DataGridViewTextBoxColumn colUsername;

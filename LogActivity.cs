@@ -9,10 +9,9 @@ namespace Project_KPL_ManajemenPassword
     public class LogActivity
     {
         public DateTime Timestamp { get; set; }
-        public string Activity { get; set; } // Contoh: Login, Akses Password, Ubah Master Key
-        public string Status { get; set; }   // Contoh: Berhasil atau Gagal
+        public string Activity { get; set; } 
+        public string Status { get; set; }   
 
-        // Constructor biar gampang pas bikin log baru
         public LogActivity(string activity, string status)
         {
             this.Timestamp = DateTime.Now;

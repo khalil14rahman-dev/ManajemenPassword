@@ -60,5 +60,10 @@ namespace Project_KPL_ManajemenPassword
         {
 
         }
+
+        private void FormSetting_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
