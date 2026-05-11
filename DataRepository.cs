@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Diagnostics;
 
 namespace Project_KPL_ManajemenPassword
 {
@@ -24,16 +25,22 @@ namespace Project_KPL_ManajemenPassword
         // Ambil Data (Generic)
        public List<T> LoadData()
         {
+            Debug.Assert(!string.IsNullOrEmpty(filePath), "FilePath tidak boleh kosong!");
+
             if (!File.Exists(filePath)) return new List<T>();
 
-            try 
+            try
             {
                 string jsonString = File.ReadAllText(filePath);
                 var result = JsonSerializer.Deserialize<List<T>>(jsonString);
 
-                return result ?? new List<T>();
+                List<T> finalResult = result ?? new List<T>();
+
+                Debug.Assert(finalResult != null, "Post-condition gagal: Output tidak boleh null!");
+
+                return finalResult;
             }
-            catch 
+            catch
             {
                 return new List<T>();
             }

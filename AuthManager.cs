@@ -27,7 +27,8 @@ public class AuthManager
         List<LogActivity> logs = logRepo.LoadData();
 
         // 2. Tambah data baru
-        logs.Add(new LogActivity(activity, status));
+        string waktuSekarang = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        logs.Add(new LogActivity(waktuSekarang, activity, status)); 
 
         logRepo.SaveData(logs);
     }

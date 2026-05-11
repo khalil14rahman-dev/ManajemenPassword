@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Project_KPL_ManajemenPassword
 {
@@ -56,12 +57,38 @@ namespace Project_KPL_ManajemenPassword
             }
         }
 
+        private void btnShowPass_Click(object sender, EventArgs e)
+        {
+        
+        }
+
         private void txtPassLama_TextChanged(object sender, EventArgs e)
         {
 
         }
 
         private void FormSetting_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            txtPassLama.UseSystemPasswordChar = !chkShowLama.Checked;
+        }
+        
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            txtKonfirmasi.UseSystemPasswordChar = !chkShowKonf.Checked;
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            txtPassBaru.UseSystemPasswordChar = !chkShowBaru.Checked;
+        }
+
+        private void txtKonfirmasi_TextChanged(object sender, EventArgs e)
         {
 
         }

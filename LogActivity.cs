@@ -8,16 +8,16 @@ namespace Project_KPL_ManajemenPassword
 {
     public class LogActivity
     {
-        public DateTime Timestamp { get; set; }
-        public string Activity { get; set; } 
-        public string Status { get; set; }   
+        public string Timestamp { get; set; }
+        public string Activity { get; set; }
+        public string Status { get; set; }
 
-        public LogActivity(string activity, string status)
+        // Pastikan parameter pertama adalah STRING
+        public LogActivity(string timestamp, string activity, string status)
         {
-            this.Timestamp = DateTime.Now;
+            this.Timestamp = timestamp;
             this.Activity = activity;
             this.Status = status;
         }
-
     }
 }
