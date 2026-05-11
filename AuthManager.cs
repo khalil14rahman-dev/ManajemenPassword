@@ -10,8 +10,12 @@ public enum AppState { SETUP, LOGIN, DASHBOARD }
 
 public class AuthManager
 {
-    private string path = "master_key9.txt"; 
+    private string path = "master_key10.txt"; 
     private const string logFilePath = "activity_logs.json";
+
+    
+    private int loginAttempts = 0;
+
     private DataRepository<LogActivity> logRepo = new DataRepository<LogActivity>("activity_logs.json");
     public AppState CurrentState { get; private set; }
 
@@ -40,6 +44,16 @@ public class AuthManager
     // UpdateState 
     public bool UpdateState(string input)
     {
+        // STRATEGI DEFENSIVE PROGRAMMING (Logic Level)
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            return false;
+        }
+        else if (CurrentState == AppState.SETUP && input.Length < 8)
+        {
+            return false;
+        }
+
         // Defensive Programming
         if (string.IsNullOrWhiteSpace(input)) return false;
 
@@ -57,16 +71,31 @@ public class AuthManager
                 if (File.Exists(path) && hashedInput == File.ReadAllText(path))
                 {
                     SaveLog("User Login", "Success");
+                    loginAttempts = 0; // Reset jika sukses
                     CurrentState = AppState.DASHBOARD;
                     return true;
                 }
                 SaveLog("Login Attempt", "Failed");
+                loginAttempts++; // Tambah hitungan jika salah
                 return false;
 
             default:
                 return false;
         }
     }
+
+    // Fungsi untuk mengecek apakah user sudah salah 3 kali
+    public bool IsLockedOut()
+    {
+        return loginAttempts >= 3;
+    }
+
+    // Fungsi untuk mereset hitungan setelah jeda waktu selesai
+    public void ResetAttempts()
+    {
+        loginAttempts = 0;
+    }
+
 
     public void ChangePassword(string newPassword)
     {

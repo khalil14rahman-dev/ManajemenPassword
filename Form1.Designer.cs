@@ -31,6 +31,7 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.txtMasterPassword = new System.Windows.Forms.TextBox();
             this.btnAction = new System.Windows.Forms.Button();
+            this.chkShowPassword = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lblStatus
@@ -65,11 +66,23 @@
             this.btnAction.UseVisualStyleBackColor = true;
             this.btnAction.Click += new System.EventHandler(this.btnAction_Click);
             // 
+            // chkShowPassword
+            // 
+            this.chkShowPassword.AutoSize = true;
+            this.chkShowPassword.Location = new System.Drawing.Point(463, 116);
+            this.chkShowPassword.Name = "chkShowPassword";
+            this.chkShowPassword.Size = new System.Drawing.Size(120, 20);
+            this.chkShowPassword.TabIndex = 3;
+            this.chkShowPassword.Text = "Lihat Password";
+            this.chkShowPassword.UseVisualStyleBackColor = true;
+            this.chkShowPassword.CheckedChanged += new System.EventHandler(this.chkShowPassword_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(711, 360);
+            this.Controls.Add(this.chkShowPassword);
             this.Controls.Add(this.btnAction);
             this.Controls.Add(this.txtMasterPassword);
             this.Controls.Add(this.lblStatus);
@@ -87,6 +100,7 @@
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.TextBox txtMasterPassword;
         private System.Windows.Forms.Button btnAction;
+        private System.Windows.Forms.CheckBox chkShowPassword;
     }
 }
 
