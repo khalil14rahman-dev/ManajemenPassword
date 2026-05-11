@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Project_KPL_ManajemenPassword
 {
     public partial class Form1 : Form
     {
-        // Instansiasi AuthManager 
         AuthManager auth = new AuthManager();
 
         public Form1()
@@ -20,11 +20,19 @@ namespace Project_KPL_ManajemenPassword
             RefreshUI();
         }
 
-        private void btnAction_Click(object sender, EventArgs e)
+        private async void btnAction_Click(object sender, EventArgs e)
         {
             string input = txtMasterPassword.Text;
 
-            // STRATEGI DEFENSIVE PROGRAMMING 
+
+            // DEFENSIVE: Cek apakah sistem sedang terkunci
+            if (auth.IsLockedOut())
+            {
+                MessageBox.Show("Terlalu banyak percobaan! Silakan tunggu 10 detik.", "Sistem Terkunci", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return;
+            }
+
+            // DEFENSIVE PROGRAMMING 
             if (string.IsNullOrWhiteSpace(input))
             {
                 MessageBox.Show("Password tidak boleh kosong!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -32,7 +40,6 @@ namespace Project_KPL_ManajemenPassword
             }
             else if (auth.CurrentState == AppState.SETUP && input.Length < 8)
             {
-                // KONDISI SPESIFIK: Memaksa standar keamanan saat pembuatan Master Password
                 MessageBox.Show("Master Password terlalu lemah! Gunakan minimal 8 karakter demi keamanan.", "Peringatan Keamanan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -43,7 +50,6 @@ namespace Project_KPL_ManajemenPassword
             // Eksekusi transisi di Automata
             bool isSuccess = auth.UpdateState(input);
 
-            // LOGIKA RESPON BERDASARKAN HASIL TRANSISI 
             if (isSuccess)
             {
                 if (stateSebelumnya == AppState.SETUP)
@@ -68,12 +74,27 @@ namespace Project_KPL_ManajemenPassword
                 // Jika isSuccess false pada state LOGIN, berarti password salah
                 if (auth.CurrentState == AppState.LOGIN)
                 {
-                    MessageBox.Show("Password Salah!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    // DEFENSIVE: Cek jika baru saja mencapai batas kesalahan
+                    if (auth.IsLockedOut())
+                    {
+                        btnAction.Enabled = false; // Matikan tombol
+                        MessageBox.Show("3 kali salah! Tombol dimatikan selama 10 detik.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        await Task.Delay(10000); // Jeda 10 detik secara asinkron
+
+                        auth.ResetAttempts(); // Reset hitungan di manager
+                        btnAction.Enabled = true; // Aktifkan tombol lagi
+                        MessageBox.Show("Silakan coba login kembali.", "Informasi");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Password Salah!", "Error");
+                    }
                 }
             }
         }
 
-        // STRATEGI STATE-BASED UI
+        // STATE-BASED UI
         private void RefreshUI()
         {
             if (auth.CurrentState == AppState.SETUP)
@@ -96,6 +117,21 @@ namespace Project_KPL_ManajemenPassword
         private void txtMasterPassword_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            // DEFENSIVE & UX: Mengatur visibilitas karakter berdasarkan status CheckBox
+            if (chkShowPassword.Checked)
+            {
+                // Jika dicentang, karakter password ditampilkan (normal)
+                txtMasterPassword.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                // Jika tidak dicentang, karakter disembunyikan (bulatan/bintang)
+                txtMasterPassword.UseSystemPasswordChar = true;
+            }
         }
     }
 }

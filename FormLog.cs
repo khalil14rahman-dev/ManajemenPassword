@@ -23,10 +23,8 @@ namespace Project_KPL_ManajemenPassword
             AuthManager auth = new AuthManager();
             List<LogActivity> dataLog = auth.GetLogs();
 
-            // Masukkan data ke DataGridView
             dgvLogs.DataSource = dataLog;
 
-            // Merapikan tampilan kolom
             if (dgvLogs.Columns["Timestamp"] != null)
                 dgvLogs.Columns["Timestamp"].HeaderText = "Waktu";
 

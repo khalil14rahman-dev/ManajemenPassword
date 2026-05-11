@@ -21,7 +21,6 @@ namespace Project_KPL_ManajemenPassword
             InitializeComponent();
         }
 
-        // --- UPDATE PADA CONSTRUCTOR EDIT ---
         public FormInputData(PasswordModel data, int index)
         {
             InitializeComponent();
@@ -30,7 +29,6 @@ namespace Project_KPL_ManajemenPassword
             txtAplikasi.Text = data.NamaAplikasi;
             txtUsername.Text = data.Username;
 
-            // NAUFAL'S UPDATE: Dekripsi password saat ditampilkan untuk diedit
             textPassword.Text = SecurityService.Decrypt(data.Password);
 
             btnSimpanFormInput.Text = "Update Data";
@@ -43,7 +41,6 @@ namespace Project_KPL_ManajemenPassword
 
         private void btnAuto_Click(object sender, EventArgs e)
         {
-            // TABLE-DRIVEN milik Ariel tetap sama
             string[] karakterTabel = {
                 "ABCDEFGHJKLMNPQRSTUVWXYZ",
                 "abcdefghijkmnopqrstuvwxyz",
@@ -68,7 +65,6 @@ namespace Project_KPL_ManajemenPassword
 
         private void btnSimpanFormInput_Click(object sender, EventArgs e)
         {
-            // --- DEFENSIVE PROGRAMMING ---
             if (string.IsNullOrWhiteSpace(txtAplikasi.Text) ||
                 string.IsNullOrWhiteSpace(txtUsername.Text) ||
                 string.IsNullOrWhiteSpace(textPassword.Text))
@@ -81,10 +77,8 @@ namespace Project_KPL_ManajemenPassword
             {
                 List<PasswordModel> listData = repo.LoadData();
 
-                // --- NAUFAL'S UPDATE: Enkripsi password sebelum disimpan ke model ---
                 string passwordAman = SecurityService.Encrypt(textPassword.Text);
 
-                // Masukkan password yang sudah di-Encrypt ke model
                 PasswordModel dataInput = new PasswordModel(txtAplikasi.Text, txtUsername.Text, passwordAman);
 
                 if (indexEdit == -1)
@@ -115,8 +109,6 @@ namespace Project_KPL_ManajemenPassword
 
         private void textPassword_TextChanged(object sender, EventArgs e)
         {
-            // Pastikan nama label di Properties (Name) sudah kamu ganti jadi lblstrength
-            // Jika masih bernama label4, maka ganti tulisan 'lblstrength' di bawah menjadi 'label4'
 
             if (string.IsNullOrEmpty(textPassword.Text))
             {
@@ -142,7 +134,6 @@ namespace Project_KPL_ManajemenPassword
 
         private void lblstrength_Click(object sender, EventArgs e)
         {
-            // Cek teks yang sedang diketik
             string pass = textPassword.Text;
 
             if (string.IsNullOrEmpty(pass))
@@ -164,11 +155,9 @@ namespace Project_KPL_ManajemenPassword
 
         private void textPassword_TextChanged_1(object sender, EventArgs e)
         {
-            // Mengambil teks langsung saat user mengetik
             string pass = textPassword.Text;
             int len = pass.Length;
 
-            // --- TABLE DRIVEN CONSTRUCTION ---
             var strengthTable = new Dictionary<int, (string Status, Color Warna)>
     {
         { 0, ("Kekuatan: -", Color.Gray) },
@@ -180,7 +169,6 @@ namespace Project_KPL_ManajemenPassword
             string statusBaru = "Kekuatan: -";
             Color warnaBaru = Color.Gray;
 
-            // Otomatis mencari aturan yang sesuai dengan panjang teks saat ini
             foreach (var rule in strengthTable)
             {
                 if (len >= rule.Key)
@@ -190,7 +178,6 @@ namespace Project_KPL_ManajemenPassword
                 }
             }
 
-            // Langsung update Label secara Real-Time
             lblstrength.Text = statusBaru;
             lblstrength.ForeColor = warnaBaru;
         }

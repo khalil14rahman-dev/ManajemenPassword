@@ -11,7 +11,6 @@ namespace Project_KPL_ManajemenPassword
     {
         public static string HashPassword(string password)
         {
-            // MENJADI (TEKNIK THROW EXCEPTION):
             if (string.IsNullOrEmpty(password))
             {
                 throw new ArgumentException("Password yang akan di-enkripsi tidak valid.");
@@ -27,6 +26,7 @@ namespace Project_KPL_ManajemenPassword
                 }
                 return builder.ToString();
             }
+
         }
     }
 }

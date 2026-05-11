@@ -20,21 +20,16 @@ namespace Project_KPL_ManajemenPassword
             //generic
             List<PasswordModel> listData = repo.LoadData();
 
-            // 1. TAMBAHKAN INI: Agar kolom manual kamu tidak tertumpuk kolom otomatis
             dataGridView1.AutoGenerateColumns = false;
 
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = listData;
 
-            // 2. HUBUNGKAN KOLOM: Pastikan nama di dalam kurung [ ] sesuai dengan properti di PasswordModel
-            // colAplikasi adalah Name yang kamu buat di "Edit Columns" tadi
             if (dataGridView1.Columns.Contains("colAplikasi"))
             {
                 dataGridView1.Columns["colAplikasi"].DataPropertyName = "NamaAplikasi";
             }
 
-            // Username dan Password tetap kita hubungkan ke kolom yang Visible = False 
-            // agar datanya "terbawa" tapi tidak terlihat di layar
             if (dataGridView1.Columns.Contains("colUsername"))
             {
                 dataGridView1.Columns["colUsername"].DataPropertyName = "Username";
@@ -127,10 +122,8 @@ namespace Project_KPL_ManajemenPassword
         {
             if (e.RowIndex >= 0)
             {
-                // Mengambil data utuh dari baris yang diklik
                 var data = (PasswordModel)dataGridView1.Rows[e.RowIndex].DataBoundItem;
 
-                // Membuka form detail dan mengirim data (Aplikasi, User, Password Enkripsi)
                 FormDetailPassword formDetail = new FormDetailPassword(data.NamaAplikasi, data.Username, data.Password);
                 formDetail.ShowDialog();
             }

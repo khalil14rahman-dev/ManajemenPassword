@@ -12,7 +12,8 @@ public class AuthManager
 {
 
     private string path = "master_key9.txt"; //bbb 
-    private const string logFilePath = "activity_logs.json"; //savelog JSON path
+    private int loginAttempts = 0; // Pencatat jumlah salah
+    private const string logFilePath = "activity_logs.json"; 
 
     private DataRepository<LogActivity> logRepo = new DataRepository<LogActivity>("activity_logs.json");
 
@@ -23,13 +24,10 @@ public class AuthManager
         CurrentState = File.Exists(path) ? AppState.LOGIN : AppState.SETUP;
     }
 
-    // LOG (JSON)
     public void SaveLog(string activity, string status)
     {
-        // 1. Ambil data 
         List<LogActivity> logs = logRepo.LoadData();
 
-        // 2. Tambah data baru
         logs.Add(new LogActivity(activity, status));
 
         logRepo.SaveData(logs);
@@ -39,18 +37,16 @@ public class AuthManager
     {
         return logRepo.LoadData();
     }
-
-    // UpdateState 
+ 
     public bool UpdateState(string input)
     {
-        // STRATEGI DEFENSIVE PROGRAMMING (Logic Level)
         if (string.IsNullOrWhiteSpace(input))
         {
-            return false; // Kondisi 1: Tolak input kosong
+            return false; 
         }
         else if (CurrentState == AppState.SETUP && input.Length < 8)
         {
-            return false; // Kondisi 2: Tolak eksekusi jika tidak memenuhi standar keamanan saat SETUP
+            return false; 
         }
 
         string hashedInput = SecurityHelper.HashPassword(input);
@@ -67,15 +63,29 @@ public class AuthManager
                 if (File.Exists(path) && hashedInput == File.ReadAllText(path))
                 {
                     SaveLog("User Login", "Success"); //savelog
+                    loginAttempts = 0; // Reset jika sukses
                     CurrentState = AppState.DASHBOARD; //transisi ke dashboard
                     return true;
                 }
                 SaveLog("Login Attempt", "Failed"); //savelog
+                loginAttempts++; // Tambah hitungan jika salah
                 return false;
 
             default:
                 return false;
         }
+    }
+
+    // Fungsi untuk mengecek apakah user sudah salah 3 kali
+    public bool IsLockedOut()
+    {
+        return loginAttempts >= 3;
+    }
+
+    // Fungsi untuk mereset hitungan setelah jeda waktu selesai
+    public void ResetAttempts()
+    {
+        loginAttempts = 0;
     }
 
     public void ChangePassword(string newPassword)
