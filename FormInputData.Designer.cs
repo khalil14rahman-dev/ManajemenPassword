@@ -137,7 +137,6 @@
             this.lblstrength.Size = new System.Drawing.Size(59, 13);
             this.lblstrength.TabIndex = 9;
             this.lblstrength.Text = "Kekuatan :";
-            this.lblstrength.Click += new System.EventHandler(this.lblstrength_Click);
             // 
             // FormInputData
             // 
