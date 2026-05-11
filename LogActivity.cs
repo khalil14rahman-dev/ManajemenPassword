@@ -12,7 +12,7 @@ namespace Project_KPL_ManajemenPassword
         public string Activity { get; set; } 
         public string Status { get; set; }   
 
-        public LogActivity(string activity, string status)
+        public LogActivity(string activity, string status, string status1)
         {
             this.Timestamp = DateTime.Now;
             this.Activity = activity;

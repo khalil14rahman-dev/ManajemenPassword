@@ -43,14 +43,17 @@ namespace Project_KPL_ManajemenPassword
         // Ambil Data (Generic)
         public List<T> LoadData()
         {
-            if (!File.Exists(filePath)) return new List<T>();
-
-            try 
+            Debug.Assert(!string.IsNullOrEmpty(filePath), "FilePath tidak boleh kosong!");
+            try
             {
                 string jsonString = File.ReadAllText(filePath);
                 var result = JsonSerializer.Deserialize<List<T>>(jsonString);
 
-                return result ?? new List<T>();
+                List<T> finalResult = result ?? new List<T>();
+
+                Debug.Assert(finalResult != null, "Post-condition gagal: Output tidak boleh null!");
+
+                return finalResult;
             }
             catch 
             {

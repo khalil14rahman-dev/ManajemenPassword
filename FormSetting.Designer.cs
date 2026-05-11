@@ -36,6 +36,9 @@
             this.txtKonfirmasi = new System.Windows.Forms.TextBox();
             this.btnUpdateFormSetting = new System.Windows.Forms.Button();
             this.btnBatalFormSetting = new System.Windows.Forms.Button();
+            this.chkShowLama = new System.Windows.Forms.CheckBox();
+            this.chkShowBaru = new System.Windows.Forms.CheckBox();
+            this.chkShowKonf = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -113,11 +116,47 @@
             this.btnBatalFormSetting.UseVisualStyleBackColor = true;
             this.btnBatalFormSetting.Click += new System.EventHandler(this.btnBatalFormSetting_Click);
             // 
+            // chkShowLama
+            // 
+            this.chkShowLama.AutoSize = true;
+            this.chkShowLama.Location = new System.Drawing.Point(292, 71);
+            this.chkShowLama.Name = "chkShowLama";
+            this.chkShowLama.Size = new System.Drawing.Size(120, 20);
+            this.chkShowLama.TabIndex = 8;
+            this.chkShowLama.Text = "Lihat Password";
+            this.chkShowLama.UseVisualStyleBackColor = true;
+            this.chkShowLama.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // chkShowBaru
+            // 
+            this.chkShowBaru.AutoSize = true;
+            this.chkShowBaru.Location = new System.Drawing.Point(292, 145);
+            this.chkShowBaru.Name = "chkShowBaru";
+            this.chkShowBaru.Size = new System.Drawing.Size(120, 20);
+            this.chkShowBaru.TabIndex = 9;
+            this.chkShowBaru.Text = "Lihat Password";
+            this.chkShowBaru.UseVisualStyleBackColor = true;
+            this.chkShowBaru.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // chkShowKonf
+            // 
+            this.chkShowKonf.AutoSize = true;
+            this.chkShowKonf.Location = new System.Drawing.Point(292, 215);
+            this.chkShowKonf.Name = "chkShowKonf";
+            this.chkShowKonf.Size = new System.Drawing.Size(120, 20);
+            this.chkShowKonf.TabIndex = 10;
+            this.chkShowKonf.Text = "Lihat Password";
+            this.chkShowKonf.UseVisualStyleBackColor = true;
+            this.chkShowKonf.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
             // FormSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(385, 312);
+            this.ClientSize = new System.Drawing.Size(427, 312);
+            this.Controls.Add(this.chkShowKonf);
+            this.Controls.Add(this.chkShowBaru);
+            this.Controls.Add(this.chkShowLama);
             this.Controls.Add(this.btnBatalFormSetting);
             this.Controls.Add(this.btnUpdateFormSetting);
             this.Controls.Add(this.txtKonfirmasi);
@@ -145,5 +184,8 @@
         private System.Windows.Forms.TextBox txtKonfirmasi;
         private System.Windows.Forms.Button btnUpdateFormSetting;
         private System.Windows.Forms.Button btnBatalFormSetting;
+        private System.Windows.Forms.CheckBox chkShowLama;
+        private System.Windows.Forms.CheckBox chkShowBaru;
+        private System.Windows.Forms.CheckBox chkShowKonf;
     }
 }

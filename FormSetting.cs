@@ -65,5 +65,20 @@ namespace Project_KPL_ManajemenPassword
         {
 
         }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            txtKonfirmasi.UseSystemPasswordChar = !chkShowKonf.Checked;
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            txtPassLama.UseSystemPasswordChar = !chkShowLama.Checked;
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            txtPassBaru.UseSystemPasswordChar = !chkShowBaru.Checked;
+        }
     }
 }
