@@ -34,12 +34,14 @@
             // 
             // dgvLogs
             // 
+            this.dgvLogs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvLogs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvLogs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvLogs.Location = new System.Drawing.Point(0, 0);
             this.dgvLogs.Name = "dgvLogs";
             this.dgvLogs.RowHeadersWidth = 51;
             this.dgvLogs.RowTemplate.Height = 24;
+            this.dgvLogs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvLogs.Size = new System.Drawing.Size(800, 450);
             this.dgvLogs.TabIndex = 0;
             this.dgvLogs.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);

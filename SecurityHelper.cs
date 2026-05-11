@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace Project_KPL_ManajemenPassword
 {
-    // Static class agar bisa diakses di seluruh aplikasi (Code Reuse)
     public static class SecurityHelper
     {
-        // Fungsi Hashing untuk AuthManager
         public static string HashPassword(string password)
         {
             // MENJADI (TEKNIK THROW EXCEPTION):

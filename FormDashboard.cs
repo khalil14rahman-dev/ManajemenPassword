@@ -12,10 +12,12 @@ namespace Project_KPL_ManajemenPassword
 {
     public partial class FormDashboard : Form
     {
+        //generic
         DataRepository<PasswordModel> repo = new DataRepository<PasswordModel>("data_password.json");
 
         public void LoadDataToGrid()
         {
+            //generic
             List<PasswordModel> listData = repo.LoadData();
 
             // 1. TAMBAHKAN INI: Agar kolom manual kamu tidak tertumpuk kolom otomatis
@@ -110,7 +112,17 @@ namespace Project_KPL_ManajemenPassword
             logWindow.ShowDialog();
         }
 
-        // TAMBAHKAN KODE INI DI SINI:
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtJumlahLog_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -125,6 +137,7 @@ namespace Project_KPL_ManajemenPassword
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+
         {
 
         }
