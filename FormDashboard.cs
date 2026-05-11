@@ -75,28 +75,45 @@ namespace Project_KPL_ManajemenPassword
 
         private void hapusToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //pre kondisi harus ada baris yang dipilih
+            // Pre-kondisi: harus ada baris yang dipilih
             Debug.Assert(dataGridView1.CurrentRow != null, "Kontrak Gagal: CurrentRow tidak boleh null saat menghapus.");
 
             if (dataGridView1.CurrentRow != null)
             {
-                var confirm = MessageBox.Show("Apakah yakin ingin menghapus akun ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                string namaAplikasi = dataGridView1.CurrentRow.Cells[0].Value?.ToString() ?? "Unknown";
+
+                var confirm = MessageBox.Show($"Apakah yakin ingin menghapus akun {namaAplikasi}?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
                 if (confirm == DialogResult.Yes)
                 {
-                    List<PasswordModel> listData = repo.LoadData();
+                    try
+                    {
+                        List<PasswordModel> listData = repo.LoadData();
+                        int index = dataGridView1.CurrentRow.Index;
 
-                    int index = dataGridView1.CurrentRow.Index;
+                        // Invariant agar index yang didapat sesuai dengan jumlah data di list
+                        Debug.Assert(index >= 0 && index < listData.Count, "Kontrak Gagal: Indeks di luar jangkauan list data.");
 
-                    //invariant agar index yg didapat sesuai dengan jumlah data di list
-                    Debug.Assert(index >= 0 && index < listData.Count, "Kontrak Gagal: Indeks di luar jangkauan list data.");
+                        // Hapus data
+                        listData.RemoveAt(index);
+                        repo.SaveData(listData);
 
-                    listData.RemoveAt(index);
-                    repo.SaveData(listData);
+                        AuthManager auth = new AuthManager();
+                        auth.SaveLog($"Hapus Data Password: {namaAplikasi}", "Success");
 
-                    LoadDataToGrid();
+                        LoadDataToGrid();
 
-                    //post kondisi mengembalikan message 
-                    MessageBox.Show("Data berhasil dihapus!");
+                        // Post-kondisi mengembalikan message 
+                        MessageBox.Show("Data berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log jika terjadi error saat proses hapus
+                        AuthManager auth = new AuthManager();
+                        auth.SaveLog($"Gagal Hapus Data: {namaAplikasi}", "Error");
+
+                        MessageBox.Show("Gagal menghapus data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }

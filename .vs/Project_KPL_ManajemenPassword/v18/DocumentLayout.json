@@ -3,20 +3,32 @@
   "WorkspaceRootPath": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|d:\\kuliah telkom university\\semester 4\\kpl\\manajemenpassword\\formsetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:formsetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|d:\\kuliah telkom university\\semester 4\\kpl\\manajemenpassword\\authmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:authmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|d:\\kuliah telkom university\\semester 4\\kpl\\manajemenpassword\\datarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:datarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|d:\\kuliah telkom university\\semester 4\\kpl\\manajemenpassword\\formsetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:formsetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|d:\\kuliah telkom university\\semester 4\\kpl\\manajemenpassword\\formsetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:formsetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|d:\\kuliah telkom university\\semester 4\\kpl\\manajemenpassword\\forminputdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:forminputdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|d:\\kuliah telkom university\\semester 4\\kpl\\manajemenpassword\\logactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:logactivity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|d:\\kuliah telkom university\\semester 4\\kpl\\manajemenpassword\\formdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:formdashboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|d:\\kuliah telkom university\\semester 4\\kpl\\manajemenpassword\\forminputdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{8DC3929C-EE5D-4210-9CAD-FC37D0D1C5CD}|Project_KPL_ManajemenPassword.csproj|solutionrelative:forminputdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,53 +46,91 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "FormSetting.cs",
               "DocumentMoniker": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\FormSetting.cs",
               "RelativeDocumentMoniker": "FormSetting.cs",
               "ToolTip": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\FormSetting.cs",
               "RelativeToolTip": "FormSetting.cs",
-              "ViewState": "AgIAACsAAAAAAAAAAAAnwEwAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAACMAAAAAAAAAAAAowEAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-11T16:06:38.11Z",
+              "WhenOpened": "2026-05-11T16:52:37.909Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "FormSetting.cs [Design]",
               "DocumentMoniker": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\FormSetting.cs",
               "RelativeDocumentMoniker": "FormSetting.cs",
               "ToolTip": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\FormSetting.cs [Design]",
               "RelativeToolTip": "FormSetting.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-11T16:06:02.619Z",
+              "WhenOpened": "2026-05-11T16:52:34.186Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DataRepository.cs",
-              "DocumentMoniker": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\DataRepository.cs",
-              "RelativeDocumentMoniker": "DataRepository.cs",
-              "ToolTip": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\DataRepository.cs",
-              "RelativeToolTip": "DataRepository.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAYwC4AAAAPAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "FormDashboard.cs",
+              "DocumentMoniker": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\FormDashboard.cs",
+              "RelativeDocumentMoniker": "FormDashboard.cs",
+              "ToolTip": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\FormDashboard.cs",
+              "RelativeToolTip": "FormDashboard.cs",
+              "ViewState": "AgIAAFQAAAAAAAAAAAAUwFIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-11T16:04:03.863Z",
+              "WhenOpened": "2026-05-11T16:49:03.918Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
+              "Title": "LogActivity.cs",
+              "DocumentMoniker": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\LogActivity.cs",
+              "RelativeDocumentMoniker": "LogActivity.cs",
+              "ToolTip": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\LogActivity.cs",
+              "RelativeToolTip": "LogActivity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-11T16:38:08.958Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "AuthManager.cs",
               "DocumentMoniker": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\AuthManager.cs",
               "RelativeDocumentMoniker": "AuthManager.cs",
               "ToolTip": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\AuthManager.cs",
               "RelativeToolTip": "AuthManager.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAYwCIAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAwwGMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-11T15:59:37.777Z",
+              "WhenOpened": "2026-05-11T16:35:10.702Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FormInputData.cs [Design]",
+              "DocumentMoniker": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\FormInputData.cs",
+              "RelativeDocumentMoniker": "FormInputData.cs",
+              "ToolTip": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\FormInputData.cs [Design]",
+              "RelativeToolTip": "FormInputData.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-11T16:24:28.333Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FormInputData.cs",
+              "DocumentMoniker": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\FormInputData.cs",
+              "RelativeDocumentMoniker": "FormInputData.cs",
+              "ToolTip": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\ManajemenPassword\\FormInputData.cs",
+              "RelativeToolTip": "FormInputData.cs",
+              "ViewState": "AgIAAHgAAAAAAAAAAAAowIYAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-11T16:24:07.904Z",
               "EditorCaption": ""
             }
           ]

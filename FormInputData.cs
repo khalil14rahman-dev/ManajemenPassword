@@ -88,9 +88,14 @@ namespace Project_KPL_ManajemenPassword
                 // Masukkan password yang sudah di-Encrypt ke model
                 PasswordModel dataInput = new PasswordModel(txtAplikasi.Text, txtUsername.Text, passwordAman);
 
+                AuthManager auth = new AuthManager();
+
                 if (indexEdit == -1)
                 {
                     listData.Add(dataInput);
+                    repo.SaveData(listData);
+
+                    auth.SaveLog($"Tambah Data: {txtAplikasi.Text}", "Success");
                 }
                 else
                 {
@@ -100,6 +105,9 @@ namespace Project_KPL_ManajemenPassword
                     if (indexEdit >= 0 && indexEdit < listData.Count)
                     {
                         listData[indexEdit] = dataInput;
+                        repo.SaveData(listData);
+
+                        auth.SaveLog($"Update Data: {txtAplikasi.Text}", "Success");
                     }
                 }
 
@@ -111,33 +119,11 @@ namespace Project_KPL_ManajemenPassword
             catch (Exception ex)
             {
                 //buat kalo runtime eror
+                AuthManager auth = new AuthManager();
+                auth.SaveLog("Tambah Data Password", "Success");
                 MessageBox.Show("Gagal memproses data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            AuthManager auth = new AuthManager();
-            auth.SaveLog("Tambah Data Password", "Success");
-        }
-
-        private void textPassword_TextChanged(object sender, EventArgs e)
-        {
-            // Pastikan nama label di Properties (Name) sudah kamu ganti jadi lblstrength
-            // Jika masih bernama label4, maka ganti tulisan 'lblstrength' di bawah menjadi 'label4'
-
-            if (string.IsNullOrEmpty(textPassword.Text))
-            {
-                lblstrength.Text = "Kekuatan: -";
-                lblstrength.ForeColor = Color.Gray;
-            }
-            else if (textPassword.Text.Length < 8)
-            {
-                lblstrength.Text = "Kekuatan: Lemah (Min. 8 Karakter)";
-                lblstrength.ForeColor = Color.Red;
-            }
-            else
-            {
-                lblstrength.Text = "Kekuatan: Kuat";
-                lblstrength.ForeColor = Color.Green;
-            }
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -145,59 +131,53 @@ namespace Project_KPL_ManajemenPassword
 
         }
 
-        private void lblstrength_Click(object sender, EventArgs e)
+        public static (string Status, Color Warna, int Score) CalculatePasswordStrength(string pass)
         {
-            // Cek teks yang sedang diketik
-            string pass = textPassword.Text;
-
             if (string.IsNullOrEmpty(pass))
             {
-                lblstrength.Text = "Kekuatan : -";
-                lblstrength.ForeColor = Color.Gray;
+                return ("Kekuatan: -", Color.Gray, 0);
             }
-            else if (pass.Length < 8)
+
+            var passwordRules = new List<Func<string, bool>>
             {
-                lblstrength.Text = "Kekuatan : Lemah (Terlalu Pendek)";
-                lblstrength.ForeColor = Color.Red;
-            }
-            else
+                p => p.Length >= 8,
+                p => p.Any(char.IsUpper) && p.Any(char.IsLower),
+                p => p.Any(char.IsDigit),
+                p => p.Any(ch => !char.IsLetterOrDigit(ch))
+            };
+
+            int score = passwordRules.Count(rule => rule(pass));
+
+            var strengthTable = new Dictionary<int, (string Status, Color Warna)>
             {
-                lblstrength.Text = "Kekuatan : Sangat Kuat";
-                lblstrength.ForeColor = Color.Green;
+                { 0, ("Kekuatan: Sangat Lemah", Color.Red) },
+                { 1, ("Kekuatan: Lemah", Color.Red) },
+                { 2, ("Kekuatan: Sedang", Color.Orange) },
+                { 3, ("Kekuatan: Kuat", Color.LightGreen) },
+                { 4, ("Kekuatan: Sangat Kuat", Color.Green) }
+            };
+
+            Debug.Assert(strengthTable.Count == 5, "Invariant Failed: Table size must be 5.");
+
+            if (strengthTable.TryGetValue(score, out var result))
+            {
+                // POSTCONDITIONS
+                Debug.Assert(score >= 0 && score <= passwordRules.Count, "Postcondition Failed: Score out of bounds.");
+                return (result.Status, result.Warna, score);
             }
+
+            return ("Kekuatan: -", Color.Gray, 0);
         }
 
         private void textPassword_TextChanged_1(object sender, EventArgs e)
         {
-            // Mengambil teks langsung saat user mengetik
-            string pass = textPassword.Text;
-            int len = pass.Length;
+            // PRECONDITION
+            Debug.Assert(sender != null, "Precondition Failed: Sender cannot be null.");
 
-            // --- TABLE DRIVEN CONSTRUCTION ---
-            var strengthTable = new Dictionary<int, (string Status, Color Warna)>
-    {
-        { 0, ("Kekuatan: -", Color.Gray) },
-        { 1, ("Kekuatan: Lemah", Color.Red) },
-        { 8, ("Kekuatan: Sedang", Color.Orange) },
-        { 12, ("Kekuatan: Sangat Kuat", Color.Green) }
-    };
+            var result = CalculatePasswordStrength(textPassword.Text);
 
-            string statusBaru = "Kekuatan: -";
-            Color warnaBaru = Color.Gray;
-
-            // Otomatis mencari aturan yang sesuai dengan panjang teks saat ini
-            foreach (var rule in strengthTable)
-            {
-                if (len >= rule.Key)
-                {
-                    statusBaru = rule.Value.Status;
-                    warnaBaru = rule.Value.Warna;
-                }
-            }
-
-            // Langsung update Label secara Real-Time
-            lblstrength.Text = statusBaru;
-            lblstrength.ForeColor = warnaBaru;
+            lblstrength.Text = result.Status;
+            lblstrength.ForeColor = result.Warna;
         }
     }
 }
