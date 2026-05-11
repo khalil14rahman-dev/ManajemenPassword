@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Diagnostics;
 
 namespace Project_KPL_ManajemenPassword
 {
@@ -10,19 +11,37 @@ namespace Project_KPL_ManajemenPassword
         private string filePath;
 
         public DataRepository(string fileName)
-        { 
-            filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+        {
+            if (!string.IsNullOrEmpty(fileName) && !fileName.Contains("\\"))
+            {
+                fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+            }
+            Debug.Assert(!string.IsNullOrEmpty(fileName), "Kontrak Gagal: Path file harus ditentukan.");
+            filePath = fileName;
         }
 
         // Simpan (Generic)
         public void SaveData(List<T> dataList)
         {
-            string jsonString = JsonSerializer.Serialize(dataList);
-            File.WriteAllText(filePath, jsonString);
+            //dbc pre kondisi
+            Debug.Assert(dataList != null, "Kontrak Gagal: List data tidak boleh null saat akan disimpan.");
+
+            try
+            {
+                string jsonString = JsonSerializer.Serialize(dataList);
+                File.WriteAllText(filePath, jsonString);
+
+                //dbc post kondisi
+                Debug.Assert(File.Exists(filePath), "Kontrak Gagal: File data tidak ditemukan setelah proses simpan.");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Gagal menyimpan data: " + ex.Message);
+            }
         }
 
         // Ambil Data (Generic)
-       public List<T> LoadData()
+        public List<T> LoadData()
         {
             if (!File.Exists(filePath)) return new List<T>();
 

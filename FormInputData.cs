@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Project_KPL_ManajemenPassword
 {
@@ -21,7 +22,6 @@ namespace Project_KPL_ManajemenPassword
             InitializeComponent();
         }
 
-        // --- UPDATE PADA CONSTRUCTOR EDIT ---
         public FormInputData(PasswordModel data, int index)
         {
             InitializeComponent();
@@ -30,7 +30,6 @@ namespace Project_KPL_ManajemenPassword
             txtAplikasi.Text = data.NamaAplikasi;
             txtUsername.Text = data.Username;
 
-            // NAUFAL'S UPDATE: Dekripsi password saat ditampilkan untuk diedit
             textPassword.Text = SecurityService.Decrypt(data.Password);
 
             btnSimpanFormInput.Text = "Update Data";
@@ -43,7 +42,7 @@ namespace Project_KPL_ManajemenPassword
 
         private void btnAuto_Click(object sender, EventArgs e)
         {
-            // TABLE-DRIVEN milik Ariel tetap sama
+            // TABLE-DRIVEN
             string[] karakterTabel = {
                 "ABCDEFGHJKLMNPQRSTUVWXYZ",
                 "abcdefghijkmnopqrstuvwxyz",
@@ -68,7 +67,7 @@ namespace Project_KPL_ManajemenPassword
 
         private void btnSimpanFormInput_Click(object sender, EventArgs e)
         {
-            // --- DEFENSIVE PROGRAMMING ---
+            // defensive dan dbc apabila ada inputan yang kosong
             if (string.IsNullOrWhiteSpace(txtAplikasi.Text) ||
                 string.IsNullOrWhiteSpace(txtUsername.Text) ||
                 string.IsNullOrWhiteSpace(textPassword.Text))
@@ -81,7 +80,9 @@ namespace Project_KPL_ManajemenPassword
             {
                 List<PasswordModel> listData = repo.LoadData();
 
-                // --- NAUFAL'S UPDATE: Enkripsi password sebelum disimpan ke model ---
+                //invariant agar list data tidak null
+                Debug.Assert(listData != null, "Kontrak Invariant: listData tidak boleh null setelah loading.");
+
                 string passwordAman = SecurityService.Encrypt(textPassword.Text);
 
                 // Masukkan password yang sudah di-Encrypt ke model
@@ -93,6 +94,9 @@ namespace Project_KPL_ManajemenPassword
                 }
                 else
                 {
+                    //pre kondisi agar logic index edit valid sebelum melakukan perubahhan pada list
+                    Debug.Assert(indexEdit >= 0 && indexEdit < listData.Count, "Kontrak: Indeks edit di luar jangkauan.");
+
                     if (indexEdit >= 0 && indexEdit < listData.Count)
                     {
                         listData[indexEdit] = dataInput;
@@ -106,6 +110,7 @@ namespace Project_KPL_ManajemenPassword
             }
             catch (Exception ex)
             {
+                //buat kalo runtime eror
                 MessageBox.Show("Gagal memproses data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 

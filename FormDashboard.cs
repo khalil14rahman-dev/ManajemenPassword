@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Project_KPL_ManajemenPassword
 {
@@ -74,6 +75,9 @@ namespace Project_KPL_ManajemenPassword
 
         private void hapusToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //pre kondisi harus ada baris yang dipilih
+            Debug.Assert(dataGridView1.CurrentRow != null, "Kontrak Gagal: CurrentRow tidak boleh null saat menghapus.");
+
             if (dataGridView1.CurrentRow != null)
             {
                 var confirm = MessageBox.Show("Apakah yakin ingin menghapus akun ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -83,10 +87,15 @@ namespace Project_KPL_ManajemenPassword
 
                     int index = dataGridView1.CurrentRow.Index;
 
+                    //invariant agar index yg didapat sesuai dengan jumlah data di list
+                    Debug.Assert(index >= 0 && index < listData.Count, "Kontrak Gagal: Indeks di luar jangkauan list data.");
+
                     listData.RemoveAt(index);
                     repo.SaveData(listData);
 
                     LoadDataToGrid();
+
+                    //post kondisi mengembalikan message 
                     MessageBox.Show("Data berhasil dihapus!");
                 }
             }
@@ -94,15 +103,22 @@ namespace Project_KPL_ManajemenPassword
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //pre kondisi harus ada data yg dipilih sebelum edit(sama seperti yang hapus tadi)
+            Debug.Assert(dataGridView1.CurrentRow != null, "Kontrak Gagal: Tidak bisa edit jika baris kosong.");
             if (dataGridView1.CurrentRow != null)
             {
                 PasswordModel dataTerpilih = (PasswordModel)dataGridView1.CurrentRow.DataBoundItem;
                 int index = dataGridView1.CurrentRow.Index;
 
+                //invariant
+                Debug.Assert(dataTerpilih != null, "Kontrak Gagal: Objek data yang akan diedit tidak ditemukan.");
+
                 FormInputData formEdit = new FormInputData(dataTerpilih, index);
                 formEdit.ShowDialog();
 
+                //post kondisi
                 LoadDataToGrid();
+
             }
         }
 
