@@ -13,7 +13,11 @@ namespace Project_KPL_ManajemenPassword
         // Fungsi Hashing untuk AuthManager
         public static string HashPassword(string password)
         {
-            if (string.IsNullOrWhiteSpace(password)) return string.Empty;
+            // MENJADI (TEKNIK THROW EXCEPTION):
+            if (string.IsNullOrEmpty(password))
+            {
+                throw new ArgumentException("Password yang akan di-enkripsi tidak valid.");
+            }
 
             using (SHA256 sha256Hash = SHA256.Create())
             {

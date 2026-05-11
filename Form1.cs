@@ -30,6 +30,12 @@ namespace Project_KPL_ManajemenPassword
                 MessageBox.Show("Password tidak boleh kosong!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            else if (auth.CurrentState == AppState.SETUP && input.Length < 8)
+            {
+                // KONDISI SPESIFIK: Memaksa standar keamanan saat pembuatan Master Password
+                MessageBox.Show("Master Password terlalu lemah! Gunakan minimal 8 karakter demi keamanan.", "Peringatan Keamanan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             // Simpan state saat ini sebelum update untuk pengecekan notifikasi
             AppState stateSebelumnya = auth.CurrentState;
