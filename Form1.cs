@@ -32,23 +32,20 @@ namespace Project_KPL_ManajemenPassword
                 return;
             }
 
-            // DEFENSIVE PROGRAMMING 
-            if (string.IsNullOrWhiteSpace(input))
+            // IMPLEMENTASI DTO: Bungkus string input dari TextBox ke dalam kontainer DTO
+            PasswordRequestDto authRequest = new PasswordRequestDto { Password = txtMasterPassword.Text };
+
+            // DEFENSIVE VIA DTO: Cek keabsahan data lewat satu gerbang fungsi objek DTO
+            if (!authRequest.IsValid())
             {
-                MessageBox.Show("Password tidak boleh kosong!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            else if (auth.CurrentState == AppState.SETUP && input.Length < 8)
-            {
-                MessageBox.Show("Master Password terlalu lemah! Gunakan minimal 8 karakter demi keamanan.", "Peringatan Keamanan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Password tidak boleh kosong dan wajib minimal 8 karakter demi keamanan!", "Peringatan Keamanan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Simpan state saat ini sebelum update untuk pengecekan notifikasi
             AppState stateSebelumnya = auth.CurrentState;
 
-            // Eksekusi transisi di Automata
-            bool isSuccess = auth.UpdateState(input);
+            // Eksekusi transisi Automata dengan melemparkan paket DTO
+            bool isSuccess = auth.UpdateState(authRequest);
 
             if (isSuccess)
             {
@@ -101,11 +98,13 @@ namespace Project_KPL_ManajemenPassword
             {
                 lblStatus.Text = "Halo! Silakan buat Master Password pertamamu.";
                 btnAction.Text = "Buat Password";
+                lnkLupaPassword.Visible = false; // Sembunyikan link jika masih setup awal
             }
             else if (auth.CurrentState == AppState.LOGIN)
             {
                 lblStatus.Text = "Masukkan Master Password Anda:";
                 btnAction.Text = "Masuk";
+                lnkLupaPassword.Visible = true;  // Tampilkan link hanya pada menu Login
             }
         }
 
@@ -131,6 +130,28 @@ namespace Project_KPL_ManajemenPassword
             {
                 // Jika tidak dicentang, karakter disembunyikan (bulatan/bintang)
                 txtMasterPassword.UseSystemPasswordChar = true;
+            }
+        }
+
+        private void lnkLupaPassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // DEFENSIVE: Konfirmasi ulang ke user agar tidak tidak sengaja terhapus
+            DialogResult result = MessageBox.Show(
+                "Apakah Anda yakin ingin mereset Master Password? Semua data password yang tersimpan akan tetap aman, namun Anda harus membuat Master Password baru.",
+                "Konfirmasi Reset",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                bool isReset = auth.ResetMasterKey();
+                if (isReset)
+                {
+                    MessageBox.Show("Master Password berhasil direset! Silakan buat password baru Anda.", "Sukses");
+                    txtMasterPassword.Clear();
+                    RefreshUI(); // Mengubah tampilan Form kembali ke mode SETUP awal
+                }
             }
         }
     }

@@ -32,6 +32,7 @@
             this.txtMasterPassword = new System.Windows.Forms.TextBox();
             this.btnAction = new System.Windows.Forms.Button();
             this.chkShowPassword = new System.Windows.Forms.CheckBox();
+            this.lnkLupaPassword = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // lblStatus
@@ -77,11 +78,23 @@
             this.chkShowPassword.UseVisualStyleBackColor = true;
             this.chkShowPassword.CheckedChanged += new System.EventHandler(this.chkShowPassword_CheckedChanged);
             // 
+            // lnkLupaPassword
+            // 
+            this.lnkLupaPassword.AutoSize = true;
+            this.lnkLupaPassword.Location = new System.Drawing.Point(306, 409);
+            this.lnkLupaPassword.Name = "lnkLupaPassword";
+            this.lnkLupaPassword.Size = new System.Drawing.Size(127, 20);
+            this.lnkLupaPassword.TabIndex = 4;
+            this.lnkLupaPassword.TabStop = true;
+            this.lnkLupaPassword.Text = "Lupa Password?";
+            this.lnkLupaPassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkLupaPassword_LinkClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lnkLupaPassword);
             this.Controls.Add(this.chkShowPassword);
             this.Controls.Add(this.btnAction);
             this.Controls.Add(this.txtMasterPassword);
@@ -101,6 +114,7 @@
         private System.Windows.Forms.TextBox txtMasterPassword;
         private System.Windows.Forms.Button btnAction;
         private System.Windows.Forms.CheckBox chkShowPassword;
+        private System.Windows.Forms.LinkLabel lnkLupaPassword;
     }
 }
 

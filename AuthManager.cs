@@ -12,6 +12,9 @@ public class AuthManager
 {
 
     private string path = "master_key9.txt"; //bbb 
+
+    private readonly object _fileLock = new object(); // Objek pengunci untuk sinkronisasi thread
+
     private int loginAttempts = 0; // Pencatat jumlah salah
     private const string logFilePath = "activity_logs.json"; 
 
@@ -37,42 +40,55 @@ public class AuthManager
     {
         return logRepo.LoadData();
     }
- 
-    public bool UpdateState(string input)
+    
+    //DTO
+    public bool UpdateState(PasswordRequestDto dto)
     {
-        if (string.IsNullOrWhiteSpace(input))
+        // pastikan paket data tidak kosong dan isinya valid
+        if (dto == null || !dto.IsValid())
         {
-            return false; 
-        }
-        else if (CurrentState == AppState.SETUP && input.Length < 8)
-        {
-            return false; 
+            return false;
         }
 
-        string hashedInput = SecurityHelper.HashPassword(input);
+        // Ambil string di dalam DTO untuk di-hash
+        string hashedInput = SecurityHelper.HashPassword(dto.Password);
 
-        switch (CurrentState)
+        // SINKRONISASI: Semua proses baca/tulis di bawah wajib mengantre dengan rapi
+        lock (_fileLock)
         {
-            case AppState.SETUP:
-                File.WriteAllText(path, hashedInput);
-                SaveLog("Setup Master Key", "Success"); //savelog
-                CurrentState = AppState.LOGIN; // transisi ke login 
-                return true;
-
-            case AppState.LOGIN:
-                if (File.Exists(path) && hashedInput == File.ReadAllText(path))
+            try
+            {
+                switch (CurrentState)
                 {
-                    SaveLog("User Login", "Success"); //savelog
-                    loginAttempts = 0; // Reset jika sukses
-                    CurrentState = AppState.DASHBOARD; //transisi ke dashboard
-                    return true;
-                }
-                SaveLog("Login Attempt", "Failed"); //savelog
-                loginAttempts++; // Tambah hitungan jika salah
-                return false;
+                    case AppState.SETUP:
+                        File.WriteAllText(path, hashedInput); // Proses Tulis Aman
+                        SaveLog("Setup Master Key", "Success");
+                        CurrentState = AppState.LOGIN;
+                        return true;
 
-            default:
+                    case AppState.LOGIN:
+                        // Proses Baca Aman
+                        if (File.Exists(path) && hashedInput == File.ReadAllText(path))
+                        {
+                            SaveLog("User Login", "Success");
+                            loginAttempts = 0;
+                            CurrentState = AppState.DASHBOARD;
+                            return true;
+                        }
+                        SaveLog("Login Attempt", "Failed");
+                        loginAttempts++;
+                        return false;
+
+                    default:
+                        return false;
+                }
+            }
+            catch (IOException ex)
+            {
+                // DEFENSIVE: Jika file bentrok saat dibaca/ditulis, aplikasi tidak akan crash
+                System.Windows.Forms.MessageBox.Show("Sistem mendeteksi bentrok pada file penyimpanan. Silakan coba lagi. Detail: " + ex.Message, "Sistem Sibuk");
                 return false;
+            }
         }
     }
 
@@ -91,7 +107,56 @@ public class AuthManager
     public void ChangePassword(string newPassword)
     {
         string hashedNew = SecurityHelper.HashPassword(newPassword);
-        File.WriteAllText(path, hashedNew);
-        SaveLog("Change Master Key", "Success");
+
+        // SINKRONISASI: Memaksa proses lain mengantre saat proses menulis sedang berjalan
+        lock (_fileLock)
+        {
+            try
+            {
+                File.WriteAllText(path, hashedNew);
+                SaveLog("Change Master Key", "Success");
+            }
+            catch (IOException ex)
+            {
+                // DEFENSIVE: Menangkap error jika file mendadak dikunci oleh sistem operasi
+                SaveLog("Change Master Key (File Blocked)", "Failed");
+                System.Windows.Forms.MessageBox.Show("Gagal menulis data. File sedang digunakan oleh proses lain: " + ex.Message, "Error File");
+            }
+        }
+    }
+
+    // FITUR LOGOUT: Mengembalikan status dari DASHBOARD ke LOGIN
+    public void Logout()
+    {
+        if (CurrentState == AppState.DASHBOARD)
+        {
+            CurrentState = AppState.LOGIN;
+            SaveLog("User Logout", "Success");
+        }
+    }
+
+    // FITUR LUPA PASSWORD: Menghapus file master key lama agar user bisa setup ulang dari awal
+    public bool ResetMasterKey()
+    {
+        // Menggunakan lock agar proses penghapusan file tidak bentrok
+        lock (_fileLock)
+        {
+            try
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path); // Hapus file password lama
+                }
+                CurrentState = AppState.SETUP; // Kembalikan state ke SETUP awal
+                SaveLog("Reset Master Key (Lupa Password)", "Success");
+                loginAttempts = 0; // Reset hitungan salah login
+                return true;
+            }
+            catch (IOException ex)
+            {
+                System.Windows.Forms.MessageBox.Show("Gagal mereset password, file sedang digunakan: " + ex.Message, "Error");
+                return false;
+            }
+        }
     }
 }

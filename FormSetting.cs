@@ -41,10 +41,23 @@ namespace Project_KPL_ManajemenPassword
                 return;
             }
 
-            bool sukses = auth.UpdateState(passLama);
+            // PERBAIKAN DTO: Bungkus passLama ke dalam DTO sebelum dikirim ke AuthManager
+            PasswordRequestDto authRequest = new PasswordRequestDto { Password = passLama };
+
+            // Eksekusi UpdateState menggunakan paket DTO
+            bool sukses = auth.UpdateState(authRequest);
 
             if (sukses)
             {
+                // (Opsional/Defensive): Kamu juga bisa membungkus passBaru ke DTO jika ingin memvalidasi panjang 8 karakternya
+                PasswordRequestDto validasiPassBaru = new PasswordRequestDto { Password = passBaru };
+
+                if (!validasiPassBaru.IsValid())
+                {
+                    MessageBox.Show("Password baru harus minimal 8 karakter!", "Peringatan Keamanan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 auth.ChangePassword(passBaru);
                 MessageBox.Show("Master Password berhasil diperbarui! Silakan Login ulang.");
 
