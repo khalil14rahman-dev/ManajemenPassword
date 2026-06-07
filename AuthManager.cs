@@ -10,7 +10,7 @@ public enum AppState { SETUP, LOGIN, DASHBOARD }
 
 public class AuthManager
 {
-    private string path = "master_key10.txt"; 
+    private string path = "master_key11.txt"; 
     private const string logFilePath = "activity_logs.json";
 
     

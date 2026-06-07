@@ -35,12 +35,14 @@
             this.btnTambah = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.colAplikasi = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUsername = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPassword = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hapusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnHapusTerpilih = new System.Windows.Forms.Button();
+            this.chkDelete = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colAplikasi = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUsername = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPassword = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -109,6 +111,7 @@
             this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.chkDelete,
             this.colAplikasi,
             this.colUsername,
             this.colPassword});
@@ -124,26 +127,7 @@
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
-            // 
-            // colAplikasi
-            // 
-            this.colAplikasi.HeaderText = "Nama Aplikasi";
-            this.colAplikasi.MinimumWidth = 6;
-            this.colAplikasi.Name = "colAplikasi";
-            // 
-            // colUsername
-            // 
-            this.colUsername.HeaderText = "Username";
-            this.colUsername.MinimumWidth = 6;
-            this.colUsername.Name = "colUsername";
-            this.colUsername.Visible = false;
-            // 
-            // colPassword
-            // 
-            this.colPassword.HeaderText = "Password";
-            this.colPassword.MinimumWidth = 6;
-            this.colPassword.Name = "colPassword";
-            this.colPassword.Visible = false;
+            this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
             // 
             // contextMenuStrip1
             // 
@@ -168,11 +152,52 @@
             this.hapusToolStripMenuItem.Text = "Hapus";
             this.hapusToolStripMenuItem.Click += new System.EventHandler(this.hapusToolStripMenuItem_Click);
             // 
+            // btnHapusTerpilih
+            // 
+            this.btnHapusTerpilih.Location = new System.Drawing.Point(660, 456);
+            this.btnHapusTerpilih.Name = "btnHapusTerpilih";
+            this.btnHapusTerpilih.Size = new System.Drawing.Size(228, 43);
+            this.btnHapusTerpilih.TabIndex = 2;
+            this.btnHapusTerpilih.Text = "Hapus Data Terpilih";
+            this.btnHapusTerpilih.UseVisualStyleBackColor = true;
+            this.btnHapusTerpilih.Click += new System.EventHandler(this.btnHapusTerpilih_Click);
+            // 
+            // chkDelete
+            // 
+            this.chkDelete.FillWeight = 16.04278F;
+            this.chkDelete.HeaderText = "Pilih";
+            this.chkDelete.MinimumWidth = 6;
+            this.chkDelete.Name = "chkDelete";
+            this.chkDelete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.chkDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colAplikasi
+            // 
+            this.colAplikasi.FillWeight = 183.9572F;
+            this.colAplikasi.HeaderText = "Nama Aplikasi";
+            this.colAplikasi.MinimumWidth = 6;
+            this.colAplikasi.Name = "colAplikasi";
+            // 
+            // colUsername
+            // 
+            this.colUsername.HeaderText = "Username";
+            this.colUsername.MinimumWidth = 6;
+            this.colUsername.Name = "colUsername";
+            this.colUsername.Visible = false;
+            // 
+            // colPassword
+            // 
+            this.colPassword.HeaderText = "Password";
+            this.colPassword.MinimumWidth = 6;
+            this.colPassword.Name = "colPassword";
+            this.colPassword.Visible = false;
+            // 
             // FormDashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(920, 566);
+            this.Controls.Add(this.btnHapusTerpilih);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -196,10 +221,10 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hapusToolStripMenuItem;
         private System.Windows.Forms.Button button2;
-
+        private System.Windows.Forms.Button btnHapusTerpilih;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn chkDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAplikasi;
         private System.Windows.Forms.DataGridViewTextBoxColumn colUsername;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPassword;
-
     }
 }

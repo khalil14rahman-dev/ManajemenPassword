@@ -14,8 +14,7 @@ namespace Project_KPL_ManajemenPassword
     public partial class FormDashboard : Form
     {
         //generic
-        DataRepository<PasswordModel> repo = new DataRepository<PasswordModel>("data_password.json");
-
+        DataRepository<PasswordModel> repo = DataRepository<PasswordModel>.GetInstance("data_password.json");
         public void LoadDataToGrid()
         {
             //generic
@@ -50,6 +49,7 @@ namespace Project_KPL_ManajemenPassword
         {
             InitializeComponent();
             LoadDataToGrid();
+            dataGridView1.RowHeadersWidth = 50;
         }
 
 
@@ -75,8 +75,14 @@ namespace Project_KPL_ManajemenPassword
 
         private void hapusToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Pre-kondisi: harus ada baris yang dipilih
+            // [PRE-KONDISI] Debug.Assert bawaan kamu
             Debug.Assert(dataGridView1.CurrentRow != null, "Kontrak Gagal: CurrentRow tidak boleh null saat menghapus.");
+
+            // [PRE-KONDISI RUNTIME] Tambahan throw sesuai revisi dosen
+            if (dataGridView1.CurrentRow == null)
+            {
+                throw new InvalidOperationException("DbC Violation [Pre-condition]: Tidak ada baris yang dipilih atau CurrentRow bernilai null!");
+            }
 
             if (dataGridView1.CurrentRow != null)
             {
@@ -91,8 +97,14 @@ namespace Project_KPL_ManajemenPassword
                         List<PasswordModel> listData = repo.LoadData();
                         int index = dataGridView1.CurrentRow.Index;
 
-                        // Invariant agar index yang didapat sesuai dengan jumlah data di list
+                        int jumlahBarisAwal = dataGridView1.Rows.Count;
+
                         Debug.Assert(index >= 0 && index < listData.Count, "Kontrak Gagal: Indeks di luar jangkauan list data.");
+
+                        if (index < 0 || index >= listData.Count)
+                        {
+                            throw new ArgumentOutOfRangeException(nameof(index), "DbC Violation [Invariant]: Indeks baris di UI tidak sinkron dengan jumlah data di database JSON!");
+                        }
 
                         // Hapus data
                         listData.RemoveAt(index);
@@ -101,9 +113,16 @@ namespace Project_KPL_ManajemenPassword
                         AuthManager auth = new AuthManager();
                         auth.SaveLog($"Hapus Data Password: {namaAplikasi}", "Success");
 
+                        // Refresh UI pakai fungsi asli kamu
                         LoadDataToGrid();
 
-                        // Post-kondisi mengembalikan message 
+                        // [POST-KONDISI RUNTIME] Tambahan throw untuk menjamin tabel beneran berkurang datanya setelah di-load ulang
+                        if (dataGridView1.Rows.Count != (jumlahBarisAwal - 1))
+                        {
+                            throw new InvalidOperationException("DbC Violation [Post-condition]: Fungsi LoadDataToGrid() gagal memperbarui tampilan tabel secara sinkron!");
+                        }
+
+                        // Post-kondisi mengembalikan message bawaan kamu
                         MessageBox.Show("Data berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
@@ -160,10 +179,8 @@ namespace Project_KPL_ManajemenPassword
         {
             if (e.RowIndex >= 0)
             {
-                // Mengambil data utuh dari baris yang diklik
                 var data = (PasswordModel)dataGridView1.Rows[e.RowIndex].DataBoundItem;
 
-                // Membuka form detail dan mengirim data (Aplikasi, User, Password Enkripsi)
                 FormDetailPassword formDetail = new FormDetailPassword(data.NamaAplikasi, data.Username, data.Password);
                 formDetail.ShowDialog();
             }
@@ -173,6 +190,85 @@ namespace Project_KPL_ManajemenPassword
 
         {
 
+        }
+
+        private void btnHapusTerpilih_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count == 0)
+            {
+                MessageBox.Show("Tidak ada data di dalam tabel!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            List<int> indeksYangDihapus = new List<int>();
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                var cellValue = dataGridView1.Rows[i].Cells["chkDelete"].Value;
+
+                bool isChecked = cellValue != null && Convert.ToBoolean(cellValue);
+
+                if (isChecked)
+                {
+                    indeksYangDihapus.Add(i); 
+                }
+            }
+
+            if (indeksYangDihapus.Count == 0)
+            {
+                MessageBox.Show("Silakan centang data yang ingin dihapus terlebih dahulu!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show($"Apakah Anda yakin ingin menghapus {indeksYangDihapus.Count} data yang dicentang?",
+                "Konfirmasi Hapus Massal", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    List<PasswordModel> listData = repo.LoadData();
+
+                    indeksYangDihapus.Reverse();
+
+                    foreach (int index in indeksYangDihapus)
+                    {
+                        if (index >= 0 && index < listData.Count)
+                        {
+                            listData.RemoveAt(index);
+                        }
+                    }
+
+                    repo.SaveData(listData);
+
+                    LoadDataToGrid(); 
+
+                    MessageBox.Show("Semua data terpilih berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gagal melakukan hapus massal: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            string nomorUrut = (e.RowIndex + 1).ToString();
+
+            StringFormat centerFormat = new StringFormat()
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
+
+            System.Drawing.Rectangle headerBounds = new System.Drawing.Rectangle(
+                e.RowBounds.Left, e.RowBounds.Top,
+                dataGridView1.RowHeadersWidth, e.RowBounds.Height);
+
+            e.Graphics.DrawString(nomorUrut, this.Font,
+                System.Drawing.SystemBrushes.ControlText,
+                headerBounds, centerFormat);
         }
     }
 }

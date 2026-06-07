@@ -14,7 +14,7 @@ namespace Project_KPL_ManajemenPassword
     public partial class FormInputData : Form
     {
         //generic
-        DataRepository<PasswordModel> repo = new DataRepository<PasswordModel>("data_password.json");
+        DataRepository<PasswordModel> repo = DataRepository<PasswordModel>.GetInstance("data_password.json");
         private int indexEdit = -1;
 
         public FormInputData()
@@ -42,32 +42,49 @@ namespace Project_KPL_ManajemenPassword
 
         private void btnAuto_Click(object sender, EventArgs e)
         {
-            // TABLE-DRIVEN
+            // 1. TABLE-DRIVEN
             string[] karakterTabel = {
-                "ABCDEFGHJKLMNPQRSTUVWXYZ",
-                "abcdefghijkmnopqrstuvwxyz",
-                "123456789",
-                "!@#$%^&*"
-            };
+        "ABCDEFGHJKLMNPQRSTUVWXYZ",
+        "abcdefghijkmnopqrstuvwxyz",
+        "123456789",
+        "!@#$%^&*"
+    };
 
-            Random rand = new Random();
-            string passwordBaru = "";
+            List<char> passwordCharList = new List<char>();
 
-            for (int i = 0; i < karakterTabel.Length; i++)
+            using (var crypto = new System.Security.Cryptography.RNGCryptoServiceProvider())
             {
-                string barisKarakter = karakterTabel[i];
-                for (int j = 0; j < 2; j++)
+                for (int i = 0; i < karakterTabel.Length; i++)
                 {
-                    passwordBaru += barisKarakter[rand.Next(barisKarakter.Length)];
+                    string barisKarakter = karakterTabel[i];
+                    for (int j = 0; j < 3; j++)
+                    {
+                        byte[] buffer = new byte[1];
+                        crypto.GetBytes(buffer);
+
+                        int indeksAcak = buffer[0] % barisKarakter.Length;
+                        passwordCharList.Add(barisKarakter[indeksAcak]);
+                    }
+                }
+
+                byte[] shuffleBuffer = new byte[passwordCharList.Count];
+                crypto.GetBytes(shuffleBuffer);
+
+                for (int i = passwordCharList.Count - 1; i > 0; i--)
+                {
+                    int j = shuffleBuffer[i] % (i + 1);
+                    char temp = passwordCharList[i];
+                    passwordCharList[i] = passwordCharList[j];
+                    passwordCharList[j] = temp;
                 }
             }
 
-            textPassword.Text = passwordBaru;
+            textPassword.Text = new string(passwordCharList.ToArray());
         }
 
         private void btnSimpanFormInput_Click(object sender, EventArgs e)
         {
-            // defensive dan dbc apabila ada inputan yang kosong
+            // validasi input kosong
             if (string.IsNullOrWhiteSpace(txtAplikasi.Text) ||
                 string.IsNullOrWhiteSpace(txtUsername.Text) ||
                 string.IsNullOrWhiteSpace(textPassword.Text))
@@ -80,50 +97,45 @@ namespace Project_KPL_ManajemenPassword
             {
                 List<PasswordModel> listData = repo.LoadData();
 
-                //invariant agar list data tidak null
-                Debug.Assert(listData != null, "Kontrak Invariant: listData tidak boleh null setelah loading.");
+                // DbC Invariant
+                Debug.Assert(listData != null, "Kontrak Invariant: listData tidak boleh null.");
+                if (listData == null)
+                    throw new InvalidOperationException("DbC Violation [Invariant]: listData bernilai null!");
+
+                // clean code Jika mode edit, validasi indeks harus benar dulu di awal sebelum lanjut
+                if (indexEdit != -1 && (indexEdit < 0 || indexEdit >= listData.Count))
+                {
+                    throw new ArgumentOutOfRangeException(nameof(indexEdit), "DbC Violation [Pre-condition]: Indeks data di luar jangkauan!");
+                }
 
                 string passwordAman = SecurityService.Encrypt(textPassword.Text);
-
-                // Masukkan password yang sudah di-Encrypt ke model
                 PasswordModel dataInput = new PasswordModel(txtAplikasi.Text, txtUsername.Text, passwordAman);
-
                 AuthManager auth = new AuthManager();
 
                 if (indexEdit == -1)
                 {
+                    // Mode Tambah Data Baru
                     listData.Add(dataInput);
-                    repo.SaveData(listData);
-
                     auth.SaveLog($"Tambah Data: {txtAplikasi.Text}", "Success");
                 }
                 else
                 {
-                    //pre kondisi agar logic index edit valid sebelum melakukan perubahhan pada list
-                    Debug.Assert(indexEdit >= 0 && indexEdit < listData.Count, "Kontrak: Indeks edit di luar jangkauan.");
-
-                    if (indexEdit >= 0 && indexEdit < listData.Count)
-                    {
-                        listData[indexEdit] = dataInput;
-                        repo.SaveData(listData);
-
-                        auth.SaveLog($"Update Data: {txtAplikasi.Text}", "Success");
-                    }
+                    // Mode Update Data 
+                    listData[indexEdit] = dataInput;
+                    auth.SaveLog($"Update Data: {txtAplikasi.Text}", "Success");
                 }
 
                 repo.SaveData(listData);
 
-                MessageBox.Show("Data berhasil dienkripsi dan disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Data berhasil disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             catch (Exception ex)
             {
-                //buat kalo runtime eror
                 AuthManager auth = new AuthManager();
-                auth.SaveLog("Tambah Data Password", "Success");
+                auth.SaveLog("Proses Data Password", "Failed");
                 MessageBox.Show("Gagal memproses data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
 
         private void label2_Click(object sender, EventArgs e)
