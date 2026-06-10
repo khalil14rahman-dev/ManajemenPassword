@@ -2,17 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.Json;
 
 public enum AppState { SETUP, LOGIN, DASHBOARD }
 
 public class AuthManager
 {
-    private string path = "master_key9.txt"; 
+    private string path = "master_key10.txt";
     private const string logFilePath = "activity_logs.json";
-    private DataRepository<LogActivity> logRepo = new DataRepository<LogActivity>("activity_logs.json");
+
+    private readonly DataRepository<LogActivity> _logRepo = DataRepository<LogActivity>.GetInstance(logFilePath);
+
     public AppState CurrentState { get; private set; }
 
     public AuthManager()
@@ -20,28 +19,24 @@ public class AuthManager
         CurrentState = File.Exists(path) ? AppState.LOGIN : AppState.SETUP;
     }
 
-    // LOG (JSON)
     public void SaveLog(string activity, string status)
     {
-        // 1. Ambil data 
-        List<LogActivity> logs = logRepo.LoadData();
+        List<LogActivity> logs = _logRepo.LoadData();
 
-        // 2. Tambah data baru
         string waktuSekarang = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        logs.Add(new LogActivity(waktuSekarang, activity, status)); 
+        logs.Add(new LogActivity(waktuSekarang, activity, status));
 
-        logRepo.SaveData(logs);
+        _logRepo.SaveData(logs);
     }
 
     public List<LogActivity> GetLogs()
     {
-        return logRepo.LoadData();
+        return _logRepo.LoadData();
     }
 
     // UpdateState 
     public bool UpdateState(string input)
     {
-        // Defensive Programming
         if (string.IsNullOrWhiteSpace(input)) return false;
 
         string hashedInput = SecurityHelper.HashPassword(input);
