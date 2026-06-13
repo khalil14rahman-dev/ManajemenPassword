@@ -35,14 +35,14 @@
             this.btnTambah = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hapusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnHapusTerpilih = new System.Windows.Forms.Button();
             this.chkDelete = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colAplikasi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colUsername = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPassword = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hapusToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnHapusTerpilih = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -125,9 +125,38 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(709, 566);
             this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dataGridView1.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dataGridView1_RowPostPaint);
+            // 
+            // chkDelete
+            // 
+            this.chkDelete.FillWeight = 16.04278F;
+            this.chkDelete.HeaderText = "Pilih";
+            this.chkDelete.MinimumWidth = 6;
+            this.chkDelete.Name = "chkDelete";
+            this.chkDelete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.chkDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colAplikasi
+            // 
+            this.colAplikasi.FillWeight = 183.9572F;
+            this.colAplikasi.HeaderText = "Nama Aplikasi";
+            this.colAplikasi.MinimumWidth = 6;
+            this.colAplikasi.Name = "colAplikasi";
+            // 
+            // colUsername
+            // 
+            this.colUsername.HeaderText = "Username";
+            this.colUsername.MinimumWidth = 6;
+            this.colUsername.Name = "colUsername";
+            this.colUsername.Visible = false;
+            // 
+            // colPassword
+            // 
+            this.colPassword.HeaderText = "Password";
+            this.colPassword.MinimumWidth = 6;
+            this.colPassword.Name = "colPassword";
+            this.colPassword.Visible = false;
             // 
             // contextMenuStrip1
             // 
@@ -161,36 +190,6 @@
             this.btnHapusTerpilih.Text = "Hapus Data Terpilih";
             this.btnHapusTerpilih.UseVisualStyleBackColor = true;
             this.btnHapusTerpilih.Click += new System.EventHandler(this.btnHapusTerpilih_Click);
-            // 
-            // chkDelete
-            // 
-            this.chkDelete.FillWeight = 16.04278F;
-            this.chkDelete.HeaderText = "Pilih";
-            this.chkDelete.MinimumWidth = 6;
-            this.chkDelete.Name = "chkDelete";
-            this.chkDelete.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.chkDelete.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // colAplikasi
-            // 
-            this.colAplikasi.FillWeight = 183.9572F;
-            this.colAplikasi.HeaderText = "Nama Aplikasi";
-            this.colAplikasi.MinimumWidth = 6;
-            this.colAplikasi.Name = "colAplikasi";
-            // 
-            // colUsername
-            // 
-            this.colUsername.HeaderText = "Username";
-            this.colUsername.MinimumWidth = 6;
-            this.colUsername.Name = "colUsername";
-            this.colUsername.Visible = false;
-            // 
-            // colPassword
-            // 
-            this.colPassword.HeaderText = "Password";
-            this.colPassword.MinimumWidth = 6;
-            this.colPassword.Name = "colPassword";
-            this.colPassword.Visible = false;
             // 
             // FormDashboard
             // 

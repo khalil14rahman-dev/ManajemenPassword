@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -20,21 +15,16 @@ namespace Project_KPL_ManajemenPassword
             //generic
             List<PasswordModel> listData = repo.LoadData();
 
-            // 1. TAMBAHKAN INI: Agar kolom manual kamu tidak tertumpuk kolom otomatis
             dataGridView1.AutoGenerateColumns = false;
 
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = listData;
 
-            // 2. HUBUNGKAN KOLOM: Pastikan nama di dalam kurung [ ] sesuai dengan properti di PasswordModel
-            // colAplikasi adalah Name yang kamu buat di "Edit Columns" tadi
             if (dataGridView1.Columns.Contains("colAplikasi"))
             {
                 dataGridView1.Columns["colAplikasi"].DataPropertyName = "NamaAplikasi";
             }
 
-            // Username dan Password tetap kita hubungkan ke kolom yang Visible = False 
-            // agar datanya "terbawa" tapi tidak terlihat di layar
             if (dataGridView1.Columns.Contains("colUsername"))
             {
                 dataGridView1.Columns["colUsername"].DataPropertyName = "Username";
@@ -48,6 +38,10 @@ namespace Project_KPL_ManajemenPassword
         public FormDashboard()
         {
             InitializeComponent();
+
+            //buat memanggil observer yang ada di datarepo,
+            repo.OnDataChanged += LoadDataToGrid;
+
             LoadDataToGrid();
             dataGridView1.RowHeadersWidth = 50;
         }
@@ -59,18 +53,12 @@ namespace Project_KPL_ManajemenPassword
             FormInputData formInput = new FormInputData();
 
             formInput.ShowDialog();
-            LoadDataToGrid();
         }
 
         private void btnSetting_Click(object sender, EventArgs e)
         {
             FormSetting formSet = new FormSetting();
             formSet.ShowDialog();
-        }
-
-        private void btnGenerateDashboard_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void hapusToolStripMenuItem_Click(object sender, EventArgs e)
@@ -113,8 +101,6 @@ namespace Project_KPL_ManajemenPassword
                         AuthManager auth = new AuthManager();
                         auth.SaveLog($"Hapus Data Password: {namaAplikasi}", "Success");
 
-                        // Refresh UI pakai fungsi asli kamu
-                        LoadDataToGrid();
 
                         // [POST-KONDISI RUNTIME] Tambahan throw untuk menjamin tabel beneran berkurang datanya setelah di-load ulang
                         if (dataGridView1.Rows.Count != (jumlahBarisAwal - 1))
@@ -152,9 +138,6 @@ namespace Project_KPL_ManajemenPassword
                 FormInputData formEdit = new FormInputData(dataTerpilih, index);
                 formEdit.ShowDialog();
 
-                //post kondisi
-                LoadDataToGrid();
-
             }
         }
 
@@ -162,17 +145,6 @@ namespace Project_KPL_ManajemenPassword
         {
             FormLog logWindow = new FormLog();
             logWindow.ShowDialog();
-        }
-
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtJumlahLog_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -184,12 +156,6 @@ namespace Project_KPL_ManajemenPassword
                 FormDetailPassword formDetail = new FormDetailPassword(data.NamaAplikasi, data.Username, data.Password);
                 formDetail.ShowDialog();
             }
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-
-        {
-
         }
 
         private void btnHapusTerpilih_Click(object sender, EventArgs e)
@@ -240,8 +206,6 @@ namespace Project_KPL_ManajemenPassword
                     }
 
                     repo.SaveData(listData);
-
-                    LoadDataToGrid(); 
 
                     MessageBox.Show("Semua data terpilih berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

@@ -16,8 +16,7 @@ public class AuthManager
     
     private int loginAttempts = 0;
 
-    private DataRepository<LogActivity> logRepo = new DataRepository<LogActivity>("activity_logs.json");
-    public AppState CurrentState { get; private set; }
+    DataRepository<LogActivity> logRepo = DataRepository<LogActivity>.GetInstance("data_log.json"); public AppState CurrentState { get; private set; }
 
     public AuthManager()
     {
