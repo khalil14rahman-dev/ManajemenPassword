@@ -8,11 +8,9 @@ namespace Project_KPL_ManajemenPassword
 {
     public partial class FormDashboard : Form
     {
-        //generic
         DataRepository<PasswordModel> repo = DataRepository<PasswordModel>.GetInstance("data_password.json");
         public void LoadDataToGrid()
         {
-            //generic
             List<PasswordModel> listData = repo.LoadData();
 
             dataGridView1.AutoGenerateColumns = false;
@@ -63,10 +61,8 @@ namespace Project_KPL_ManajemenPassword
 
         private void hapusToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // [PRE-KONDISI] Debug.Assert bawaan kamu
             Debug.Assert(dataGridView1.CurrentRow != null, "Kontrak Gagal: CurrentRow tidak boleh null saat menghapus.");
 
-            // [PRE-KONDISI RUNTIME] Tambahan throw sesuai revisi dosen
             if (dataGridView1.CurrentRow == null)
             {
                 throw new InvalidOperationException("DbC Violation [Pre-condition]: Tidak ada baris yang dipilih atau CurrentRow bernilai null!");
@@ -94,7 +90,6 @@ namespace Project_KPL_ManajemenPassword
                             throw new ArgumentOutOfRangeException(nameof(index), "DbC Violation [Invariant]: Indeks baris di UI tidak sinkron dengan jumlah data di database JSON!");
                         }
 
-                        // Hapus data
                         listData.RemoveAt(index);
                         repo.SaveData(listData);
 
@@ -102,18 +97,15 @@ namespace Project_KPL_ManajemenPassword
                         auth.SaveLog($"Hapus Data Password: {namaAplikasi}", "Success");
 
 
-                        // [POST-KONDISI RUNTIME] Tambahan throw untuk menjamin tabel beneran berkurang datanya setelah di-load ulang
                         if (dataGridView1.Rows.Count != (jumlahBarisAwal - 1))
                         {
                             throw new InvalidOperationException("DbC Violation [Post-condition]: Fungsi LoadDataToGrid() gagal memperbarui tampilan tabel secara sinkron!");
                         }
 
-                        // Post-kondisi mengembalikan message bawaan kamu
                         MessageBox.Show("Data berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        // Log jika terjadi error saat proses hapus
                         AuthManager auth = new AuthManager();
                         auth.SaveLog($"Gagal Hapus Data: {namaAplikasi}", "Error");
 
@@ -125,14 +117,12 @@ namespace Project_KPL_ManajemenPassword
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //pre kondisi harus ada data yg dipilih sebelum edit(sama seperti yang hapus tadi)
             Debug.Assert(dataGridView1.CurrentRow != null, "Kontrak Gagal: Tidak bisa edit jika baris kosong.");
             if (dataGridView1.CurrentRow != null)
             {
                 PasswordModel dataTerpilih = (PasswordModel)dataGridView1.CurrentRow.DataBoundItem;
                 int index = dataGridView1.CurrentRow.Index;
 
-                //invariant
                 Debug.Assert(dataTerpilih != null, "Kontrak Gagal: Objek data yang akan diedit tidak ditemukan.");
 
                 FormInputData formEdit = new FormInputData(dataTerpilih, index);
