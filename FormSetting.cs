@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Project_KPL_ManajemenPassword
 {
     public partial class FormSetting : Form
     {
-        AuthManager auth = new AuthManager();
+        // [CLEAN CODE] - Menerapkan standar penamaan variabel global & readonly
+        private readonly AuthManager _auth = new AuthManager();
+
         public FormSetting()
         {
             InitializeComponent();
@@ -30,6 +24,7 @@ namespace Project_KPL_ManajemenPassword
             string passBaru = txtPassBaru.Text;
             string konfirmasi = txtKonfirmasi.Text;
 
+            // [CLEAN CODE: DEFENSIVE PROGRAMMING]
             if (string.IsNullOrEmpty(passLama) || string.IsNullOrEmpty(passBaru))
             {
                 MessageBox.Show("Semua kolom harus diisi!");
@@ -42,11 +37,12 @@ namespace Project_KPL_ManajemenPassword
                 return;
             }
 
-            bool sukses = auth.UpdateState(passLama);
+            // Memanggil logika dari kelas AuthManager (Penerapan Single Responsibility)
+            bool sukses = _auth.UpdateState(passLama);
 
             if (sukses)
             {
-                auth.ChangePassword(passBaru);
+                _auth.ChangePassword(passBaru);
                 MessageBox.Show("Master Password berhasil diperbarui! Silakan Login ulang.");
 
                 Application.Restart();
@@ -57,26 +53,12 @@ namespace Project_KPL_ManajemenPassword
             }
         }
 
-        private void btnShowPass_Click(object sender, EventArgs e)
-        {
-        
-        }
-
-        private void txtPassLama_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FormSetting_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        // [CLEAN CODE: DEFENSIVE UI] - Inversi nilai boolean untuk fitur Show/Hide
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             txtPassLama.UseSystemPasswordChar = !chkShowLama.Checked;
         }
-        
+
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             txtPassBaru.UseSystemPasswordChar = !chkShowBaru.Checked;
@@ -85,13 +67,6 @@ namespace Project_KPL_ManajemenPassword
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
             txtKonfirmasi.UseSystemPasswordChar = !chkShowKonf.Checked;
-        }
-
-       
-
-        private void txtKonfirmasi_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

@@ -194,5 +194,10 @@ namespace Project_KPL_ManajemenPassword
             lblstrength.Text = statusBaru;
             lblstrength.ForeColor = warnaBaru;
         }
+
+        private void FormInputData_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -78,7 +78,6 @@
             this.txtPassLama.Size = new System.Drawing.Size(194, 22);
             this.txtPassLama.TabIndex = 3;
             this.txtPassLama.UseSystemPasswordChar = true;
-            this.txtPassLama.TextChanged += new System.EventHandler(this.txtPassLama_TextChanged);
             // 
             // txtPassBaru
             // 
@@ -95,7 +94,6 @@
             this.txtKonfirmasi.Size = new System.Drawing.Size(195, 22);
             this.txtKonfirmasi.TabIndex = 5;
             this.txtKonfirmasi.UseSystemPasswordChar = true;
-            this.txtKonfirmasi.TextChanged += new System.EventHandler(this.txtKonfirmasi_TextChanged);
             // 
             // btnUpdateFormSetting
             // 
@@ -170,7 +168,6 @@
             this.Name = "FormSetting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormSetting";
-            this.Load += new System.EventHandler(this.FormSetting_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
