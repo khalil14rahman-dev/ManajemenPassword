@@ -45,7 +45,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(64, 33);
+            this.label1.Location = new System.Drawing.Point(69, 33);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(187, 20);
             this.label1.TabIndex = 0;
@@ -75,16 +75,15 @@
             // 
             this.txtPassLama.Location = new System.Drawing.Point(68, 70);
             this.txtPassLama.Name = "txtPassLama";
-            this.txtPassLama.Size = new System.Drawing.Size(183, 22);
+            this.txtPassLama.Size = new System.Drawing.Size(194, 22);
             this.txtPassLama.TabIndex = 3;
             this.txtPassLama.UseSystemPasswordChar = true;
-            this.txtPassLama.TextChanged += new System.EventHandler(this.txtPassLama_TextChanged);
             // 
             // txtPassBaru
             // 
             this.txtPassBaru.Location = new System.Drawing.Point(68, 144);
             this.txtPassBaru.Name = "txtPassBaru";
-            this.txtPassBaru.Size = new System.Drawing.Size(183, 22);
+            this.txtPassBaru.Size = new System.Drawing.Size(195, 22);
             this.txtPassBaru.TabIndex = 4;
             this.txtPassBaru.UseSystemPasswordChar = true;
             // 
@@ -98,9 +97,9 @@
             // 
             // btnUpdateFormSetting
             // 
-            this.btnUpdateFormSetting.Location = new System.Drawing.Point(180, 258);
+            this.btnUpdateFormSetting.Location = new System.Drawing.Point(180, 287);
             this.btnUpdateFormSetting.Name = "btnUpdateFormSetting";
-            this.btnUpdateFormSetting.Size = new System.Drawing.Size(93, 42);
+            this.btnUpdateFormSetting.Size = new System.Drawing.Size(93, 45);
             this.btnUpdateFormSetting.TabIndex = 6;
             this.btnUpdateFormSetting.Text = "Update Password";
             this.btnUpdateFormSetting.UseVisualStyleBackColor = true;
@@ -108,9 +107,9 @@
             // 
             // btnBatalFormSetting
             // 
-            this.btnBatalFormSetting.Location = new System.Drawing.Point(68, 258);
+            this.btnBatalFormSetting.Location = new System.Drawing.Point(68, 287);
             this.btnBatalFormSetting.Name = "btnBatalFormSetting";
-            this.btnBatalFormSetting.Size = new System.Drawing.Size(91, 42);
+            this.btnBatalFormSetting.Size = new System.Drawing.Size(91, 45);
             this.btnBatalFormSetting.TabIndex = 7;
             this.btnBatalFormSetting.Text = "Batal";
             this.btnBatalFormSetting.UseVisualStyleBackColor = true;
@@ -119,7 +118,7 @@
             // chkShowLama
             // 
             this.chkShowLama.AutoSize = true;
-            this.chkShowLama.Location = new System.Drawing.Point(292, 71);
+            this.chkShowLama.Location = new System.Drawing.Point(285, 71);
             this.chkShowLama.Name = "chkShowLama";
             this.chkShowLama.Size = new System.Drawing.Size(120, 20);
             this.chkShowLama.TabIndex = 8;
@@ -130,18 +129,19 @@
             // chkShowBaru
             // 
             this.chkShowBaru.AutoSize = true;
-            this.chkShowBaru.Location = new System.Drawing.Point(292, 145);
+            this.chkShowBaru.Location = new System.Drawing.Point(285, 146);
             this.chkShowBaru.Name = "chkShowBaru";
             this.chkShowBaru.Size = new System.Drawing.Size(120, 20);
             this.chkShowBaru.TabIndex = 9;
             this.chkShowBaru.Text = "Lihat Password";
             this.chkShowBaru.UseVisualStyleBackColor = true;
             this.chkShowBaru.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            this.chkShowBaru.Click += new System.EventHandler(this.checkBox3_CheckedChanged);
             // 
             // chkShowKonf
             // 
             this.chkShowKonf.AutoSize = true;
-            this.chkShowKonf.Location = new System.Drawing.Point(292, 215);
+            this.chkShowKonf.Location = new System.Drawing.Point(285, 216);
             this.chkShowKonf.Name = "chkShowKonf";
             this.chkShowKonf.Size = new System.Drawing.Size(120, 20);
             this.chkShowKonf.TabIndex = 10;
@@ -153,7 +153,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(427, 312);
+            this.ClientSize = new System.Drawing.Size(461, 373);
             this.Controls.Add(this.chkShowKonf);
             this.Controls.Add(this.chkShowBaru);
             this.Controls.Add(this.chkShowLama);
@@ -168,7 +168,6 @@
             this.Name = "FormSetting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormSetting";
-            this.Load += new System.EventHandler(this.FormSetting_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

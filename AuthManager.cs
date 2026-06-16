@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.Json;
 
 public enum AppState { SETUP, LOGIN, DASHBOARD }
 
@@ -17,6 +14,12 @@ public class UserCredentials
 
 public class AuthManager
 {
+    private string path = "master_key10.txt";
+    private const string logFilePath = "activity_logs.json";
+
+    private readonly DataRepository<LogActivity> _logRepo = DataRepository<LogActivity>.GetInstance(logFilePath);
+
+    public AppState CurrentState { get; private set; }
     private static AuthManager _instance;
     private static readonly object _instanceLock = new object();
 
@@ -69,26 +72,33 @@ public class AuthManager
 
     public void SaveLog(string activity, string status)
     {
+        List<LogActivity> logs = _logRepo.LoadData();
         List<LogActivity> logs = logRepo.LoadData();
-
+        List<LogActivity> logs = logRepo.LoadData();
+        string waktuSekarang = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        logs.Add(new LogActivity(waktuSekarang, activity, status));
         logs.Add(new LogActivity(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), activity, status));
+        logs.Add(new LogActivity(activity, status));
 
-        logRepo.SaveData(logs);
+        _logRepo.SaveData(logs);
     }
 
     public List<LogActivity> GetLogs()
     {
-        return logRepo.LoadData();
+        return _logRepo.LoadData();
     }
 
     //Implementation of DTO 
     public bool UpdateState(PasswordRequestDto dto)
-    {
+        if (string.IsNullOrWhiteSpace(input)) return false;
+
+        string hashedInput = SecurityHelper.HashPassword(input);
         
         if (dto == null || !dto.IsValid())
         {
             return false;
         }
+        string hashedInput = SecurityHelper.HashPassword(input);
 
         try
         {

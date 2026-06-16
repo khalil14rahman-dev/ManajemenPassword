@@ -14,7 +14,7 @@ namespace Project_KPL_ManajemenPassword
     public partial class FormDashboard : Form
     {
         //generic
-        DataRepository<PasswordModel> repo = new DataRepository<PasswordModel>("data_password.json");
+        DataRepository<PasswordModel> repo = DataRepository<PasswordModel>.GetInstance("passwords.json");
 
         public void LoadDataToGrid()
         {

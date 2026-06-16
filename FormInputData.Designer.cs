@@ -156,6 +156,7 @@
             this.Name = "FormInputData";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormInputData";
+            this.Load += new System.EventHandler(this.FormInputData_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
