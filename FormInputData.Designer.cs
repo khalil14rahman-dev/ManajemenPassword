@@ -65,7 +65,6 @@
             this.label2.Size = new System.Drawing.Size(108, 16);
             this.label2.TabIndex = 2;
             this.label2.Text = "Username/Email";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // txtUsername
             // 
@@ -91,7 +90,6 @@
             this.textPassword.Name = "textPassword";
             this.textPassword.Size = new System.Drawing.Size(175, 22);
             this.textPassword.TabIndex = 5;
-            this.textPassword.TextChanged += new System.EventHandler(this.textPassword_TextChanged_1);
             // 
             // btnAuto
             // 
@@ -156,7 +154,6 @@
             this.Name = "FormInputData";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormInputData";
-            this.Load += new System.EventHandler(this.FormInputData_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

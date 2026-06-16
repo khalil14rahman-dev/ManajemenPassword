@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Project_KPL_ManajemenPassword
 {
     public partial class FormInputData : Form
     {
-        //generic
         DataRepository<PasswordModel> repo = DataRepository<PasswordModel>.GetInstance("data_password.json");
         private int indexEdit = -1;
 
@@ -28,9 +24,7 @@ namespace Project_KPL_ManajemenPassword
 
             txtAplikasi.Text = data.NamaAplikasi;
             txtUsername.Text = data.Username;
-
             textPassword.Text = SecurityService.Decrypt(data.Password);
-
             btnSimpanFormInput.Text = "Update Data";
         }
 
@@ -76,9 +70,7 @@ namespace Project_KPL_ManajemenPassword
             try
             {
                 List<PasswordModel> listData = repo.LoadData();
-
                 string passwordAman = SecurityService.Encrypt(textPassword.Text);
-
                 PasswordModel dataInput = new PasswordModel(txtAplikasi.Text, txtUsername.Text, passwordAman);
 
                 if (indexEdit == -1)
@@ -93,9 +85,11 @@ namespace Project_KPL_ManajemenPassword
                     }
                 }
 
+                // Saat baris ini jalan, Event Observer akan otomatis terpanggil, memanggil yang ada di datarepo
+                //disini juga ada clean code DRY
                 repo.SaveData(listData);
 
-                MessageBox.Show("Data berhasil dienkripsi dan disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Data berhasil disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             catch (Exception ex)
@@ -104,87 +98,36 @@ namespace Project_KPL_ManajemenPassword
             }
 
             AuthManager auth = AuthManager.GetInstance();
-            auth.SaveLog("Tambah Data Password", "Success");
+            auth.SaveLog("Tambah/Update Data Password", "Success");
         }
 
-        private void textPassword_TextChanged(object sender, EventArgs e)
+        public static StrengthResult CalculatePasswordStrength(string pass)
         {
+            if (string.IsNullOrEmpty(pass)) return new StrengthResult("Kekuatan: -", Color.Gray, 0);
 
-            if (string.IsNullOrEmpty(textPassword.Text))
-            {
-                lblstrength.Text = "Kekuatan: -";
-                lblstrength.ForeColor = Color.Gray;
-            }
-            else if (textPassword.Text.Length < 8)
-            {
-                lblstrength.Text = "Kekuatan: Lemah (Min. 8 Karakter)";
-                lblstrength.ForeColor = Color.Red;
-            }
-            else
-            {
-                lblstrength.Text = "Kekuatan: Kuat";
-                lblstrength.ForeColor = Color.Green;
-            }
-        }
+            var passwordRules = new List<Func<string, bool>>
+    {
+        p => p.Length >= 8,
+        p => p.Any(char.IsUpper) && p.Any(char.IsLower),
+        p => p.Any(char.IsDigit),
+        p => p.Any(ch => !char.IsLetterOrDigit(ch))
+    };
 
-        private void label2_Click(object sender, EventArgs e)
-        {
+            int score = passwordRules.Count(rule => rule(pass));
 
-        }
-
-        private void lblstrength_Click(object sender, EventArgs e)
-        {
-            string pass = textPassword.Text;
-
-            if (string.IsNullOrEmpty(pass))
-            {
-                lblstrength.Text = "Kekuatan : -";
-                lblstrength.ForeColor = Color.Gray;
-            }
-            else if (pass.Length < 8)
-            {
-                lblstrength.Text = "Kekuatan : Lemah (Terlalu Pendek)";
-                lblstrength.ForeColor = Color.Red;
-            }
-            else
-            {
-                lblstrength.Text = "Kekuatan : Sangat Kuat";
-                lblstrength.ForeColor = Color.Green;
-            }
+            StrengthFactory factory = new PasswordStrengthFactory();
+            return factory.CreateStrengthResult(score);
         }
 
         private void textPassword_TextChanged_1(object sender, EventArgs e)
         {
-            string pass = textPassword.Text;
-            int len = pass.Length;
+            Debug.Assert(sender != null, "Precondition gagal: pengirim tidak boleh null.");
 
-            var strengthTable = new Dictionary<int, (string Status, Color Warna)>
-    {
-        { 0, ("Kekuatan: -", Color.Gray) },
-        { 1, ("Kekuatan: Lemah", Color.Red) },
-        { 8, ("Kekuatan: Sedang", Color.Orange) },
-        { 12, ("Kekuatan: Sangat Kuat", Color.Green) }
-    };
+            StrengthResult result = CalculatePasswordStrength(textPassword.Text);
 
-            string statusBaru = "Kekuatan: -";
-            Color warnaBaru = Color.Gray;
-
-            foreach (var rule in strengthTable)
-            {
-                if (len >= rule.Key)
-                {
-                    statusBaru = rule.Value.Status;
-                    warnaBaru = rule.Value.Warna;
-                }
-            }
-
-            lblstrength.Text = statusBaru;
-            lblstrength.ForeColor = warnaBaru;
-        }
-
-        private void FormInputData_Load(object sender, EventArgs e)
-        {
-
+            lblstrength.Text = result.Status;
+            lblstrength.ForeColor = result.Warna;
         }
     }
 }
+   
