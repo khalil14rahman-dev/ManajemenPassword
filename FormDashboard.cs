@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Project_KPL_ManajemenPassword
 {
@@ -71,35 +72,67 @@ namespace Project_KPL_ManajemenPassword
 
         private void hapusToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            // Pre-kondisi: harus ada baris yang dipilih
+            Debug.Assert(dataGridView1.CurrentRow != null, "Kontrak Gagal: CurrentRow tidak boleh null saat menghapus.");
+
             if (dataGridView1.CurrentRow != null)
             {
-                var confirm = MessageBox.Show("Apakah yakin ingin menghapus akun ini?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                string namaAplikasi = dataGridView1.CurrentRow.Cells[0].Value?.ToString() ?? "Unknown";
+
+                var confirm = MessageBox.Show($"Apakah yakin ingin menghapus akun {namaAplikasi}?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
                 if (confirm == DialogResult.Yes)
                 {
-                    List<PasswordModel> listData = repo.LoadData();
+                    try
+                    {
+                        List<PasswordModel> listData = repo.LoadData();
+                        int index = dataGridView1.CurrentRow.Index;
 
-                    int index = dataGridView1.CurrentRow.Index;
+                        // Invariant agar index yang didapat sesuai dengan jumlah data di list
+                        Debug.Assert(index >= 0 && index < listData.Count, "Kontrak Gagal: Indeks di luar jangkauan list data.");
 
-                    listData.RemoveAt(index);
-                    repo.SaveData(listData);
+                        // Hapus data
+                        listData.RemoveAt(index);
+                        repo.SaveData(listData);
 
-                    LoadDataToGrid();
-                    MessageBox.Show("Data berhasil dihapus!");
+                        AuthManager auth = new AuthManager();
+                        auth.SaveLog($"Hapus Data Password: {namaAplikasi}", "Success");
+
+                        LoadDataToGrid();
+
+                        // Post-kondisi mengembalikan message 
+                        MessageBox.Show("Data berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log jika terjadi error saat proses hapus
+                        AuthManager auth = new AuthManager();
+                        auth.SaveLog($"Gagal Hapus Data: {namaAplikasi}", "Error");
+
+                        MessageBox.Show("Gagal menghapus data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //pre kondisi harus ada data yg dipilih sebelum edit(sama seperti yang hapus tadi)
+            Debug.Assert(dataGridView1.CurrentRow != null, "Kontrak Gagal: Tidak bisa edit jika baris kosong.");
             if (dataGridView1.CurrentRow != null)
             {
                 PasswordModel dataTerpilih = (PasswordModel)dataGridView1.CurrentRow.DataBoundItem;
                 int index = dataGridView1.CurrentRow.Index;
 
+                //invariant
+                Debug.Assert(dataTerpilih != null, "Kontrak Gagal: Objek data yang akan diedit tidak ditemukan.");
+
                 FormInputData formEdit = new FormInputData(dataTerpilih, index);
                 formEdit.ShowDialog();
 
+                //post kondisi
                 LoadDataToGrid();
+
             }
         }
 

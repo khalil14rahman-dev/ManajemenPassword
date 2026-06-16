@@ -112,6 +112,7 @@ public class AuthManager
         loginAttempts = 0;
     }
 
+
     public void ChangePassword(string newPassword)
     {
         // SECURE CODING (Guard Clause / Early Exit): 
