@@ -10,7 +10,6 @@ namespace Project_KPL_ManajemenPassword
     {
         public bool Handle(AuthManager context, PasswordRequestDto dto)
         {
-            // Fase validasi login/setup sudah selesai dilalui, return true secara linier
             return true;
         }
     }

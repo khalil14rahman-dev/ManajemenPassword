@@ -26,6 +26,7 @@ namespace Project_KPL_ManajemenPassword
             txtUsername.Text = data.Username;
             textPassword.Text = SecurityService.Decrypt(data.Password);
             btnSimpanFormInput.Text = "Update Data";
+            textPassword_TextChanged(textPassword, EventArgs.Empty);
         }
 
         private void btnBatalFormInput_Click(object sender, EventArgs e)
@@ -101,25 +102,7 @@ namespace Project_KPL_ManajemenPassword
             auth.SaveLog("Tambah/Update Data Password", "Success");
         }
 
-        public static StrengthResult CalculatePasswordStrength(string pass)
-        {
-            if (string.IsNullOrEmpty(pass)) return new StrengthResult("Kekuatan: -", Color.Gray, 0);
-
-            var passwordRules = new List<Func<string, bool>>
-    {
-        p => p.Length >= 8,
-        p => p.Any(char.IsUpper) && p.Any(char.IsLower),
-        p => p.Any(char.IsDigit),
-        p => p.Any(ch => !char.IsLetterOrDigit(ch))
-    };
-
-            int score = passwordRules.Count(rule => rule(pass));
-
-            StrengthFactory factory = new PasswordStrengthFactory();
-            return factory.CreateStrengthResult(score);
-        }
-
-        private void textPassword_TextChanged_1(object sender, EventArgs e)
+        private void textPassword_TextChanged(object sender, EventArgs e)
         {
             Debug.Assert(sender != null, "Precondition gagal: pengirim tidak boleh null.");
 
@@ -128,6 +111,26 @@ namespace Project_KPL_ManajemenPassword
             lblstrength.Text = result.Status;
             lblstrength.ForeColor = result.Warna;
         }
+
+        public static StrengthResult CalculatePasswordStrength(string pass)
+        {
+            if (string.IsNullOrEmpty(pass)) return new StrengthResult("Kekuatan: -", Color.Gray, 0);
+
+            var passwordRules = new List<Func<string, bool>>
+{
+    p => p.Length >= 8,
+    p => p.Any(char.IsUpper) && p.Any(char.IsLower),
+    p => p.Any(char.IsDigit),
+    p => p.Any(ch => !char.IsLetterOrDigit(ch))
+};
+
+            int score = passwordRules.Count(rule => rule(pass));
+
+            // Melempar skor ke Factory Design Pattern kelompokmu
+            StrengthFactory factory = new PasswordStrengthFactory();
+            return factory.CreateStrengthResult(score);
+        }
+
     }
 }
    

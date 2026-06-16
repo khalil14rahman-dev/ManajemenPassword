@@ -32,7 +32,7 @@ public class AuthManager
         }
     }
 
-    private string path = "master_key9.txt"; //bbb 
+    private string path = "master_key9.txt"; 
 
     private readonly object _fileLock = new object(); // Objek pengunci untuk sinkronisasi thread
 
