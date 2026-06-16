@@ -95,7 +95,6 @@ namespace Project_KPL_ManajemenPassword
                         listData.RemoveAt(index);
                         repo.SaveData(listData);
 
-                        AuthManager auth = new AuthManager();
                         auth.SaveLog($"Hapus Data Password: {namaAplikasi}", "Success");
 
                         LoadDataToGrid();
@@ -106,7 +105,6 @@ namespace Project_KPL_ManajemenPassword
                     catch (Exception ex)
                     {
                         // Log jika terjadi error saat proses hapus
-                        AuthManager auth = new AuthManager();
                         auth.SaveLog($"Gagal Hapus Data: {namaAplikasi}", "Error");
 
                         MessageBox.Show("Gagal menghapus data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -71,7 +71,7 @@ public class AuthManager
     {
         List<LogActivity> logs = logRepo.LoadData();
 
-        logs.Add(new LogActivity(activity, status));
+        logs.Add(new LogActivity(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), activity, status));
 
         logRepo.SaveData(logs);
     }
