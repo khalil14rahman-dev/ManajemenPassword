@@ -20,7 +20,7 @@ namespace Project_KPL_ManajemenPassword
 
         private void LoadLogToTable()
         {
-            AuthManager auth = new AuthManager();
+            AuthManager auth = AuthManager.GetInstance();
             List<LogActivity> dataLog = auth.GetLogs();
 
             dgvLogs.DataSource = dataLog;

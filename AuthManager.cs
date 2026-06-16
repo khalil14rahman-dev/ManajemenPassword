@@ -5,27 +5,67 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
-//automata
+
 public enum AppState { SETUP, LOGIN, DASHBOARD }
+
+public class UserCredentials
+{
+    public string PasswordHash { get; set; }
+    public string SecurityQuestion { get; set; }
+    public string AnswerHash { get; set; }
+}
 
 public class AuthManager
 {
+    private static AuthManager _instance;
+    private static readonly object _instanceLock = new object();
+
+    public static AuthManager GetInstance()
+    {
+        lock (_instanceLock)
+        {
+            if (_instance == null)
+            {
+                _instance = new AuthManager();
+            }
+            return _instance;
+        }
+    }
 
     private string path = "master_key9.txt"; //bbb 
 
     private readonly object _fileLock = new object(); // Objek pengunci untuk sinkronisasi thread
 
     private int loginAttempts = 0; // Pencatat jumlah salah
+
     private const string logFilePath = "activity_logs.json"; 
 
     private DataRepository<LogActivity> logRepo = new DataRepository<LogActivity>("activity_logs.json");
 
-    public AppState CurrentState { get; private set; }
+    private IAuthState _currentState;
 
-    public AuthManager()
-    {
-        CurrentState = File.Exists(path) ? AppState.LOGIN : AppState.SETUP;
+    public AppState CurrentState {
+        get
+        {
+            if (_currentState is SetupState) return AppState.SETUP;
+            if (_currentState is LoginState) return AppState.LOGIN;
+            return AppState.DASHBOARD;
+        }
     }
+
+    private AuthManager()
+    {
+        _currentState = File.Exists(path) ? (IAuthState)new LoginState() : new SetupState();
+    }
+
+    public void ChangeState(IAuthState newState)
+    {
+        _currentState = newState;
+    }
+
+    public string GetPath() => path;
+    public object GetFileLock() => _fileLock;
+    public void IncrementAttempts() => loginAttempts++;
 
     public void SaveLog(string activity, string status)
     {
@@ -40,55 +80,23 @@ public class AuthManager
     {
         return logRepo.LoadData();
     }
-    
-    //DTO
+
+    //Implementation of DTO 
     public bool UpdateState(PasswordRequestDto dto)
     {
-        // pastikan paket data tidak kosong dan isinya valid
+        
         if (dto == null || !dto.IsValid())
         {
             return false;
         }
 
-        // Ambil string di dalam DTO untuk di-hash
-        string hashedInput = SecurityHelper.HashPassword(dto.Password);
-
-        // SINKRONISASI: Semua proses baca/tulis di bawah wajib mengantre dengan rapi
-        lock (_fileLock)
+        try
         {
-            try
-            {
-                switch (CurrentState)
-                {
-                    case AppState.SETUP:
-                        File.WriteAllText(path, hashedInput); // Proses Tulis Aman
-                        SaveLog("Setup Master Key", "Success");
-                        CurrentState = AppState.LOGIN;
-                        return true;
-
-                    case AppState.LOGIN:
-                        // Proses Baca Aman
-                        if (File.Exists(path) && hashedInput == File.ReadAllText(path))
-                        {
-                            SaveLog("User Login", "Success");
-                            loginAttempts = 0;
-                            CurrentState = AppState.DASHBOARD;
-                            return true;
-                        }
-                        SaveLog("Login Attempt", "Failed");
-                        loginAttempts++;
-                        return false;
-
-                    default:
-                        return false;
-                }
-            }
-            catch (IOException ex)
-            {
-                // DEFENSIVE: Jika file bentrok saat dibaca/ditulis, aplikasi tidak akan crash
-                System.Windows.Forms.MessageBox.Show("Sistem mendeteksi bentrok pada file penyimpanan. Silakan coba lagi. Detail: " + ex.Message, "Sistem Sibuk");
-                return false;
-            }
+            return _currentState.Handle(this, dto);
+        }
+        catch (IOException)
+        {
+            throw;
         }
     }
 
@@ -106,21 +114,35 @@ public class AuthManager
 
     public void ChangePassword(string newPassword)
     {
-        string hashedNew = SecurityHelper.HashPassword(newPassword);
+        // SECURE CODING (Guard Clause / Early Exit): 
+        // Mencegah parameter kosong masuk ke tingkat penyimpanan data file fisik
+        if (string.IsNullOrWhiteSpace(newPassword) || newPassword.Length < 8)
+        {
+            throw new ArgumentException("Keamanan Ditolak: Password baru tidak memenuhi syarat minimum.");
+        }
 
-        // SINKRONISASI: Memaksa proses lain mengantre saat proses menulis sedang berjalan
         lock (_fileLock)
         {
             try
             {
-                File.WriteAllText(path, hashedNew);
+                UserCredentials creds = new UserCredentials();
+                if (File.Exists(path))
+                {
+                    string jsonLama = File.ReadAllText(path);
+                    creds = JsonSerializer.Deserialize<UserCredentials>(jsonLama) ?? new UserCredentials();
+                }
+
+                // Update hash password saja, pertanyaan & jawaban keamanan tetap dipertahankan
+                creds.PasswordHash = SecurityHelper.HashPassword(newPassword);
+
+                string jsonBaru = JsonSerializer.Serialize(creds);
+                File.WriteAllText(path, jsonBaru);
                 SaveLog("Change Master Key", "Success");
             }
-            catch (IOException ex)
+            catch (IOException)
             {
-                // DEFENSIVE: Menangkap error jika file mendadak dikunci oleh sistem operasi
                 SaveLog("Change Master Key (File Blocked)", "Failed");
-                System.Windows.Forms.MessageBox.Show("Gagal menulis data. File sedang digunakan oleh proses lain: " + ex.Message, "Error File");
+                throw;
             }
         }
     }
@@ -130,33 +152,55 @@ public class AuthManager
     {
         if (CurrentState == AppState.DASHBOARD)
         {
-            CurrentState = AppState.LOGIN;
+            ChangeState(new LoginState());
             SaveLog("User Logout", "Success");
         }
     }
 
-    // FITUR LUPA PASSWORD: Menghapus file master key lama agar user bisa setup ulang dari awal
-    public bool ResetMasterKey()
+    // 1. Ambil data Pertanyaan Keamanan dari file untuk ditampilkan di UI Lupa Password
+    public string GetSecurityQuestion()
     {
-        // Menggunakan lock agar proses penghapusan file tidak bentrok
         lock (_fileLock)
         {
+            if (!File.Exists(path)) return null;
             try
             {
-                if (File.Exists(path))
-                {
-                    File.Delete(path); // Hapus file password lama
-                }
-                CurrentState = AppState.SETUP; // Kembalikan state ke SETUP awal
-                SaveLog("Reset Master Key (Lupa Password)", "Success");
-                loginAttempts = 0; // Reset hitungan salah login
-                return true;
+                string json = File.ReadAllText(path);
+                var creds = JsonSerializer.Deserialize<UserCredentials>(json);
+                return creds?.SecurityQuestion;
             }
-            catch (IOException ex)
+            catch { return null; }
+        }
+    }
+
+    // 2. Validasi jawaban pengguna saat menempuh alur Lupa Password
+    public bool ValidateRecoveryAnswer(string inputAnswer)
+    {
+        if (string.IsNullOrWhiteSpace(inputAnswer)) return false;
+
+        lock (_fileLock)
+        {
+            if (!File.Exists(path)) return false;
+
+            try
             {
-                System.Windows.Forms.MessageBox.Show("Gagal mereset password, file sedang digunakan: " + ex.Message, "Error");
+                string json = File.ReadAllText(path);
+                var creds = JsonSerializer.Deserialize<UserCredentials>(json);
+
+                // Lakukan standarisasi teks input (lowercase & tanpa spasi luar) sebelum di-hash
+                string hashedInputAnswer = SecurityHelper.HashPassword(inputAnswer.Trim().ToLower());
+
+                if (creds != null && creds.AnswerHash == hashedInputAnswer)
+                {
+                    ChangeState(new SetupState()); // Izinkan balik ke SETUP untuk buat password baru
+                    SaveLog("Forgot Password Verification", "Success");
+                    return true;
+                }
+
+                SaveLog("Forgot Password Verification", "Failed");
                 return false;
             }
+            catch { return false; }
         }
     }
 }

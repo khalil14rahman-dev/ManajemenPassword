@@ -40,6 +40,8 @@ namespace Project_KPL_ManajemenPassword
                 dataGridView1.Columns["colPassword"].DataPropertyName = "Password";
             }
         }
+
+        private AuthManager auth = AuthManager.GetInstance();
         public FormDashboard()
         {
             InitializeComponent();
@@ -137,17 +139,16 @@ namespace Project_KPL_ManajemenPassword
 
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            // 1. Panggil instance AuthManager untuk mengeksekusi logika transisi Automata
-            AuthManager auth = new AuthManager();
-            auth.Logout(); // Ini akan mengubah status dari DASHBOARD menjadi LOGIN
+            // CLEAN CODE: Memakai objek pusat '_auth' yang konsisten, bukan membuat objek 'new' tiruan
+            auth.Logout();
+            auth.SaveLog("Logout User", "Success");
 
-            MessageBox.Show("Anda telah berhasil logout.", "Informasi");
+            // CLEAN CODE: Menggunakan MessageBoxIcon untuk kualitas UX standar industri
+            MessageBox.Show("Anda telah berhasil logout.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            // 2. Tampilkan kembali Form Login (Form1)
             Form1 loginForm = new Form1();
             loginForm.Show();
 
-            // 3. Tutup halaman dashboard saat ini agar tidak menumpuk di background
             this.Close();
         }
     }

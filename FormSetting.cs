@@ -12,7 +12,9 @@ namespace Project_KPL_ManajemenPassword
 {
     public partial class FormSetting : Form
     {
-        AuthManager auth = new AuthManager();
+        private AuthManager auth = AuthManager.GetInstance();
+
+        // 2. CONSTRUCTOR REFACTORING: Terima operan objek auth aktif dari FormDashboard
         public FormSetting()
         {
             InitializeComponent();
@@ -49,7 +51,7 @@ namespace Project_KPL_ManajemenPassword
 
             if (sukses)
             {
-                // (Opsional/Defensive): Kamu juga bisa membungkus passBaru ke DTO jika ingin memvalidasi panjang 8 karakternya
+                // (Opsional/Defensive): membungkus passBaru ke DTO jika ingin memvalidasi panjang 8 karakternya
                 PasswordRequestDto validasiPassBaru = new PasswordRequestDto { Password = passBaru };
 
                 if (!validasiPassBaru.IsValid())
@@ -58,10 +60,18 @@ namespace Project_KPL_ManajemenPassword
                     return;
                 }
 
-                auth.ChangePassword(passBaru);
-                MessageBox.Show("Master Password berhasil diperbarui! Silakan Login ulang.");
-
-                Application.Restart();
+                // 3. SECURE CODING (EXCEPTION HANDLING): Mengisolasi pemanggilan backend jika terkena Guard Clause
+                try
+                {
+                    auth.ChangePassword(passBaru);
+                    MessageBox.Show("Master Password berhasil diperbarui! Silakan Login ulang.");
+                    Application.Restart();
+                }
+                catch (ArgumentException ex)
+                {
+                    // Menangkap pesan error dari Guard Clause di AuthManager jika bypass UI terjadi
+                    MessageBox.Show(ex.Message, "Peringatan Keamanan Backend", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
             }
             else
             {

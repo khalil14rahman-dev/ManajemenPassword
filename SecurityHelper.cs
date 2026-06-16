@@ -11,11 +11,13 @@ namespace Project_KPL_ManajemenPassword
     {
         public static string HashPassword(string password)
         {
+            //Guard Clause (CWE-20: Improper Input Validation)
             if (string.IsNullOrEmpty(password))
             {
                 throw new ArgumentException("Password yang akan di-enkripsi tidak valid.");
             }
 
+            //automatic resource disposal (cegah celah kebocoran memori (memory leak))
             using (SHA256 sha256Hash = SHA256.Create())
             {
                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));

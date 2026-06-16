@@ -103,7 +103,7 @@ namespace Project_KPL_ManajemenPassword
                 MessageBox.Show("Gagal memproses data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            AuthManager auth = new AuthManager();
+            AuthManager auth = AuthManager.GetInstance();
             auth.SaveLog("Tambah Data Password", "Success");
         }
 

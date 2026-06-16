@@ -33,6 +33,10 @@
             this.btnAction = new System.Windows.Forms.Button();
             this.chkShowPassword = new System.Windows.Forms.CheckBox();
             this.lnkLupaPassword = new System.Windows.Forms.LinkLabel();
+            this.cmbSecurityQuestion = new System.Windows.Forms.ComboBox();
+            this.txtSecurityAnswer = new System.Windows.Forms.TextBox();
+            this.lblQuestionHint = new System.Windows.Forms.Label();
+            this.lblAnswerHint = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblStatus
@@ -58,7 +62,7 @@
             // 
             // btnAction
             // 
-            this.btnAction.Location = new System.Drawing.Point(248, 231);
+            this.btnAction.Location = new System.Drawing.Point(248, 339);
             this.btnAction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAction.Name = "btnAction";
             this.btnAction.Size = new System.Drawing.Size(253, 39);
@@ -89,11 +93,52 @@
             this.lnkLupaPassword.Text = "Lupa Password?";
             this.lnkLupaPassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkLupaPassword_LinkClicked);
             // 
+            // cmbSecurityQuestion
+            // 
+            this.cmbSecurityQuestion.FormattingEnabled = true;
+            this.cmbSecurityQuestion.Items.AddRange(new object[] {
+            "Apa nama hewan peliharaan pertama Anda?",
+            "Di kota mana kedua orang tua Anda bertemu?",
+            "Apa nama sekolah dasar Anda?"});
+            this.cmbSecurityQuestion.Location = new System.Drawing.Point(248, 215);
+            this.cmbSecurityQuestion.Name = "cmbSecurityQuestion";
+            this.cmbSecurityQuestion.Size = new System.Drawing.Size(253, 28);
+            this.cmbSecurityQuestion.TabIndex = 5;
+            // 
+            // txtSecurityAnswer
+            // 
+            this.txtSecurityAnswer.Location = new System.Drawing.Point(248, 284);
+            this.txtSecurityAnswer.Name = "txtSecurityAnswer";
+            this.txtSecurityAnswer.Size = new System.Drawing.Size(253, 26);
+            this.txtSecurityAnswer.TabIndex = 6;
+            // 
+            // lblQuestionHint
+            // 
+            this.lblQuestionHint.AutoSize = true;
+            this.lblQuestionHint.Location = new System.Drawing.Point(244, 192);
+            this.lblQuestionHint.Name = "lblQuestionHint";
+            this.lblQuestionHint.Size = new System.Drawing.Size(207, 20);
+            this.lblQuestionHint.TabIndex = 7;
+            this.lblQuestionHint.Text = "Pilih Pertanyaan Keamanan:";
+            // 
+            // lblAnswerHint
+            // 
+            this.lblAnswerHint.AutoSize = true;
+            this.lblAnswerHint.Location = new System.Drawing.Point(244, 261);
+            this.lblAnswerHint.Name = "lblAnswerHint";
+            this.lblAnswerHint.Size = new System.Drawing.Size(155, 20);
+            this.lblAnswerHint.TabIndex = 8;
+            this.lblAnswerHint.Text = "Jawaban Pemulihan:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblAnswerHint);
+            this.Controls.Add(this.lblQuestionHint);
+            this.Controls.Add(this.txtSecurityAnswer);
+            this.Controls.Add(this.cmbSecurityQuestion);
             this.Controls.Add(this.lnkLupaPassword);
             this.Controls.Add(this.chkShowPassword);
             this.Controls.Add(this.btnAction);
@@ -115,6 +160,10 @@
         private System.Windows.Forms.Button btnAction;
         private System.Windows.Forms.CheckBox chkShowPassword;
         private System.Windows.Forms.LinkLabel lnkLupaPassword;
+        private System.Windows.Forms.ComboBox cmbSecurityQuestion;
+        private System.Windows.Forms.TextBox txtSecurityAnswer;
+        private System.Windows.Forms.Label lblQuestionHint;
+        private System.Windows.Forms.Label lblAnswerHint;
     }
 }
 
