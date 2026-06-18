@@ -8,13 +8,11 @@ namespace Project_KPL_ManajemenPassword
 {
     public class DataRepository<T> where T : class
     {
-        //design pattern instance tunggal bersifat private dan static
         private static DataRepository<T> _instance;
         private static readonly object _lock = new object();
 
         private string _filePath;
 
-        //design pattern, constructor diubah menjadi private agar tidak bisa di- "new" sembarangan dari luar
         private DataRepository(string fileName)
         {
             if (!string.IsNullOrEmpty(fileName) && !fileName.Contains("\\"))
@@ -61,7 +59,7 @@ namespace Project_KPL_ManajemenPassword
                 string jsonString = JsonSerializer.Serialize(dataList, new JsonSerializerOptions { WriteIndented = true });
                 File.WriteAllText(_filePath, jsonString);
 
-                // [Ariel] Observer Trigger -> Teriak ke FormDashboard kalau data udah disave!
+                // [Ariel] Observer Trigger -> ke FormDashboard 
                 OnDataChanged?.Invoke();
             }
             catch (Exception ex)
