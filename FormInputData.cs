@@ -9,23 +9,31 @@ namespace Project_KPL_ManajemenPassword
 {
     public partial class FormInputData : Form
     {
-        DataRepository<PasswordModel> repo = DataRepository<PasswordModel>.GetInstance("data_password.json");
-        private int indexEdit = -1;
+        DataRepository repo = DataRepository.GetInstance();
+
+        private int currentIdPassword = -1;
 
         public FormInputData()
         {
             InitializeComponent();
+            LoadCategoryComboBox();
         }
 
         public FormInputData(PasswordModel data, int index)
         {
             InitializeComponent();
-            this.indexEdit = index;
+            LoadCategoryComboBox(); 
 
+            this.currentIdPassword = data.IdPassword;
             txtAplikasi.Text = data.NamaAplikasi;
-            txtUsername.Text = data.Username;
+            txtUsername.Text = data.UsernameAkun;
             textPassword.Text = SecurityService.Decrypt(data.Password);
+
+            cmbKategori.SelectedValue = data.IdCategory;
+
             btnSimpanFormInput.Text = "Update Data";
+
+            textPassword_TextChanged(textPassword, EventArgs.Empty);
         }
 
         private void btnBatalFormInput_Click(object sender, EventArgs e)
@@ -35,26 +43,16 @@ namespace Project_KPL_ManajemenPassword
 
         private void btnAuto_Click(object sender, EventArgs e)
         {
-            string[] karakterTabel = {
-                "ABCDEFGHJKLMNPQRSTUVWXYZ",
-                "abcdefghijkmnopqrstuvwxyz",
-                "123456789",
-                "!@#$%^&*"
-            };
+            textPassword.Text = PasswordModel.GeneratePassword();
+        }
 
-            Random rand = new Random();
-            string passwordBaru = "";
+        private void LoadCategoryComboBox()
+        {
+            var listKategori = repo.GetCategories();
 
-            for (int i = 0; i < karakterTabel.Length; i++)
-            {
-                string barisKarakter = karakterTabel[i];
-                for (int j = 0; j < 2; j++)
-                {
-                    passwordBaru += barisKarakter[rand.Next(barisKarakter.Length)];
-                }
-            }
-
-            textPassword.Text = passwordBaru;
+            cmbKategori.DataSource = new BindingSource(listKategori, null);
+            cmbKategori.DisplayMember = "Value"; 
+            cmbKategori.ValueMember = "Key";     
         }
 
         private void btnSimpanFormInput_Click(object sender, EventArgs e)
@@ -69,25 +67,28 @@ namespace Project_KPL_ManajemenPassword
 
             try
             {
-                List<PasswordModel> listData = repo.LoadData();
                 string passwordAman = SecurityService.Encrypt(textPassword.Text);
-                PasswordModel dataInput = new PasswordModel(txtAplikasi.Text, txtUsername.Text, passwordAman);
 
-                if (indexEdit == -1)
+                PasswordModel dataInput = new PasswordModel();
+                dataInput.NamaAplikasi = txtAplikasi.Text;
+                dataInput.UsernameAkun = txtUsername.Text;
+                dataInput.Password = passwordAman;
+
+                dataInput.IdCategory = (int)cmbKategori.SelectedValue;
+
+                if (currentIdPassword == -1)
                 {
-                    listData.Add(dataInput);
+                    dataInput.IdPassword = 0;
                 }
                 else
                 {
-                    if (indexEdit >= 0 && indexEdit < listData.Count)
-                    {
-                        listData[indexEdit] = dataInput;
-                    }
+                    dataInput.IdPassword = currentIdPassword;
                 }
 
-                // Saat baris ini jalan, Event Observer akan otomatis terpanggil, memanggil yang ada di datarepo
-                //disini juga ada clean code DRY
-                repo.SaveData(listData);
+                repo.SaveData(dataInput);
+
+                AuthManager auth = AuthManager.GetInstance();
+                auth.SaveLog($"Simpan Data Aplikasi: {txtAplikasi.Text}", "Success");
 
                 MessageBox.Show("Data berhasil disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
@@ -96,9 +97,16 @@ namespace Project_KPL_ManajemenPassword
             {
                 MessageBox.Show("Gagal memproses data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
 
-            AuthManager auth = AuthManager.GetInstance();
-            auth.SaveLog("Tambah/Update Data Password", "Success");
+        private void textPassword_TextChanged(object sender, EventArgs e)
+        {
+            Debug.Assert(sender != null, "Precondition gagal: pengirim tidak boleh null.");
+
+            StrengthResult result = CalculatePasswordStrength(textPassword.Text);
+
+            lblstrength.Text = result.Status;
+            lblstrength.ForeColor = result.Warna;
         }
 
         public static StrengthResult CalculatePasswordStrength(string pass)
@@ -118,16 +126,5 @@ namespace Project_KPL_ManajemenPassword
             StrengthFactory factory = new PasswordStrengthFactory();
             return factory.CreateStrengthResult(score);
         }
-
-        private void textPassword_TextChanged_1(object sender, EventArgs e)
-        {
-            Debug.Assert(sender != null, "Precondition gagal: pengirim tidak boleh null.");
-
-            StrengthResult result = CalculatePasswordStrength(textPassword.Text);
-
-            lblstrength.Text = result.Status;
-            lblstrength.ForeColor = result.Warna;
-        }
     }
 }
-   

@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Project_KPL_ManajemenPassword
@@ -20,29 +14,30 @@ namespace Project_KPL_ManajemenPassword
 
         private void LoadLogToTable()
         {
-            AuthManager auth = AuthManager.GetInstance();
-            List<LogActivity> dataLog = auth.GetLogs();
+            try
+            {
+                AuthManager auth = AuthManager.GetInstance();
+                List<LogActivity> dataLog = auth.GetLogs();
 
-            dgvLogs.DataSource = dataLog;
+                dgvLogs.AutoGenerateColumns = true; 
+                dgvLogs.DataSource = null;
+                dgvLogs.DataSource = dataLog;
 
-            if (dgvLogs.Columns["Timestamp"] != null)
-                dgvLogs.Columns["Timestamp"].HeaderText = "Waktu";
+                if (dgvLogs.Columns["Waktu"] != null)
+                    dgvLogs.Columns["Waktu"].HeaderText = "Waktu Aktivitas";
 
-            if (dgvLogs.Columns["Activity"] != null)
-                dgvLogs.Columns["Activity"].HeaderText = "Aktivitas";
+                if (dgvLogs.Columns["Aktivitas"] != null)
+                    dgvLogs.Columns["Aktivitas"].HeaderText = "Detail Aktivitas";
 
-            if (dgvLogs.Columns["Status"] != null)
-                dgvLogs.Columns["Status"].HeaderText = "Status";
+                if (dgvLogs.Columns["Status"] != null)
+                    dgvLogs.Columns["Status"].HeaderText = "Status";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal memuat log aktivitas: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void FormLog_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
+       
     }
 }

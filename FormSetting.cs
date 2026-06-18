@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Project_KPL_ManajemenPassword
@@ -14,7 +7,6 @@ namespace Project_KPL_ManajemenPassword
     {
         private AuthManager auth = AuthManager.GetInstance();
 
-        // 2. CONSTRUCTOR REFACTORING: Terima operan objek auth aktif dari FormDashboard
         public FormSetting()
         {
             InitializeComponent();
@@ -31,67 +23,58 @@ namespace Project_KPL_ManajemenPassword
             string passBaru = txtPassBaru.Text;
             string konfirmasi = txtKonfirmasi.Text;
 
-            if (string.IsNullOrEmpty(passLama) || string.IsNullOrEmpty(passBaru))
+            if (string.IsNullOrWhiteSpace(passLama) || string.IsNullOrWhiteSpace(passBaru) || string.IsNullOrWhiteSpace(konfirmasi))
             {
-                MessageBox.Show("Semua kolom harus diisi!");
+                MessageBox.Show("Semua kolom harus diisi!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (passBaru != konfirmasi)
             {
-                MessageBox.Show("Konfirmasi password baru tidak cocok!");
+                MessageBox.Show("Konfirmasi password baru tidak cocok!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // PERBAIKAN DTO: Bungkus passLama ke dalam DTO sebelum dikirim ke AuthManager
             PasswordRequestDto authRequest = new PasswordRequestDto { Password = passLama };
 
-            // Eksekusi UpdateState menggunakan paket DTO
             bool sukses = auth.UpdateState(authRequest);
 
             if (sukses)
             {
-                // (Opsional/Defensive): membungkus passBaru ke DTO jika ingin memvalidasi panjang 8 karakternya
                 PasswordRequestDto validasiPassBaru = new PasswordRequestDto { Password = passBaru };
 
                 if (!validasiPassBaru.IsValid())
                 {
-                    MessageBox.Show("Password baru harus minimal 8 karakter!", "Peringatan Keamanan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Password baru wajib minimal 8 karakter demi keamanan!", "Peringatan Keamanan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // 3. SECURE CODING (EXCEPTION HANDLING): Mengisolasi pemanggilan backend jika terkena Guard Clause
                 try
                 {
                     auth.ChangePassword(passBaru);
-                    MessageBox.Show("Master Password berhasil diperbarui! Silakan Login ulang.");
+
+                    auth.SaveLog("Ganti Master Password", "Success");
+                    MessageBox.Show("Master Password berhasil diperbarui! Aplikasi akan memuat ulang.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                     Application.Restart();
                 }
                 catch (ArgumentException ex)
                 {
-                    // Menangkap pesan error dari Guard Clause di AuthManager jika bypass UI terjadi
                     MessageBox.Show(ex.Message, "Peringatan Keamanan Backend", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
             }
             else
             {
-                MessageBox.Show("Password lama salah!");
+                auth.SaveLog("Gagal Ganti Master Password (Password Lama Salah)", "Failed");
+                MessageBox.Show("Password lama yang Anda masukkan salah!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void txtPassLama_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void FormSetting_Load(object sender, EventArgs e)
         {
-
-        }
-
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            txtKonfirmasi.UseSystemPasswordChar = !chkShowKonf.Checked;
+            txtPassLama.UseSystemPasswordChar = true;
+            txtPassBaru.UseSystemPasswordChar = true;
+            txtKonfirmasi.UseSystemPasswordChar = true;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -103,5 +86,12 @@ namespace Project_KPL_ManajemenPassword
         {
             txtPassBaru.UseSystemPasswordChar = !chkShowBaru.Checked;
         }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            txtKonfirmasi.UseSystemPasswordChar = !chkShowKonf.Checked;
+        }
+
+        private void txtPassLama_TextChanged(object sender, EventArgs e) { }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MySqlConnector;
+using MySql.Data.MySqlClient;
 using System.Windows.Forms;
 
 namespace Project_KPL_ManajemenPassword
@@ -13,17 +13,13 @@ namespace Project_KPL_ManajemenPassword
         private static DatabaseConnection _instance;
         private MySqlConnection _connection;
 
-        // Konfigurasi String Koneksi (Gaya penulisan string tetap sama persis untuk phpMyAdmin)
-        private readonly string connectionString = "Server=localhost;Database=password_manager_db;Uid=root;Pwd=;";
+        private readonly string connectionString = "Server=localhost;Database=password_manager;Uid=root;Pwd=;";
 
-        // Constructor bertipe private (Singleton)
         private DatabaseConnection()
         {
-            // Tetap menggunakan kelas MySqlConnection bawaan dari MySqlConnector
             _connection = new MySqlConnection(connectionString);
         }
 
-        // Gerbang Singleton Pattern
         public static DatabaseConnection GetInstance()
         {
             if (_instance == null)
@@ -38,7 +34,6 @@ namespace Project_KPL_ManajemenPassword
             return _connection;
         }
 
-        // Metode penunjang membuka koneksi secara aman
         public void OpenConnection()
         {
             if (_connection.State == System.Data.ConnectionState.Closed)
@@ -47,14 +42,13 @@ namespace Project_KPL_ManajemenPassword
                 {
                     _connection.Open();
                 }
-                catch (MySqlException ex) // Menangkap exception spesifik dari MySqlConnector
+                catch (MySqlException ex) 
                 {
-                    throw new Exception("Gagal terhubung ke database server via MySqlConnector: " + ex.Message);
+                    throw new Exception("Gagal terhubung ke database server: " + ex.Message);
                 }
             }
         }
 
-        // Metode penunjang menutup koneksi
         public void CloseConnection()
         {
             if (_connection.State == System.Data.ConnectionState.Open)

@@ -8,13 +8,24 @@ namespace Project_KPL_ManajemenPassword
 {
     public partial class FormDashboard : Form
     {
-        DataRepository<PasswordModel> repo = DataRepository<PasswordModel>.GetInstance("data_password.json");
+        DataRepository repo = DataRepository.GetInstance();
+        private AuthManager auth = AuthManager.GetInstance();
+
+        public FormDashboard()
+        {
+            InitializeComponent();
+
+            repo.OnDataChanged += LoadDataToGrid;
+
+            LoadDataToGrid();
+            dataGridView1.RowHeadersWidth = 50;
+        }
+
         public void LoadDataToGrid()
         {
             List<PasswordModel> listData = repo.LoadData();
 
             dataGridView1.AutoGenerateColumns = false;
-
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = listData;
 
@@ -25,7 +36,7 @@ namespace Project_KPL_ManajemenPassword
 
             if (dataGridView1.Columns.Contains("colUsername"))
             {
-                dataGridView1.Columns["colUsername"].DataPropertyName = "Username";
+                dataGridView1.Columns["colUsername"].DataPropertyName = "UsernameAkun";
             }
 
             if (dataGridView1.Columns.Contains("colPassword"))
@@ -34,24 +45,9 @@ namespace Project_KPL_ManajemenPassword
             }
         }
 
-        private AuthManager auth = AuthManager.GetInstance();
-        public FormDashboard()
-        {
-            InitializeComponent();
-
-            //buat memanggil observer yang ada di datarepo,
-            repo.OnDataChanged += LoadDataToGrid;
-
-            LoadDataToGrid();
-            dataGridView1.RowHeadersWidth = 50;
-        }
-
-
-
         private void btnTambah_Click(object sender, EventArgs e)
         {
             FormInputData formInput = new FormInputData();
-
             formInput.ShowDialog();
         }
 
@@ -67,12 +63,14 @@ namespace Project_KPL_ManajemenPassword
 
             if (dataGridView1.CurrentRow == null)
             {
-                throw new InvalidOperationException("DbC Violation [Pre-condition]: Tidak ada baris yang dipilih atau CurrentRow bernilai null!");
+                throw new InvalidOperationException("DbC Violation [Pre-condition]: Tidak ada baris yang dipilih!");
             }
 
-            if (dataGridView1.CurrentRow != null)
+            PasswordModel dataTerpilih = (PasswordModel)dataGridView1.CurrentRow.DataBoundItem;
+
+            if (dataTerpilih != null)
             {
-                string namaAplikasi = dataGridView1.CurrentRow.Cells[0].Value?.ToString() ?? "Unknown";
+                string namaAplikasi = dataTerpilih.NamaAplikasi;
 
                 var confirm = MessageBox.Show($"Apakah yakin ingin menghapus akun {namaAplikasi}?", "Konfirmasi", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
@@ -80,35 +78,14 @@ namespace Project_KPL_ManajemenPassword
                 {
                     try
                     {
-                        List<PasswordModel> listData = repo.LoadData();
-                        int index = dataGridView1.CurrentRow.Index;
+                        repo.SoftDeleteData(dataTerpilih.IdPassword);
 
-                        int jumlahBarisAwal = dataGridView1.Rows.Count;
-
-                        Debug.Assert(index >= 0 && index < listData.Count, "Kontrak Gagal: Indeks di luar jangkauan list data.");
-
-                        if (index < 0 || index >= listData.Count)
-                        {
-                            throw new ArgumentOutOfRangeException(nameof(index), "DbC Violation [Invariant]: Indeks baris di UI tidak sinkron dengan jumlah data di database JSON!");
-                        }
-
-                        listData.RemoveAt(index);
-                        repo.SaveData(listData);
-   
                         auth.SaveLog($"Hapus Data Password: {namaAplikasi}", "Success");
-
-
-                        if (dataGridView1.Rows.Count != (jumlahBarisAwal - 1))
-                        {
-                            throw new InvalidOperationException("DbC Violation [Post-condition]: Fungsi LoadDataToGrid() gagal memperbarui tampilan tabel secara sinkron!");
-                        }
-
                         MessageBox.Show("Data berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
                         auth.SaveLog($"Gagal Hapus Data: {namaAplikasi}", "Error");
-
                         MessageBox.Show("Gagal menghapus data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
@@ -127,7 +104,6 @@ namespace Project_KPL_ManajemenPassword
 
                 FormInputData formEdit = new FormInputData(dataTerpilih, index);
                 formEdit.ShowDialog();
-
             }
         }
 
@@ -142,8 +118,7 @@ namespace Project_KPL_ManajemenPassword
             if (e.RowIndex >= 0)
             {
                 var data = (PasswordModel)dataGridView1.Rows[e.RowIndex].DataBoundItem;
-
-                FormDetailPassword formDetail = new FormDetailPassword(data.NamaAplikasi, data.Username, data.Password);
+                FormDetailPassword formDetail = new FormDetailPassword(data.NamaAplikasi, data.UsernameAkun, data.Password);
                 formDetail.ShowDialog();
             }
         }
@@ -156,46 +131,37 @@ namespace Project_KPL_ManajemenPassword
                 return;
             }
 
-            List<int> indeksYangDihapus = new List<int>();
+            List<PasswordModel> dataDihapusMassal = new List<PasswordModel>();
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 var cellValue = dataGridView1.Rows[i].Cells["chkDelete"].Value;
-
                 bool isChecked = cellValue != null && Convert.ToBoolean(cellValue);
 
                 if (isChecked)
                 {
-                    indeksYangDihapus.Add(i);
+                    var data = (PasswordModel)dataGridView1.Rows[i].DataBoundItem;
+                    if (data != null) dataDihapusMassal.Add(data);
                 }
             }
 
-            if (indeksYangDihapus.Count == 0)
+            if (dataDihapusMassal.Count == 0)
             {
                 MessageBox.Show("Silakan centang data yang ingin dihapus terlebih dahulu!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            DialogResult result = MessageBox.Show($"Apakah Anda yakin ingin menghapus {indeksYangDihapus.Count} data yang dicentang?",
+            DialogResult result = MessageBox.Show($"Apakah Anda yakin ingin menghapus {dataDihapusMassal.Count} data yang dicentang?",
                 "Konfirmasi Hapus Massal", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
                 try
                 {
-                    List<PasswordModel> listData = repo.LoadData();
-
-                    indeksYangDihapus.Reverse();
-
-                    foreach (int index in indeksYangDihapus)
+                    foreach (var item in dataDihapusMassal)
                     {
-                        if (index >= 0 && index < listData.Count)
-                        {
-                            listData.RemoveAt(index);
-                        }
+                        repo.SoftDeleteData(item.IdPassword);
                     }
-
-                    repo.SaveData(listData);
 
                     MessageBox.Show("Semua data terpilih berhasil dihapus!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -209,7 +175,6 @@ namespace Project_KPL_ManajemenPassword
         private void dataGridView1_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
             string nomorUrut = (e.RowIndex + 1).ToString();
-
             StringFormat centerFormat = new StringFormat()
             {
                 Alignment = StringAlignment.Center,
@@ -224,18 +189,14 @@ namespace Project_KPL_ManajemenPassword
                 System.Drawing.SystemBrushes.ControlText,
                 headerBounds, centerFormat);
         }
+
         private void btnLogout_Click(object sender, EventArgs e)
         {
-            // CLEAN CODE: Memakai objek pusat '_auth' yang konsisten, bukan membuat objek 'new' tiruan
             auth.Logout();
-            auth.SaveLog("Logout User", "Success");
-
-            // CLEAN CODE: Menggunakan MessageBoxIcon untuk kualitas UX standar industri
             MessageBox.Show("Anda telah berhasil logout.", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             Form1 loginForm = new Form1();
             loginForm.Show();
-
             this.Close();
         }
     }

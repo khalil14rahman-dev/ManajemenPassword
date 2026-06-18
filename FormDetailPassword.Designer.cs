@@ -60,7 +60,6 @@ namespace Project_KPL_ManajemenPassword
             this.label2.Size = new System.Drawing.Size(70, 16);
             this.label2.TabIndex = 1;
             this.label2.Text = "Username";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 
@@ -83,7 +82,6 @@ namespace Project_KPL_ManajemenPassword
             this.label4.TabIndex = 3;
             this.label4.Text = "Detail Akun";
             this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // txtNamaApp
             // 

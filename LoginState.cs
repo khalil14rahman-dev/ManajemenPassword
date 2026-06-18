@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-
+using System.Windows.Forms;
 
 namespace Project_KPL_ManajemenPassword
 {
@@ -12,35 +7,27 @@ namespace Project_KPL_ManajemenPassword
     {
         public bool Handle(AuthManager context, PasswordRequestDto dto)
         {
-            string hashedInput = SecurityHelper.HashPassword(dto.Password);
-
-            lock (context.GetFileLock())
+            if (string.IsNullOrWhiteSpace(dto.Username) || string.IsNullOrWhiteSpace(dto.Password))
             {
-                string storedPath = context.GetPath();
-                if (File.Exists(storedPath))
-                {
-                    try
-                    {
-                        string json = File.ReadAllText(storedPath);
-                        var creds = System.Text.Json.JsonSerializer.Deserialize<UserCredentials>(json);
+                MessageBox.Show("Username dan Password tidak boleh kosong!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
 
-                        // Cocokkan hash input dengan PasswordHash di dalam objek JSON
-                        if (creds != null && hashedInput == creds.PasswordHash)
-                        {
-                            context.SaveLog("User Login", "Success");
-                            context.ResetAttempts();
-                            context.ChangeState(new DashboardState());
-                            return true;
-                        }
-                    }
-                    catch
-                    {
-                        // Menangani jika file corrupt atau format lama
-                    }
-                }
+            bool isPasswordValid = context.ValidateLogin(dto.Username, dto.Password);
 
-                context.SaveLog("Login Attempt", "Failed");
+            if (isPasswordValid)
+            {
+                context.ResetAttempts();
+                context.SaveLog("User Login Berhasil", "Success");
+
+                context.ChangeState(new DashboardState());
+                return true;
+            }
+            else
+            {
                 context.IncrementAttempts();
+
+                context.SaveLog($"Gagal Login (Percobaan Username: {dto.Username})", "Failed");
                 return false;
             }
         }

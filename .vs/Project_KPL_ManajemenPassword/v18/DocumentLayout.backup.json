@@ -1,11 +1,7 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Khalil\\source\\repos\\Project_KPL_ManajemenPassword\\Project_KPL_ManajemenPassword\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{2122D7AB-33F6-4EF9-A00E-9F4ABE6F484C}|..\\Khalil_Testing\\Khalil_Testing.csproj|c:\\users\\khalil\\source\\repos\\project_kpl_manajemenpassword\\khalil_testing\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "WorkspaceRootPath": "D:\\Kuliah Telkom University\\SEMESTER 4\\KPL\\tubes\\ManajemenPassword\\",
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -13,20 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": -1,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "UnitTest1.cs",
-              "DocumentMoniker": "C:\\Users\\Khalil\\source\\repos\\Project_KPL_ManajemenPassword\\Khalil_Testing\\UnitTest1.cs",
-              "RelativeDocumentMoniker": "..\\Khalil_Testing\\UnitTest1.cs",
-              "ToolTip": "C:\\Users\\Khalil\\source\\repos\\Project_KPL_ManajemenPassword\\Khalil_Testing\\UnitTest1.cs",
-              "RelativeToolTip": "..\\Khalil_Testing\\UnitTest1.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACcAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-11T13:50:12.647Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Bookmark",

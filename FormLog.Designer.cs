@@ -44,7 +44,6 @@
             this.dgvLogs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvLogs.Size = new System.Drawing.Size(800, 450);
             this.dgvLogs.TabIndex = 0;
-            this.dgvLogs.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // FormLog
             // 
@@ -54,7 +53,6 @@
             this.Controls.Add(this.dgvLogs);
             this.Name = "FormLog";
             this.Text = "FormLog";
-            this.Load += new System.EventHandler(this.FormLog_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvLogs)).EndInit();
             this.ResumeLayout(false);
 

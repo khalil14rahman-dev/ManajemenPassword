@@ -1,109 +1,230 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
+using System.Data;
 using System.Diagnostics;
+using MySql.Data.MySqlClient;
 
 namespace Project_KPL_ManajemenPassword
 {
-    public class DataRepository<T> where T : class
+    public class DataRepository
     {
-        //design pattern instance tunggal bersifat private dan static
-        private static DataRepository<T> _instance;
+        private static DataRepository _instance;
         private static readonly object _lock = new object();
 
-        private string _filePath;
-
-        //design pattern, constructor diubah menjadi private agar tidak bisa di- "new" sembarangan dari luar
-        private DataRepository(string fileName)
+        private DataRepository()
         {
-            if (!string.IsNullOrEmpty(fileName) && !fileName.Contains("\\"))
+            try
             {
-                fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+                DatabaseConnection.GetInstance().OpenConnection();
             }
-            Debug.Assert(!string.IsNullOrEmpty(fileName), "Kontrak Gagal: Path file harus ditentukan.");
-
-            if (string.IsNullOrEmpty(fileName))
+            catch (Exception ex)
             {
-                throw new ArgumentNullException(nameof(fileName), "DbC Violation [Pre-condition]: Path file harus ditentukan dan tidak boleh kosong!");
+                throw new InvalidOperationException("DbC Violation [Pre-condition]: Gagal inisialisasi koneksi database. " + ex.Message);
             }
-
-            _filePath = fileName;
+            finally
+            {
+                DatabaseConnection.GetInstance().CloseConnection();
+            }
         }
 
-        // design pattern Thread-Safe Singleton Accessor
-        // Fungsi ini yang akan dipanggil dari Form untuk mendapatkan objek repo
-        public static DataRepository<T> GetInstance(string fileName)
+        public static DataRepository GetInstance()
         {
             lock (_lock)
             {
                 if (_instance == null)
                 {
-                    _instance = new DataRepository<T>(fileName);
+                    _instance = new DataRepository();
                 }
                 return _instance;
             }
         }
 
-        // Simpan (Generic)
         public event Action OnDataChanged;
-        public void SaveData(List<T> dataList)
+
+        public List<PasswordModel> LoadData()
         {
-            // [Andra] Design by Contract (Pre-Condition Validation)
-            if (dataList == null)
-            {
-                throw new ArgumentNullException(nameof(dataList), "Data tidak boleh null sebelum disimpan!");
-            }
+            List<PasswordModel> listResult = new List<PasswordModel>();
+            DatabaseConnection db = DatabaseConnection.GetInstance();
+
+            int currentUserId = AuthManager.GetInstance().CurrentIdUser;
 
             try
             {
-                // [Andra] JSON Serialization
-                string jsonString = JsonSerializer.Serialize(dataList, new JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(_filePath, jsonString);
+                db.OpenConnection();
+                string query = "SELECT * FROM password_model WHERE is_active = 1 AND id_user = @id_user";
+                MySqlCommand cmd = new MySqlCommand(query, db.GetConnection());
+                cmd.Parameters.AddWithValue("@id_user", currentUserId);
 
-                // [Ariel] Observer Trigger -> Teriak ke FormDashboard kalau data udah disave!
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        PasswordModel item = new PasswordModel
+                        {
+                            IdPassword = Convert.ToInt32(reader["id_password"]),
+                            IdCategory = Convert.ToInt32(reader["id_category"]),
+                            NamaAplikasi = reader["nama_aplikasi"].ToString(),
+                            UsernameAkun = reader["username_akun"].ToString(),
+                            Password = reader["password"].ToString()
+                        };
+                        listResult.Add(item);
+                    }
+                }
+
+                Debug.Assert(listResult != null, "Post-condition gagal: Output list tidak boleh null!");
+                return listResult;
+            }
+            catch
+            {
+                return new List<PasswordModel>();
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
+
+        public void SaveData(PasswordModel data)
+        {
+            if (data == null) throw new ArgumentNullException(nameof(data));
+
+            DatabaseConnection db = DatabaseConnection.GetInstance();
+
+            int currentUserId = AuthManager.GetInstance().CurrentIdUser;
+
+            try
+            {
+                db.OpenConnection();
+                string query;
+
+                if (data.IdPassword == 0)
+                {
+                    query = @"INSERT INTO password_model (id_user, id_category, nama_aplikasi, username_akun, password, is_active) 
+                             VALUES (@id_user, @id_category, @nama_aplikasi, @username_akun, @password, 1)";
+                }
+                else
+                {
+                    query = @"UPDATE password_model 
+                             SET id_category = @id_category, nama_aplikasi = @nama_aplikasi, username_akun = @username_akun, password = @password 
+                             WHERE id_password = @id_password AND id_user = @id_user";
+                }
+
+                MySqlCommand cmd = new MySqlCommand(query, db.GetConnection());
+
+                if (data.IdPassword > 0) cmd.Parameters.AddWithValue("@id_password", data.IdPassword);
+                cmd.Parameters.AddWithValue("@id_user", currentUserId);
+                cmd.Parameters.AddWithValue("@id_category", data.IdCategory);
+                cmd.Parameters.AddWithValue("@nama_aplikasi", data.NamaAplikasi);
+                cmd.Parameters.AddWithValue("@username_akun", data.UsernameAkun);
+                cmd.Parameters.AddWithValue("@password", data.Password);
+
+                cmd.ExecuteNonQuery();
+
                 OnDataChanged?.Invoke();
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Gagal menulis data ke file JSON.", ex);
+                throw new InvalidOperationException("Gagal mengeksekusi operasi simpan ke database MySQL. Detail: " + ex.Message, ex);
+            }
+            finally
+            {
+                db.CloseConnection();
             }
         }
 
-        // Ambil Data (Generic)
-        public List<T> LoadData()
+        public void SoftDeleteData(int idPassword)
         {
-            Debug.Assert(!string.IsNullOrEmpty(_filePath), "FilePath tidak boleh kosong!");
+            DatabaseConnection db = DatabaseConnection.GetInstance();
 
-            if (string.IsNullOrEmpty(_filePath))
-            {
-                throw new InvalidOperationException("DbC Violation [Pre-condition]: FilePath tidak boleh kosong!");
-            }
+            int currentUserId = AuthManager.GetInstance().CurrentIdUser;
 
             try
             {
-                if (!File.Exists(_filePath))
+                db.OpenConnection();
+
+                string query = "UPDATE password_model SET is_active = 0 WHERE id_password = @id_password AND id_user = @id_user";
+                MySqlCommand cmd = new MySqlCommand(query, db.GetConnection());
+                cmd.Parameters.AddWithValue("@id_password", idPassword);
+                cmd.Parameters.AddWithValue("@id_user", currentUserId); // 🛠️ TAMBAHAN
+
+                cmd.ExecuteNonQuery();
+
+                OnDataChanged?.Invoke();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Gagal melakukan penghapusan data di database MySQL.", ex);
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
+
+        public Dictionary<int, string> GetCategories()
+        {
+            Dictionary<int, string> categories = new Dictionary<int, string>();
+            DatabaseConnection db = DatabaseConnection.GetInstance();
+
+            try
+            {
+                db.OpenConnection();
+                string query = "SELECT id_category, nama_kategori FROM categories";
+
+                MySqlCommand cmd = new MySqlCommand(query, db.GetConnection());
+
+                using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
-                    return new List<T>();
+                    while (reader.Read())
+                    {
+                        int id = Convert.ToInt32(reader["id_category"]);
+                        string nama = reader["nama_kategori"].ToString();
+                        categories.Add(id, nama);
+                    }
                 }
-
-                string jsonString = File.ReadAllText(_filePath);
-                var result = JsonSerializer.Deserialize<List<T>>(jsonString);
-
-                List<T> finalResult = result ?? new List<T>();
-
-                Debug.Assert(finalResult != null, "Post-condition gagal: Output tidak boleh null!");
-
-                if (finalResult == null)
-                {
-                    throw new InvalidOperationException("DbC Violation [Post-condition]: Hasil load mengembalikan null!");
-                }
-
-                return finalResult;
+                return categories;
             }
             catch
             {
-                return new List<T>();
+                categories.Add(1, "Umum / Default");
+                return categories;
+            }
+            finally
+            {
+                db.CloseConnection();
+            }
+        }
+
+        public Dictionary<int, string> GetSecurityQuestions()
+        {
+            Dictionary<int, string> questions = new Dictionary<int, string>();
+            DatabaseConnection db = DatabaseConnection.GetInstance();
+
+            try
+            {
+                db.OpenConnection();
+                string query = "SELECT id_question, text_question FROM security_questions";
+                MySqlCommand cmd = new MySqlCommand(query, db.GetConnection());
+
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int id = Convert.ToInt32(reader["id_question"]);
+                        string text = reader["text_question"].ToString();
+                        questions.Add(id, text);
+                    }
+                }
+                return questions;
+            }
+            catch
+            {
+                questions.Add(1, "Apa nama sekolah dasar Anda?");
+                return questions;
+            }
+            finally
+            {
+                db.CloseConnection();
             }
         }
     }
