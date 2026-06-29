@@ -38,6 +38,8 @@
             this.btnSimpanFormInput = new System.Windows.Forms.Button();
             this.btnBatalFormInput = new System.Windows.Forms.Button();
             this.lblstrength = new System.Windows.Forms.Label();
+            this.cmbKategori = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -65,7 +67,6 @@
             this.label2.Size = new System.Drawing.Size(108, 16);
             this.label2.TabIndex = 2;
             this.label2.Text = "Username/Email";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // txtUsername
             // 
@@ -78,7 +79,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(77, 174);
+            this.label3.Location = new System.Drawing.Point(74, 283);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(67, 16);
             this.label3.TabIndex = 4;
@@ -86,16 +87,16 @@
             // 
             // textPassword
             // 
-            this.textPassword.Location = new System.Drawing.Point(81, 204);
+            this.textPassword.Location = new System.Drawing.Point(78, 313);
             this.textPassword.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textPassword.Name = "textPassword";
             this.textPassword.Size = new System.Drawing.Size(175, 22);
             this.textPassword.TabIndex = 5;
-            this.textPassword.TextChanged += new System.EventHandler(this.textPassword_TextChanged_1);
+            this.textPassword.TextChanged += new System.EventHandler(this.textPassword_TextChanged);
             // 
             // btnAuto
             // 
-            this.btnAuto.Location = new System.Drawing.Point(280, 199);
+            this.btnAuto.Location = new System.Drawing.Point(277, 308);
             this.btnAuto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnAuto.Name = "btnAuto";
             this.btnAuto.Size = new System.Drawing.Size(75, 33);
@@ -106,7 +107,7 @@
             // 
             // btnSimpanFormInput
             // 
-            this.btnSimpanFormInput.Location = new System.Drawing.Point(251, 302);
+            this.btnSimpanFormInput.Location = new System.Drawing.Point(248, 400);
             this.btnSimpanFormInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnSimpanFormInput.Name = "btnSimpanFormInput";
             this.btnSimpanFormInput.Size = new System.Drawing.Size(104, 46);
@@ -117,7 +118,7 @@
             // 
             // btnBatalFormInput
             // 
-            this.btnBatalFormInput.Location = new System.Drawing.Point(83, 302);
+            this.btnBatalFormInput.Location = new System.Drawing.Point(80, 400);
             this.btnBatalFormInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBatalFormInput.Name = "btnBatalFormInput";
             this.btnBatalFormInput.Size = new System.Drawing.Size(104, 46);
@@ -129,19 +130,38 @@
             // lblstrength
             // 
             this.lblstrength.AutoSize = true;
-            this.lblstrength.Location = new System.Drawing.Point(79, 258);
+            this.lblstrength.Location = new System.Drawing.Point(76, 356);
             this.lblstrength.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblstrength.Name = "lblstrength";
             this.lblstrength.Size = new System.Drawing.Size(69, 16);
             this.lblstrength.TabIndex = 9;
             this.lblstrength.Text = "Kekuatan :";
-            this.lblstrength.Click += new System.EventHandler(this.lblstrength_Click);
+            this.lblstrength.Click += new System.EventHandler(this.btnAuto_Click);
+            // 
+            // cmbKategori
+            // 
+            this.cmbKategori.FormattingEnabled = true;
+            this.cmbKategori.Location = new System.Drawing.Point(81, 229);
+            this.cmbKategori.Name = "cmbKategori";
+            this.cmbKategori.Size = new System.Drawing.Size(216, 24);
+            this.cmbKategori.TabIndex = 10;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(78, 176);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(57, 16);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "Kategori";
             // 
             // FormInputData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(504, 402);
+            this.ClientSize = new System.Drawing.Size(504, 554);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.cmbKategori);
             this.Controls.Add(this.lblstrength);
             this.Controls.Add(this.btnBatalFormInput);
             this.Controls.Add(this.btnSimpanFormInput);
@@ -157,7 +177,6 @@
             this.Name = "FormInputData";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormInputData";
-            this.Load += new System.EventHandler(this.FormInputData_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -175,5 +194,7 @@
         private System.Windows.Forms.Button btnSimpanFormInput;
         private System.Windows.Forms.Button btnBatalFormInput;
         private System.Windows.Forms.Label lblstrength;
+        private System.Windows.Forms.ComboBox cmbKategori;
+        private System.Windows.Forms.Label label5;
     }
 }

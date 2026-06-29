@@ -5,8 +5,7 @@ namespace Project_KPL_ManajemenPassword
 {
     public partial class FormSetting : Form
     {
-        // [CLEAN CODE] - Menerapkan standar penamaan variabel global & readonly
-        private readonly AuthManager _auth = new AuthManager();
+        private AuthManager auth = AuthManager.GetInstance();
 
         public FormSetting()
         {
@@ -24,36 +23,60 @@ namespace Project_KPL_ManajemenPassword
             string passBaru = txtPassBaru.Text;
             string konfirmasi = txtKonfirmasi.Text;
 
-            // [CLEAN CODE: DEFENSIVE PROGRAMMING]
-            if (string.IsNullOrEmpty(passLama) || string.IsNullOrEmpty(passBaru))
+            if (string.IsNullOrWhiteSpace(passLama) || string.IsNullOrWhiteSpace(passBaru) || string.IsNullOrWhiteSpace(konfirmasi))
             {
-                MessageBox.Show("Semua kolom harus diisi!");
+                MessageBox.Show("Semua kolom harus diisi!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (passBaru != konfirmasi)
             {
-                MessageBox.Show("Konfirmasi password baru tidak cocok!");
+                MessageBox.Show("Konfirmasi password baru tidak cocok!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Memanggil logika dari kelas AuthManager (Penerapan Single Responsibility)
-            bool sukses = _auth.UpdateState(passLama);
+            PasswordRequestDto authRequest = new PasswordRequestDto { Password = passLama };
+
+            bool sukses = auth.UpdateState(authRequest);
 
             if (sukses)
             {
-                _auth.ChangePassword(passBaru);
-                MessageBox.Show("Master Password berhasil diperbarui! Silakan Login ulang.");
+                PasswordRequestDto validasiPassBaru = new PasswordRequestDto { Password = passBaru };
 
-                Application.Restart();
+                if (!validasiPassBaru.IsValid())
+                {
+                    MessageBox.Show("Password baru wajib minimal 8 karakter demi keamanan!", "Peringatan Keamanan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                try
+                {
+                    auth.ChangePassword(passBaru);
+
+                    auth.SaveLog("Ganti Master Password", "Success");
+                    MessageBox.Show("Master Password berhasil diperbarui! Aplikasi akan memuat ulang.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    Application.Restart();
+                }
+                catch (ArgumentException ex)
+                {
+                    MessageBox.Show(ex.Message, "Peringatan Keamanan Backend", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                }
             }
             else
             {
-                MessageBox.Show("Password lama salah!");
+                auth.SaveLog("Gagal Ganti Master Password (Password Lama Salah)", "Failed");
+                MessageBox.Show("Password lama yang Anda masukkan salah!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // [CLEAN CODE: DEFENSIVE UI] - Inversi nilai boolean untuk fitur Show/Hide
+        private void FormSetting_Load(object sender, EventArgs e)
+        {
+            txtPassLama.UseSystemPasswordChar = true;
+            txtPassBaru.UseSystemPasswordChar = true;
+            txtKonfirmasi.UseSystemPasswordChar = true;
+        }
+
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             txtPassLama.UseSystemPasswordChar = !chkShowLama.Checked;
@@ -68,5 +91,7 @@ namespace Project_KPL_ManajemenPassword
         {
             txtKonfirmasi.UseSystemPasswordChar = !chkShowKonf.Checked;
         }
+
+        private void txtPassLama_TextChanged(object sender, EventArgs e) { }
     }
 }

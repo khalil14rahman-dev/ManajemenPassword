@@ -11,7 +11,10 @@ namespace Project_KPL_ManajemenPassword
     {
         public static string HashPassword(string password)
         {
-            if (string.IsNullOrWhiteSpace(password)) return string.Empty;
+            if (string.IsNullOrEmpty(password))
+            {
+                throw new ArgumentException("Password yang akan di-enkripsi tidak valid.");
+            }
 
             using (SHA256 sha256Hash = SHA256.Create())
             {
@@ -23,6 +26,7 @@ namespace Project_KPL_ManajemenPassword
                 }
                 return builder.ToString();
             }
+
         }
     }
 }

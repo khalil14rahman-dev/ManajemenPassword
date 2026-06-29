@@ -12,7 +12,6 @@ namespace Project_KPL_ManajemenPassword
         public string Activity { get; set; }
         public string Status { get; set; }
 
-        // Pastikan parameter pertama adalah STRING
         public LogActivity(string timestamp, string activity, string status)
         {
             this.Timestamp = timestamp;

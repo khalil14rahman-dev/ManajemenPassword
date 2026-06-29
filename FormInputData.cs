@@ -1,39 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Project_KPL_ManajemenPassword
 {
     public partial class FormInputData : Form
     {
-        //generic
-        DataRepository<PasswordModel> repo = DataRepository<PasswordModel>.GetInstance("data_password.json");
-        private int indexEdit = -1;
+        DataRepository repo = DataRepository.GetInstance();
+
+        private int currentIdPassword = -1;
 
         public FormInputData()
         {
             InitializeComponent();
+            LoadCategoryComboBox();
         }
 
-        // --- UPDATE PADA CONSTRUCTOR EDIT ---
         public FormInputData(PasswordModel data, int index)
         {
             InitializeComponent();
-            this.indexEdit = index;
+            LoadCategoryComboBox(); 
 
+            this.currentIdPassword = data.IdPassword;
             txtAplikasi.Text = data.NamaAplikasi;
-            txtUsername.Text = data.Username;
-
-            // NAUFAL'S UPDATE: Dekripsi password saat ditampilkan untuk diedit
+            txtUsername.Text = data.UsernameAkun;
             textPassword.Text = SecurityService.Decrypt(data.Password);
 
+            cmbKategori.SelectedValue = data.IdCategory;
+
             btnSimpanFormInput.Text = "Update Data";
+
+            textPassword_TextChanged(textPassword, EventArgs.Empty);
         }
 
         private void btnBatalFormInput_Click(object sender, EventArgs e)
@@ -43,32 +43,20 @@ namespace Project_KPL_ManajemenPassword
 
         private void btnAuto_Click(object sender, EventArgs e)
         {
-            // TABLE-DRIVEN milik Ariel tetap sama
-            string[] karakterTabel = {
-                "ABCDEFGHJKLMNPQRSTUVWXYZ",
-                "abcdefghijkmnopqrstuvwxyz",
-                "123456789",
-                "!@#$%^&*"
-            };
+            textPassword.Text = PasswordModel.GeneratePassword();
+        }
 
-            Random rand = new Random();
-            string passwordBaru = "";
+        private void LoadCategoryComboBox()
+        {
+            var listKategori = repo.GetCategories();
 
-            for (int i = 0; i < karakterTabel.Length; i++)
-            {
-                string barisKarakter = karakterTabel[i];
-                for (int j = 0; j < 2; j++)
-                {
-                    passwordBaru += barisKarakter[rand.Next(barisKarakter.Length)];
-                }
-            }
-
-            textPassword.Text = passwordBaru;
+            cmbKategori.DataSource = new BindingSource(listKategori, null);
+            cmbKategori.DisplayMember = "Value"; 
+            cmbKategori.ValueMember = "Key";     
         }
 
         private void btnSimpanFormInput_Click(object sender, EventArgs e)
         {
-            // --- DEFENSIVE PROGRAMMING ---
             if (string.IsNullOrWhiteSpace(txtAplikasi.Text) ||
                 string.IsNullOrWhiteSpace(txtUsername.Text) ||
                 string.IsNullOrWhiteSpace(textPassword.Text))
@@ -79,125 +67,64 @@ namespace Project_KPL_ManajemenPassword
 
             try
             {
-                List<PasswordModel> listData = repo.LoadData();
-
-                // --- NAUFAL'S UPDATE: Enkripsi password sebelum disimpan ke model ---
                 string passwordAman = SecurityService.Encrypt(textPassword.Text);
 
-                // Masukkan password yang sudah di-Encrypt ke model
-                PasswordModel dataInput = new PasswordModel(txtAplikasi.Text, txtUsername.Text, passwordAman);
+                PasswordModel dataInput = new PasswordModel();
+                dataInput.NamaAplikasi = txtAplikasi.Text;
+                dataInput.UsernameAkun = txtUsername.Text;
+                dataInput.Password = passwordAman;
 
-                if (indexEdit == -1)
+                dataInput.IdCategory = (int)cmbKategori.SelectedValue;
+
+                if (currentIdPassword == -1)
                 {
-                    listData.Add(dataInput);
+                    dataInput.IdPassword = 0;
                 }
                 else
                 {
-                    if (indexEdit >= 0 && indexEdit < listData.Count)
-                    {
-                        listData[indexEdit] = dataInput;
-                    }
+                    dataInput.IdPassword = currentIdPassword;
                 }
 
-                repo.SaveData(listData);
+                repo.SaveData(dataInput);
 
-                MessageBox.Show("Data berhasil dienkripsi dan disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                AuthManager auth = AuthManager.GetInstance();
+                auth.SaveLog($"Simpan Data Aplikasi: {txtAplikasi.Text}", "Success");
+
+                MessageBox.Show("Data berhasil disimpan!", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Gagal memproses data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            AuthManager auth = new AuthManager();
-            auth.SaveLog("Tambah Data Password", "Success");
         }
 
         private void textPassword_TextChanged(object sender, EventArgs e)
         {
-            // Pastikan nama label di Properties (Name) sudah kamu ganti jadi lblstrength
-            // Jika masih bernama label4, maka ganti tulisan 'lblstrength' di bawah menjadi 'label4'
+            Debug.Assert(sender != null, "Precondition gagal: pengirim tidak boleh null.");
 
-            if (string.IsNullOrEmpty(textPassword.Text))
-            {
-                lblstrength.Text = "Kekuatan: -";
-                lblstrength.ForeColor = Color.Gray;
-            }
-            else if (textPassword.Text.Length < 8)
-            {
-                lblstrength.Text = "Kekuatan: Lemah (Min. 8 Karakter)";
-                lblstrength.ForeColor = Color.Red;
-            }
-            else
-            {
-                lblstrength.Text = "Kekuatan: Kuat";
-                lblstrength.ForeColor = Color.Green;
-            }
+            StrengthResult result = CalculatePasswordStrength(textPassword.Text);
+
+            lblstrength.Text = result.Status;
+            lblstrength.ForeColor = result.Warna;
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        public static StrengthResult CalculatePasswordStrength(string pass)
         {
+            if (string.IsNullOrEmpty(pass)) return new StrengthResult("Kekuatan: -", Color.Gray, 0);
 
-        }
-
-        private void lblstrength_Click(object sender, EventArgs e)
-        {
-            // Cek teks yang sedang diketik
-            string pass = textPassword.Text;
-
-            if (string.IsNullOrEmpty(pass))
-            {
-                lblstrength.Text = "Kekuatan : -";
-                lblstrength.ForeColor = Color.Gray;
-            }
-            else if (pass.Length < 8)
-            {
-                lblstrength.Text = "Kekuatan : Lemah (Terlalu Pendek)";
-                lblstrength.ForeColor = Color.Red;
-            }
-            else
-            {
-                lblstrength.Text = "Kekuatan : Sangat Kuat";
-                lblstrength.ForeColor = Color.Green;
-            }
-        }
-
-        private void textPassword_TextChanged_1(object sender, EventArgs e)
-        {
-            // Mengambil teks langsung saat user mengetik
-            string pass = textPassword.Text;
-            int len = pass.Length;
-
-            // --- TABLE DRIVEN CONSTRUCTION ---
-            var strengthTable = new Dictionary<int, (string Status, Color Warna)>
+            var passwordRules = new List<Func<string, bool>>
     {
-        { 0, ("Kekuatan: -", Color.Gray) },
-        { 1, ("Kekuatan: Lemah", Color.Red) },
-        { 8, ("Kekuatan: Sedang", Color.Orange) },
-        { 12, ("Kekuatan: Sangat Kuat", Color.Green) }
+        p => p.Length >= 8,
+        p => p.Any(char.IsUpper) && p.Any(char.IsLower),
+        p => p.Any(char.IsDigit),
+        p => p.Any(ch => !char.IsLetterOrDigit(ch))
     };
 
-            string statusBaru = "Kekuatan: -";
-            Color warnaBaru = Color.Gray;
+            int score = passwordRules.Count(rule => rule(pass));
 
-            // Otomatis mencari aturan yang sesuai dengan panjang teks saat ini
-            foreach (var rule in strengthTable)
-            {
-                if (len >= rule.Key)
-                {
-                    statusBaru = rule.Value.Status;
-                    warnaBaru = rule.Value.Warna;
-                }
-            }
-
-            // Langsung update Label secara Real-Time
-            lblstrength.Text = statusBaru;
-            lblstrength.ForeColor = warnaBaru;
-        }
-
-        private void FormInputData_Load(object sender, EventArgs e)
-        {
-
+            StrengthFactory factory = new PasswordStrengthFactory();
+            return factory.CreateStrengthResult(score);
         }
     }
 }
